@@ -1,0 +1,97 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title">Edit Employee</h4>
+                  </div>
+                  <div class="card-body">
+                      <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input  matInput type="text" value="{{selectedEmployee.name}}" formControlName="name" class="form-control" placeholder="Employee Name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                        <div *ngIf="f.name.errors.required">Name is required</div>
+                                    </div>
+                                  </mat-form-field>
+                              </div>
+                              <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput formControlName="email" value="{{selectedEmployee.email}}" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email address" type="email">
+                                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                        <div *ngIf="f.email.errors.required">Email is required</div>
+                                    </div>
+                                  </mat-form-field>
+                              </div>
+                          </div>
+
+
+                          <div class="row">
+                              <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput class="form-control" value="{{selectedEmployee.emp_id}}" placeholder="Employee ID" type="text" disabled>
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput formControlName="password" value="{{selectedEmployee.password}}" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" type="password">
+                                  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                    <div *ngIf="f.password.errors.required">Password is required</div>
+                                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                                </div>
+                                </mat-form-field>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-12">
+                                <mat-form-field class="example-full-width">
+                                  <input  matInput type="text" value="{{selectedEmployee.card_id}}" formControlName="card_id" class="form-control" placeholder="Card ID" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                                  <div *ngIf="submitted && f.card_id.errors" class="invalid-feedback">
+                                      <div *ngIf="f.card_id.errors.required">Card ID is required</div>
+                                  </div>
+                                </mat-form-field>
+                            </div>
+                            
+                        </div>
+
+                          <div class="row">
+                              <div class="col-md-6">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input class="form-check-input" checked="{{selectedEmployee.is_admin}}" formControlName="is_admin" [ngClass]="{ 'is-invalid': submitted && f.is_admin.errors }" type="checkbox" value=""> Admin
+                              <span class="form-check-sign">
+                                <span class="check">
+                                </span>
+                              </span>
+                              </label>
+                              <div *ngIf="submitted && f.is_admin.errors" class="invalid-feedback">
+                              </div>
+                            </div>
+                              </div>
+                              
+                                  <div class="col-md-6">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                  <input class="form-check-input" checked="{{selectedEmployee.is_contract}}" formControlName="is_contract" [ngClass]="{ 'is-invalid': submitted && f.is_contract.errors }"  type="checkbox" value=""> Contract
+                                  <span class="form-check-sign">
+                                    <span class="check">
+                                    </span>
+                                  </span>
+                                  </label>
+                                  <div *ngIf="submitted && f.is_admin.errors" class="invalid-feedback">
+                                  </div>
+                                </div></div></div>
+                            
+                          
+                          <button mat-raised-button type="submit" class="btn btn-success pull-right">Add</button>
+                          <div class="clearfix"></div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

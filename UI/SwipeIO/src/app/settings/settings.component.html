@@ -1,0 +1,103 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header card-header-warning">
+                        <h4 class="card-title ">Gates
+                                <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right">
+                                        <i class="material-icons">add</i> Add Gate
+                                </button>
+                        </h4>
+                        
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Gate Name
+                                    </th>
+                                    <th>
+                                        Edit / Remove
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let Gate of Gates">
+                                        <td>
+                                            {{Gate.gate_id}}
+                                        </td>
+                                        <td>
+                                            {{Gate.gate_name}}
+                                        </td>
+                                        <td class="td-actions">
+                                                <button mat-raised-button type="button" matTooltip="Edit {{Gate.gate_name}}" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-md btn-just-icon">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <button mat-raised-button type="button" matTooltip="Remove {{Gate.gate_name}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header card-header-warning">
+                            <h4 class="card-title ">Cards
+                                    <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right">
+                                            <i class="material-icons">add</i> Add Card
+                                    </button>
+                            </h4>
+                            
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            Card ID
+                                        </th>
+                                        <th>
+                                            Card Number
+                                        </th>
+                                        <th>
+                                            Edit / Remove
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let Card of Cards">
+                                            <td>
+                                                {{Card.card_id}}
+                                            </td>
+                                            <td>
+                                                {{Card.card_number}}
+                                            </td>
+                                            <td class="td-actions">
+                                                    <button mat-raised-button type="button" matTooltip="Edit {{Card.card_number}}" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-md btn-just-icon">
+                                                        <i class="material-icons">edit</i>
+                                                    </button>
+                                                    <button mat-raised-button type="button" matTooltip="Remove  {{Card.card_number}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+                                                        <i class="material-icons">close</i>
+                                                    </button>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+  </div>
+  

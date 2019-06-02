@@ -1,0 +1,70 @@
+<div class="main-content">
+    <div class="container-fluid">
+            <button routerLink="/add" class="btn btn-success"><span class="material-icons">person_add</span> Add a new Employee</button>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Employee Details</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Employee ID
+                                    </th>
+                                    <th>
+                                        Employee Name
+                                    </th>
+                                    <th>
+                                        Email ID
+                                    </th>
+                                    <th>
+                                        Card ID
+                                    </th>
+                                    <th>
+                                        isAdmin
+                                    </th>
+                                    <th>View / Edit / Remove</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let employee of Employees">
+                                        <td>
+                                            {{employee.emp_id}}
+                                        </td>
+                                        <td>
+                                            {{employee.name}}
+                                        </td>
+                                        <td>
+                                            {{employee.email}}
+                                        </td>
+                                        <td>
+                                            {{employee.card_id}}
+                                        </td>
+                                        <td>
+                                            {{employee.is_admin}}
+                                        </td>
+                                        <td class="td-actions">
+                                                <button routerLink="/report" mat-raised-button type="button" matTooltip="View Employee Report" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
+                                                        <i class="material-icons">poll</i>
+                                                </button>
+                                                <button routerLink="/edit/{{employee.emp_id}}" mat-raised-button type="button" matTooltip="Edit Employee Detail" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-md btn-just-icon">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <button (click)="deleteUser(employee.emp_id)" mat-raised-button type="button" matTooltip="Remove Employee" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+    </div>
+  </div>
+  

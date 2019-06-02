@@ -1,0 +1,64 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Import</h4>
+                        <div class="input-group">
+                            <button *ngIf='data' (click)="Upload()" mat-raised-button type="button" matTooltip="Refresh the data" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
+                              <i class="material-icons">refresh</i>
+                            </button>
+                            <div class="upload-btn-wrapper">
+                                <button class="btn btn-info">Choose .xlsx file</button>
+                              <input class="btn" type="file" (change)="incomingfile($event)" accept=".xlsx">   
+                            </div>                         
+                            <button type="button" class="btn btn-info btn-md" >Upload</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table *ngIf='data' class="table">
+                                <thead class=" text-primary">
+                                   <th>Log ID</th>
+                                   <th>Date</th>
+                                   <th>Time</th>
+                                   <th>Card ID</th>
+                                   <th>Employee ID</th>
+                                   <th>IN / OUT</th>
+                                   <th>Gate ID</th>
+                                </thead>
+                                <tbody>
+                                   <tr *ngFor="let datum of data">
+                                     <td>
+                                       {{datum.log_id}}
+                                     </td>
+                                     <td>
+                                        {{datum.date}}
+                                      </td>
+                                      <td>
+                                          {{datum.time}}
+                                        </td>
+                                        <td>
+                                            {{datum.card_id}}
+                                          </td>
+                                        <td>
+                                           {{datum.emp_id}}
+                                         </td>
+                                         <td>
+                                            {{datum.inorout}}
+                                          </td>
+                                          <td>
+                                             {{datum.gate_id}}
+                                           </td>
+                                   </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+      
+    </div>
+  </div>
