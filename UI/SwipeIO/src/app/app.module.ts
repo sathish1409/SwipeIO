@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+import { NgxUiLoaderModule, NgxUiLoaderConfig, POSITION, SPINNER, PB_DIRECTION } from  'ngx-ui-loader';
 import { ReactiveFormsModule }    from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -42,6 +43,34 @@ import { SettingsComponent } from './settings/settings.component';
 import { ImportComponent } from './import/import.component';
 import { UserreportComponent } from './userreport/userreport.component';
 
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsColor: "#00ACC1",
+  bgsOpacity: 0.5,
+  bgsPosition: "bottom-right",
+  bgsSize: 60,
+  bgsType: "ball-spin-clockwise",
+  blur: 14,
+  fgsColor: "#9d37b4",
+  fgsPosition: "center-center",
+  fgsSize: 120,
+  fgsType: "ball-scale-multiple",
+  gap: 24,
+  logoPosition: "center-center",
+  logoSize: 120,
+  logoUrl: "",
+  masterLoaderId: "master",
+  overlayBorderRadius: "0",
+  overlayColor: "rgba(255,255,255,0.8)",
+  pbColor: "#6700d5",
+  pbDirection: "ltr",
+  pbThickness: 3,
+  hasProgressBar: true,
+  text: "",
+  textColor: "#FFFFFF",
+  textPosition: "center-center",
+  threshold: 500
+};
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -52,6 +81,7 @@ import { UserreportComponent } from './userreport/userreport.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
     
   ],
   declarations: [
