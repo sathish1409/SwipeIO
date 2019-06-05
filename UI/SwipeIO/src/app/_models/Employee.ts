@@ -1,8 +1,9 @@
-export class User {
+export class Employee {
     emp_id: number;
     email: string;
-    password: string;
-    name: string;
+    pass_word: string;
+    emp_name: string;
+    emp_number:string;
     is_admin: boolean;
     is_contract:boolean;
     card_id:number;

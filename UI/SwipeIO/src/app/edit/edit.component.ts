@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from 'app/_services/user.service';
+import { EmployeeService } from 'app/_services/Employee.service';
 import { AlertService } from 'app/_services/alert.service';
-import { User } from 'app/_models/user';
+import { Employee } from 'app/_models/Employee';
 
 @Component({
   selector: 'app-edit',
@@ -16,12 +16,12 @@ export class EditComponent implements OnInit {
   editForm: FormGroup;
   loading = false;
   submitted = false; 
-  selectedEmployee:User;
+  selectedEmployee:Employee;
   id:number;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService,
+    private EmployeeService: EmployeeService,
     private alertService: AlertService,
     private activatedRoute: ActivatedRoute
   ) { }
@@ -30,7 +30,7 @@ export class EditComponent implements OnInit {
       this.id = paramsId.id;
   });
   console.log(this.id);
-  this.userService.getById(this.id).pipe(first()).subscribe(employee => { 
+  this.EmployeeService.getById(this.id).pipe(first()).subscribe(employee => { 
     console.log(employee);
     this.selectedEmployee = employee;
 });
@@ -59,7 +59,7 @@ export class EditComponent implements OnInit {
     
     
     this.loading = true;
-    this.userService.register(this.editForm.value)
+    this.EmployeeService.register(this.editForm.value)
         .pipe(first())
         .subscribe(
             data => {

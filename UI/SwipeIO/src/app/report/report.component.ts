@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'app/_models/user';
-import { UserService } from 'app/_services/user.service';
+import { Employee } from 'app/_models/Employee';
+import { EmployeeService } from 'app/_services/Employee.service';
 
 @Component({
   selector: 'app-report',
@@ -8,9 +8,9 @@ import { UserService } from 'app/_services/user.service';
   styleUrls: ['./report.component.scss']
 })
 export class ReportComponent implements OnInit {
-  currentUser : User;
-  constructor( private userService:UserService ) {
-    this.currentUser=JSON.parse(localStorage.getItem('currentUser'));
+  currentEmployee : Employee;
+  constructor( private EmployeeService:EmployeeService ) {
+    this.currentEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
    }
 
   

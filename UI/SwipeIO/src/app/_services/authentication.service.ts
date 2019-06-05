@@ -9,20 +9,20 @@ export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
     login(email: string, password: string) {
-        return this.http.post<any>(`${environment.apiUrl}/employees/authenticate`, { email: email, password: password })
-            .pipe(map(user => {
+        return this.http.post<any>(`${environment.apiUrl}/Employee/authenticate`, { email: email, pass_word: password })
+            .pipe(map(employee => {
                 // login successful if there's a jwt token in the response
-                if (user && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                if (employee && employee.token) {
+                    // store employee details and jwt token in local storage to keep employee logged in between page refreshes
+                    localStorage.setItem('currentEmployee', JSON.stringify(employee));
                 }
 
-                return user;
+                return employee;
             }));
     }
 
     logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        // remove employee from local storage to log employee out
+        localStorage.removeItem('currentEmployee');
     }
 }

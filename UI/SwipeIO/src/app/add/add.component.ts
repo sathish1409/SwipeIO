@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AlertService } from '../_services/alert.service';
-import { UserService } from '../_services/user.service';
+import { EmployeeService } from '../_services/Employee.service';
 
 @Component({
   selector: 'app-add',
@@ -18,7 +18,7 @@ export class AddComponent implements OnInit{
   constructor(
       private formBuilder: FormBuilder,
       private router: Router,
-      private userService: UserService,
+      private EmployeeService: EmployeeService,
       private alertService: AlertService) { }
 
   ngOnInit() {
@@ -44,7 +44,7 @@ export class AddComponent implements OnInit{
       }
 
       this.loading = true;
-      this.userService.register(this.addForm.value)
+      this.EmployeeService.register(this.addForm.value)
           .pipe(first())
           .subscribe(
               data => {

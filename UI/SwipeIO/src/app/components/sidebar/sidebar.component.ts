@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'app/_services/user.service';
-import { User } from 'app/_models/user';
+import { EmployeeService } from 'app/_services/Employee.service';
+import { Employee } from 'app/_models/Employee';
 
 
 declare const $: any;
@@ -16,7 +16,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/addorremove', title: 'Add or Remove',  icon: 'edit', class: '' },
     { path: '/settings', title: 'Settings',  icon: 'settings_input_component', class: '' },
     { path: '/import', title: 'Import',  icon: 'publish', class: '' },
-  /*  { path: '/user-profile', title: 'User Profile',  icon:'person', class: '' },
+  /*  { path: '/Employee-profile', title: 'Employee Profile',  icon:'person', class: '' },
     { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
     { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },
     { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
@@ -31,9 +31,9 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
   menuItems: any[];
-  currentUser: User;
-  constructor(private userService: UserService) {
-    this.currentUser=JSON.parse(localStorage.getItem('currentUser'));
+  currentEmployee: Employee;
+  constructor(private EmployeeService: EmployeeService) {
+    this.currentEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
    }
 
   ngOnInit() {

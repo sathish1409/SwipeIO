@@ -3,26 +3,27 @@ import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { User } from '../../_models/user';
-import { UserService } from '../../_services/user.service';
+import { Employee } from '../../_models/Employee';
+import { EmployeeService } from '../../_services/Employee.service';
+import { AuthenticationService } from 'app/_services/authentication.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-    currentUser: User;
+    currentEmployee: Employee;
     private listTitles: any[];
     location: Location;
       mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router, private userService: UserService) {
+    constructor(location: Location, private authenticationService: AuthenticationService, private element: ElementRef, private router: Router, private EmployeeService: EmployeeService) {
       this.location = location;
           this.sidebarVisible = false;
-          this.currentUser=JSON.parse(localStorage.getItem('currentUser'));
-          console.log(this.currentUser.name)
+          this.currentEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
+          
     }
 
     ngOnInit(){
@@ -113,6 +114,11 @@ export class NavbarComponent implements OnInit {
 
         }
     };
+
+    Logout(){
+        this.authenticationService.logout();
+        this.router.navigate(['/login']);
+    }
 
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());

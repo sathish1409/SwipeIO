@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
-import { User } from '../_models/user';
-import { UserService } from '../_services/user.service';
+import { Employee } from '../_models/Employee';
+import { EmployeeService } from '../_services/Employee.service';
 @Component({
   selector: 'app-addorremove',
   templateUrl: './addorremove.component.html',
@@ -10,26 +10,26 @@ import { UserService } from '../_services/user.service';
 })
 export class AddorremoveComponent implements OnInit {
 
-  currentUser: User;
-  constructor(private userService: UserService) {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  currentEmployee: Employee;
+  constructor(private EmployeeService: EmployeeService) {
+    this.currentEmployee = JSON.parse(localStorage.getItem('currentEmployee'));
    }
 
-  Employees:User[]=[];
+  Employees:Employee[]=[];
 
   ngOnInit() {
-    this.loadAllUsers() 
+    this.loadAllEmployees() 
   }
   
-  deleteUser(id: number) {
-    this.userService.delete(id).pipe(first()).subscribe(() => { 
-        this.loadAllUsers() 
+  deleteEmployee(id: number) {
+    this.EmployeeService.delete(id).pipe(first()).subscribe(() => { 
+        this.loadAllEmployees() 
     });
 }
 
-private loadAllUsers() {
-    this.userService.getAll().pipe(first()).subscribe(users => { 
-        this.Employees = users; 
+private loadAllEmployees() {
+    this.EmployeeService.getAll().pipe(first()).subscribe(Employees => { 
+        this.Employees = Employees; 
     });
 }
 
