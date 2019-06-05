@@ -12,3 +12,17 @@ C:\Users\rubika\source\repos\SwipeIO_Web_API\SwipeIO_Web_API\obj\Debug\netcoreap
 C:\Users\rubika\source\repos\SwipeIO_Web_API\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.pdb
 C:\Users\rubika\source\repos\SwipeIO_Web_API\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.dll
 C:\Users\rubika\source\repos\SwipeIO_Web_API\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.pdb
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.csprojAssemblyReference.cache
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.csproj.CoreCompileInputs.cache
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.RazorAssemblyInfo.cache
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.RazorAssemblyInfo.cs
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.AssemblyInfoInputs.cache
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.AssemblyInfo.cs
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.dll
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.pdb
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.deps.json
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.runtimeconfig.json
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.runtimeconfig.dev.json
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.dll
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.pdb
+C:\Users\rubika\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.RazorTargetAssemblyInfo.cache

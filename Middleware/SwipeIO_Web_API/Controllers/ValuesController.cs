@@ -16,7 +16,7 @@ namespace SwipeIO_Web_API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            db.Database.ExecuteSqlCommand("INSERT Employee (id,name) VALUES (1,'Sathish')");
+            
             return new string[] { "value1", "value2" };
         }
 
@@ -24,19 +24,23 @@ namespace SwipeIO_Web_API.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return "value";
+     //       db.Database.ExecuteSqlCommand("call Emp(@p0,@p1);", id, "FromAPI");
+            return "value"+id;
+            
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Employee employee)
         {
+        //db.Database.ExecuteSqlCommand("INSERT Employee (id,name) VALUES (@p0,@p1)", employee.id, employee.name);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+            
         }
 
         // DELETE api/values/5

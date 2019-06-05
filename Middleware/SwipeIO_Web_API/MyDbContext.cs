@@ -2,6 +2,8 @@
 using Pomelo.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,9 +22,22 @@ namespace SwipeIO_Web_API
 
     public class Employee
     {
-        public int id { get; set; }
-        public string name { get; set; }
-
+        [Key]
+        public int emp_id { get; set; }
+        public string emp_number { get; set; }
+        public string emp_name { get; set; }
+        public string email { get; set; }
+        public int card_id { get; set; }
+        public bool is_admin { get; set; }
+        public bool is_contract { get; set; }
+        public string pass_word { get; set; }
+        [NotMapped]
+        public string Token { get; set; }
+    }
+    public static class Role
+    {
+        public const string Admin = "Admin";
+        public const string Employee = "Employee";
     }
 
 }

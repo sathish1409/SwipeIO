@@ -12185,11 +12185,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rubika\\source\\repos\\SwipeIO_Web_API\\SwipeIO_Web_API\\SwipeIO_Web_API.csproj",
+      "projectUniqueName": "C:\\Users\\rubika\\SwipeIO\\Middleware\\SwipeIO_Web_API\\SwipeIO_Web_API.csproj",
       "projectName": "SwipeIO_Web_API",
-      "projectPath": "C:\\Users\\rubika\\source\\repos\\SwipeIO_Web_API\\SwipeIO_Web_API\\SwipeIO_Web_API.csproj",
+      "projectPath": "C:\\Users\\rubika\\SwipeIO\\Middleware\\SwipeIO_Web_API\\SwipeIO_Web_API.csproj",
       "packagesPath": "C:\\Users\\rubika\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rubika\\source\\repos\\SwipeIO_Web_API\\SwipeIO_Web_API\\obj\\",
+      "outputPath": "C:\\Users\\rubika\\SwipeIO\\Middleware\\SwipeIO_Web_API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
