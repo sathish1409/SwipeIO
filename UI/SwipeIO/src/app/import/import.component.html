@@ -13,43 +13,43 @@
                                 <button class="btn btn-info">Choose .xlsx file</button>
                               <input class="btn" type="file" (change)="incomingfile($event)" accept=".xlsx">   
                             </div>                         
-                            <button type="button" class="btn btn-info btn-md" >Upload</button>
+                            <button type="button" (click)="onSubmit()" class="btn btn-info btn-md" >Upload</button>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table *ngIf='data' class="table">
                                 <thead class=" text-primary">
-                                   <th>Log ID</th>
                                    <th>Date</th>
                                    <th>Time</th>
                                    <th>Card ID</th>
                                    <th>Employee ID</th>
                                    <th>IN / OUT</th>
-                                   <th>Gate ID</th>
+                                   <th>Gate</th>
+                                   <th>Department</th>
                                 </thead>
                                 <tbody>
                                    <tr *ngFor="let datum of data">
                                      <td>
-                                       {{datum.log_id}}
+                                       {{datum.Date}}
                                      </td>
                                      <td>
-                                        {{datum.date}}
+                                        {{datum.Time}}
                                       </td>
                                       <td>
-                                          {{datum.time}}
+                                          {{datum.Cardid}}
                                         </td>
                                         <td>
-                                            {{datum.card_id}}
+                                            {{datum.Empid}}
                                           </td>
                                         <td>
-                                           {{datum.emp_id}}
+                                           {{datum.InOut}}
                                          </td>
                                          <td>
-                                            {{datum.inorout}}
+                                            {{datum.Gate}}
                                           </td>
                                           <td>
-                                             {{datum.gate_id}}
+                                             {{datum.Department}}
                                            </td>
                                    </tr>
                                 </tbody>

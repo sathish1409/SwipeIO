@@ -24,6 +24,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AlertService} from './_services/alert.service';
 import { AuthenticationService} from './_services/authentication.service';
 import {  EmployeeService } from './_services/Employee.service';
+import {  LogService } from './_services/Log.service';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 
@@ -98,7 +99,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     EmployeeService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+    LogService,
     // provider used to create fake backend
     //fakeBackendProvider
   ],
