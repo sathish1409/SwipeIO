@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace SwipeIO_Web_API.Controllers
-{
+{ 
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -16,8 +18,12 @@ namespace SwipeIO_Web_API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            
-            return new string[] { "value1", "value2" };
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB"); //dd/MM/yyyy
+            string startTime = "12/6/2019 7:00 AM";
+            string endTime = "15/6/2019 2:00 PM";
+
+            TimeSpan duration = DateTime.Parse(endTime).Subtract(DateTime.Parse(startTime));
+            return new string[] { "value1", "value2", duration.ToString() };
         }
 
         // GET api/values/5

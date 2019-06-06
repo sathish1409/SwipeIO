@@ -8,7 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SwipeIO_Web_API.Helpers;
 using SwipeIO_Web_API.Services;
+using System.Globalization;
 using System.Text;
+using System.Threading;
 
 namespace SwipeIO_Web_API
 {
@@ -73,6 +75,7 @@ namespace SwipeIO_Web_API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

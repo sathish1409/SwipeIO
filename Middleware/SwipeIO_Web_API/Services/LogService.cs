@@ -29,6 +29,7 @@ namespace SwipeIO_Web_API.Services
 
         public IEnumerable<Log> GetAll()
         {
+            
             throw new NotImplementedException();
         }
 
