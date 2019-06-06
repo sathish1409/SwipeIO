@@ -276,7 +276,7 @@ call insert_incharge_log(1,1);
 
 ############################################## IMPORT #########################################
 
-drop procedure insert_from_json;
+#drop procedure insert_from_json;
 delimiter //
 #SET FOREIGN_KEY_CHECKS = 1;
 create procedure import_to_swipe(in date1 varchar(10),in time1 varchar(10),in card_number1 varchar(10),in emp_number1 varchar(10),in gate_name1 varchar(20),in inorout1 varchar(5),in remark1 varchar(30))
@@ -295,7 +295,20 @@ begin
 end //
 delimiter ;
 #call import_to_swipe('26/09/2019','11:54:01','00103100','000000C1','Entrance','In','Successful');
+
 #select * from Main_swipe;
 #truncate Main_swipe;
 #select * from cards;
 #select * from employee;
+#########################################
+
+delimiter //
+#SET FOREIGN_KEY_CHECKS = 1;
+create procedure get_swipe_log(in emp_id1 int,in from_date varchar(20),in to_date varchar(20))
+begin
+    select * from Main_swipe where emp_id=emp_id1 and date_log between from_date and to_date;
+end //
+delimiter ;
+drop procedure get_swipe_log;
+call get_swipe_log(1,"22/04/2019","30/04/2019");
+
