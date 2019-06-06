@@ -31,7 +31,7 @@ namespace SwipeIO_Web_API.Services
 
         public Employee Authenticate(string email, string pass_word)
         {
-            var employeeArr = Emp.Employee.FromSql("call Authenticate(@p0,@p1);",email,pass_word);
+            var employeeArr = Emp.Employee.FromSql("call  Validate(@p0,@p1);", email,pass_word);
 
             
 

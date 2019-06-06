@@ -16,7 +16,7 @@ namespace SwipeIO_Web_API
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("server = localhost; port = 3306; database = stud; uid = root; password = ");
+            optionsBuilder.UseMySql("server = localhost; port = 3306; database = swipeio; uid = root; password = ");
         }
     }
 
@@ -54,7 +54,7 @@ namespace SwipeIO_Web_API
         public string CID { get; set; }
         public string Gate { get; set; }
         public string InOut { get; set; }
-        public string Remarks { get; set; }
+        public string Remark { get; set; }
         
     }
     
