@@ -40,4 +40,22 @@ namespace SwipeIO_Web_API
         public const string Employee = "Employee";
     }
 
+
+    public class Log
+    {
+      
+        public string Date { get; set; }
+        public string Time { get; set; }
+        public string Cardid { get; set; }
+        public string Empid { get; set; }
+        public string EmpName { get; set; }
+        public string Department { get; set; }
+        public string Type { get; set; }
+        public string CID { get; set; }
+        public string Gate { get; set; }
+        public string InOut { get; set; }
+        public string Remarks { get; set; }
+        
+    }
+    
 }

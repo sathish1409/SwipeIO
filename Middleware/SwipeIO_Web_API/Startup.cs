@@ -66,6 +66,7 @@ namespace SwipeIO_Web_API
 
             // configure DI for application services
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<ILogService, LogService>();
 
         }
 
