@@ -13,6 +13,7 @@ namespace SwipeIO_Web_API
     public class MyDbContext : DbContext
     {
         public DbSet<Employee> Employee { get; set; }
+        public DbSet<RefinedLog> RefinedLog { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,6 +34,8 @@ namespace SwipeIO_Web_API
         public string pass_word { get; set; }
         [NotMapped]
         public string Token { get; set; }
+        public string card_number{ get; set; }
+
     }
     public static class Role
     {
@@ -57,5 +60,37 @@ namespace SwipeIO_Web_API
         public string Remark { get; set; }
         
     }
-    
+
+    public class RefinedLog
+    {
+        [Key]
+        public int log_id { get; set; }
+
+        public DataType date_log { get; set; }
+        public DateTime time_log { get; set; }
+        public string inorout { get; set; }
+        public int emp_id { get; set; }
+        public int gate_id { get; set; }
+        public int card_id { get; set; }
+        public string remarks { get; set; }
+
+    }
+
+    public class ReportParameters
+    {
+        public int emp_id { get; set; }
+        public string from { get; set; }
+        public string to { get; set; }
+        
+    }
+    public class Report
+    {
+        public int emp_id { get; set; }
+        public DateTime date { get; set; }
+        public DateTime in_time { get; set; }
+        public DateTime out_time { get; set; }
+        public double hours_worked { get; set; }
+
+    }
+
 }

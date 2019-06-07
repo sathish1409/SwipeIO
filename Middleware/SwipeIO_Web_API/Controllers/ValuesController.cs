@@ -20,10 +20,14 @@ namespace SwipeIO_Web_API.Controllers
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB"); //dd/MM/yyyy
             string startTime = "12/6/2019 7:00 AM";
-            string endTime = "15/6/2019 2:00 PM";
+            string endTime = "12/6/2019 2:00 PM";
+            string day=DateTime.Parse(endTime).Day.ToString();
+            string month = DateTime.Parse(endTime).Month.ToString();
+            string year = DateTime.Parse(endTime).Year.ToString();
 
             TimeSpan duration = DateTime.Parse(endTime).Subtract(DateTime.Parse(startTime));
-            return new string[] { "value1", "value2", duration.ToString() };
+            float i = Convert.ToSingle(duration.TotalHours) + 4;
+            return new string[] { "value1", "value2",i.ToString(),year+"/"+month+"/"+day };
         }
 
         // GET api/values/5

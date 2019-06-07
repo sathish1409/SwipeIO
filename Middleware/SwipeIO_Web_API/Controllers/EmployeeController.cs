@@ -40,6 +40,17 @@ namespace SwipeIO_Web_API.Controllers
             return Ok(employee);
         }
 
+        [Authorize(Roles = Role.Admin)]
+        [HttpPost("add")]
+        public IActionResult Add([FromBody]Employee employeeParam)
+        {
+            var employee = _employeeService.Add(employeeParam);
+
+            if (employee == 0)
+                return BadRequest(new { message = "Error" });
+
+            return Ok(employee);
+        }
 
         [Authorize(Roles = Role.Admin)]
         [HttpGet]
