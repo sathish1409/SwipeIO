@@ -35,7 +35,7 @@ drop table incharge_log;
 create table Cards(card_id int primary key not null auto_increment,card_number varchar(8) unique,updated_on datetime,created_on datetime);
 create table Employee(emp_id int primary key NOT NULL auto_increment,emp_number varchar(10) unique not null,emp_name varchar(25),email varchar(50),card_id int,is_admin bit,is_contract bit,pass_word varchar(20),created_on datetime,updated_on datetime,is_delete bit default 0,foreign key (card_id) references cards(card_id));
 create table Gate(gate_id int primary key not null auto_increment,gate_name varchar(20),updated_on datetime,created_on datetime);
-create table Main_swipe(log_id int primary key not null auto_increment ,date_log varchar(10),time_log time,inorout bit,emp_id int,gate_id int,card_id int,remarks varchar(50),foreign key (emp_id) references Employee(emp_id),foreign key (gate_id) references Gate(gate_id),foreign key (card_id) references Cards(card_id));
+create table Main_swipe(log_id int primary key not null auto_increment ,date_log date,time_log time,inorout bit,emp_id int,gate_id int,card_id int,remarks varchar(50),foreign key (emp_id) references Employee(emp_id),foreign key (gate_id) references Gate(gate_id),foreign key (card_id) references Cards(card_id));
 create table Temp_card_log(entry_id int primary key auto_increment not null,name_of_contracter varchar(25),date_of_log varchar(10),emp_id int,card_id int,foreign key (emp_id) references Employee(emp_id),foreign key (card_id) references cards(card_id));
 create table Leave_description(leave_id int primary key not null auto_increment,leave_name varchar(25),updated_on datetime,created_on datetime);
 create table Leave_log(leave_log_id int primary key not null auto_increment,from_date varchar(10),to_date varchar(10),emp_id int,leave_id int,foreign key (emp_id) references Employee(emp_id),foreign key (leave_id) references Leave_description(leave_id));
@@ -183,14 +183,15 @@ call insert_leave_description('work from home',now());
 ########################### Employee #####################################
 
 delimiter //
-create procedure insert_employee(in emp_number1 varchar(10),in emp_name1 varchar(25),in email1 varchar(50),in pass_word1 varchar(20),in is_admin1 bit,in is_contract1 bit,in created_on1 datetime, in card_id1 int)
+create procedure insert_employee(in emp_number1 varchar(10),in emp_name1 varchar(25),in email1 varchar(50),in pass_word1 varchar(20),in is_admin1 bit,in is_contract1 bit,in created_on1 datetime, in card_id1 varchar(20))
 begin
-insert into Employee (emp_number,emp_name,email,pass_word,is_contract,is_admin,created_on, card_id) values(emp_number1,emp_name1,email1,pass_word1,is_contract1,is_admin1,created_on1,card_id1); 
+select card_id into @new_card_id from Cards where card_number=card_id1;
+insert into Employee (emp_number,emp_name,email,pass_word,is_contract,is_admin,created_on, card_id) values(emp_number1,emp_name1,email1,pass_word1,is_contract1,is_admin1,created_on1,@new_card_id); 
 select * from Employee;
-end//
+end //
 delimiter ;
-call insert_employee('000000C1','Sathish','sathish@gmail.com','123456',1,0,now(),1);
-
+call insert_employee('000000C2','Kavi','kavi@gmail.com','123456',1,0,now(),'00129692');
+drop procedure insert_employee;
 delimiter //
 create procedure update_employee(in emp_number1 varchar(10),in emp_name1 varchar(25), in email1 varchar(25), in is_admin1 bit, in is_contract1 bit,in pass_word1 varchar(20))
 begin
@@ -222,9 +223,9 @@ delimiter //
 create procedure get_all_employee()
 begin
 select * from Employee where is_delete=0;
-end//
+end //
 delimiter ;
-#call get_all_employee;
+call get_all_employee;
 
 
 delimiter //
@@ -276,10 +277,10 @@ call insert_incharge_log(1,1);
 
 ############################################## IMPORT #########################################
 
-#drop procedure insert_from_json;
+drop procedure import_to_swipe;
 delimiter //
 #SET FOREIGN_KEY_CHECKS = 1;
-create procedure import_to_swipe(in date1 varchar(10),in time1 varchar(10),in card_number1 varchar(10),in emp_number1 varchar(10),in gate_name1 varchar(20),in inorout1 varchar(5),in remark1 varchar(30))
+create procedure import_to_swipe(in date1 date,in time1 varchar(10),in card_number1 varchar(10),in emp_number1 varchar(10),in gate_name1 varchar(20),in inorout1 varchar(5),in remark1 varchar(30))
 begin
 
 	select emp_id into @new_emp_id from Employee where emp_number=emp_number1;
@@ -304,11 +305,35 @@ delimiter ;
 
 delimiter //
 #SET FOREIGN_KEY_CHECKS = 1;
-create procedure get_swipe_log(in emp_id1 int,in from_date varchar(20),in to_date varchar(20))
+create procedure get_swipe_log(in emp_id1 int,in date1 varchar(30))
 begin
-    select * from Main_swipe where emp_id=emp_id1 and date_log between from_date and to_date;
+    select * from Main_swipe where emp_id=emp_id1 and gate_id=1 and date_log=date1;
 end //
 delimiter ;
 drop procedure get_swipe_log;
-call get_swipe_log(1,"22/04/2019","30/04/2019");
+call get_swipe_log(1,"26/04/2019");
+
+delimiter //
+create procedure get_dates(in emp_id1 int,in from_date varchar(20),in to_date varchar(20))
+begin
+    select * from Main_swipe where emp_id=emp_id1 and gate_id=1 and date_log between from_date and to_date group by date_log;
+end //
+delimiter ;
+drop procedure get_dates;
+call get_dates(1,"26/04/2019","30/04/2019");
+
+
+delimiter //
+#SET FOREIGN_KEY_CHECKS = 1;
+create procedure get_last_dates_of_employee(in emp_id1 int, in limit1 int)
+begin
+    SELECT date_log FROM Main_swipe  where emp_id=emp_id1 and remarks="Successful"  group by date_log
+	ORDER BY log_id DESC
+	LIMIT limit1;
+end //
+delimiter ;
+
+
+call get_last_dates_of_employee(1,7);
+select * from Main_swipe;
 
