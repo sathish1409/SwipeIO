@@ -15,15 +15,21 @@ import { AddorremoveComponent } from '../../addorremove/addorremove.component';
 import { EditComponent } from '../../edit/edit.component';
 import {AddComponent} from '../../add/add.component'
 import {SettingsComponent} from '../../settings/settings.component';
-import {ImportComponent} from '../../import/import.component'
+import {ImportComponent} from '../../import/import.component';
+
+
+import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {
   MatButtonModule,
   MatInputModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
   MatRippleModule,
   MatFormFieldModule,
   MatTooltipModule,
-  MatSelectModule
+  MatSelectModule,
+  MAT_DATE_LOCALE
 } from '@angular/material';
 @NgModule({
   imports: [
@@ -36,7 +42,9 @@ import {
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDatepickerModule,MatNativeDateModule,
+    NgbDatepickerModule
   ],
   declarations: [
     DashboardComponent,
@@ -52,7 +60,10 @@ import {
     AddComponent,
     SettingsComponent,
     ImportComponent
-  ]
+  ],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+  ],
 })
 
 export class AdminLayoutModule {}

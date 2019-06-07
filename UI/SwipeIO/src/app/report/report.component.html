@@ -1,16 +1,14 @@
 <div class="main-content">
   <div class="container-fluid">
-      <h3>Employee Name : {{currentEmployee.emp_name}}</h3>
-      <h4>Employee ID : {{currentEmployee.emp_number}}</h4>
       <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="card card-stats">
-                  <div class="card-header card-header-success card-header-icon">
+                  <div class="card-header card-header-danger card-header-icon">
                       <div class="card-icon">
-                          <i class="material-icons">done</i>
+                          <i class="material-icons">account_circle</i>
                       </div>
-                      <p class="card-category">Present</p>
-                      <h3 class="card-title">23 Days</h3>
+                      <p class="card-category">{{currentEmployee.emp_number}}</p>
+                      <h3 class="card-title">{{currentEmployee.emp_name}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
@@ -22,12 +20,12 @@
           </div>
           <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="card card-stats">
-                  <div class="card-header card-header-danger card-header-icon">
+                  <div class="card-header card-header-info card-header-icon">
                       <div class="card-icon">
                           <i class="material-icons">clear</i>
                       </div>
-                      <p class="card-category">Absent</p>
-                      <h3 class="card-title">5 Days</h3>
+                      <p class="card-category">Present</p>
+                      <h3 class="card-title">23 Days of 30 Days</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
@@ -53,13 +51,39 @@
               </div>
           </div>
           
-      </div>
-      <button class="btn btn-primary" href="#pablo" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           Select By Month<i class="material-icons">arrow_drop_down</i>
-        </button>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" *ngFor="let month of months" href="#">{{month}}</a>
-        </div><br>
+    </div>
+
+    <form >
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="from" placeholder="From"
+                        (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+                    <mat-datepicker #from></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="to" placeholder="To"
+                           (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+                    <mat-datepicker #to></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-primary" href="#pablo" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Get Report
+                </button>
+            </div>
+      
+            <div class="example-events">
+                <div *ngFor="let e of events">{{e}}</div>
+            </div>
+        </div>
+    </form>
+    
+        
       <div class="row">
           <div class="col-md-12">
               <div class="card">

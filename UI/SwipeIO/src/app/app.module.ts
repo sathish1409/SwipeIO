@@ -1,17 +1,16 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { NgxUiLoaderModule, NgxUiLoaderConfig, POSITION, SPINNER, PB_DIRECTION } from  'ngx-ui-loader';
-import { ReactiveFormsModule }    from '@angular/forms';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers/fake-backend';
-
-
+import {MatDatepickerModule, MatInputModule,MatNativeDateModule} from '@angular/material';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
@@ -25,6 +24,7 @@ import { AlertService} from './_services/alert.service';
 import { AuthenticationService} from './_services/authentication.service';
 import {  EmployeeService } from './_services/Employee.service';
 import {  LogService } from './_services/Log.service';
+
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 
@@ -43,6 +43,8 @@ import { AddComponent } from './add/add.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ImportComponent } from './import/import.component';
 //import { EmployeereportComponent } from './Employeereport/Employeereport.component';
+
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "#00ACC1",
@@ -82,7 +84,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    NgDatepickerModule
     
   ],
   declarations: [

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from 'app/_models/Employee';
 import { EmployeeService } from 'app/_services/Employee.service';
+import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import { MatDatepickerInputEvent } from '@angular/material';
 
 @Component({
   selector: 'app-report',
@@ -8,11 +10,22 @@ import { EmployeeService } from 'app/_services/Employee.service';
   styleUrls: ['./report.component.scss']
 })
 export class ReportComponent implements OnInit {
+  hoveredDate: NgbDate;
+
+  fromDate: NgbDate;
+  toDate: NgbDate;
+
   currentEmployee : Employee;
   constructor( private EmployeeService:EmployeeService ) {
     this.currentEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
+  
+    
    }
+   events: string[] = [];
 
+   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+     this.events.push(`${type}: ${event.value}`);
+   }
   
   Logs=[
     {
@@ -49,7 +62,7 @@ export class ReportComponent implements OnInit {
     },
 
   ];
-  months=['April', 'May', 'June'];
+ 
   ngOnInit() {
   }
 

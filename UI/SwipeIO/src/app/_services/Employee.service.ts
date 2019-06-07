@@ -17,7 +17,7 @@ export class EmployeeService {
     }
 
     register(Employee: Employee) {
-        return this.http.post(`${environment.apiUrl}/Employee/register`, Employee);
+        return this.http.post(`${environment.apiUrl}/Employee/add`, Employee);
     }
 
     update(Employee: Employee) {

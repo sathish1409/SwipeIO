@@ -7,4 +7,5 @@ export class Employee {
     is_admin: boolean;
     is_contract:boolean;
     card_id:number;
+    card_number:string;
 }
