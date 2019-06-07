@@ -34,6 +34,7 @@ namespace SwipeIO_Web_API
         public string pass_word { get; set; }
         [NotMapped]
         public string Token { get; set; }
+        [NotMapped]
         public string card_number{ get; set; }
 
     }
@@ -66,9 +67,9 @@ namespace SwipeIO_Web_API
         [Key]
         public int log_id { get; set; }
 
-        public DataType date_log { get; set; }
-        public DateTime time_log { get; set; }
-        public string inorout { get; set; }
+        public DateTime date_log { get; set; }
+        public TimeSpan time_log { get; set; }
+        public bool inorout { get; set; }
         public int emp_id { get; set; }
         public int gate_id { get; set; }
         public int card_id { get; set; }
@@ -87,8 +88,8 @@ namespace SwipeIO_Web_API
     {
         public int emp_id { get; set; }
         public DateTime date { get; set; }
-        public DateTime in_time { get; set; }
-        public DateTime out_time { get; set; }
+        public TimeSpan in_time { get; set; }
+        public TimeSpan out_time { get; set; }
         public double hours_worked { get; set; }
 
     }
