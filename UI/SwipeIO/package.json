@@ -31,6 +31,7 @@
     "@angular/platform-server": "7.0.2",
     "@angular/router": "7.0.2",
     "@ng-bootstrap/ng-bootstrap": "^4.2.1",
+    "@syncfusion/ej2-angular-calendars": "^17.1.49",
     "ajv": "6.4.0",
     "arrive": "2.4.1",
     "bootstrap": "4.1.0",

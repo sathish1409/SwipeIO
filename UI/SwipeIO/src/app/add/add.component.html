@@ -10,7 +10,7 @@
                         <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <mat-form-field class="example-full-width">
+                                   <mat-form-field class="example-full-width">
                                       <input  matInput type="text" formControlName="name" class="form-control" placeholder="Employee Name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
                                       <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                                           <div *ngIf="f.name.errors.required">Name is required</div>

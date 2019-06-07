@@ -24,8 +24,7 @@ import { AlertService} from './_services/alert.service';
 import { AuthenticationService} from './_services/authentication.service';
 import {  EmployeeService } from './_services/Employee.service';
 import {  LogService } from './_services/Log.service';
-
-
+import{ReportService} from './_services/Report.service'
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { TableListComponent } from './table-list/table-list.component';
@@ -106,6 +105,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     LogService,
+    ReportService
     // provider used to create fake backend
     //fakeBackendProvider
   ],
