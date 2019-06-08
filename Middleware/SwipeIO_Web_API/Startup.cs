@@ -70,7 +70,7 @@ namespace SwipeIO_Web_API
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ILogService, LogService>();
             services.AddScoped<IReportService, ReportService>();
-
+            services.AddScoped<ISettingService, SettingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

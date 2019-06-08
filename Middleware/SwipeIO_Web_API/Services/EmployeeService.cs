@@ -33,9 +33,6 @@ namespace SwipeIO_Web_API.Services
         public Employee Authenticate(string email, string pass_word)
         {
             var employeeArr = Emp.Employee.FromSql("call  Validate(@p0,@p1);", email,pass_word);
-
-            
-
             // return null if user not found
             if (employeeArr.Count()<1)
                 return null;
@@ -64,15 +61,14 @@ namespace SwipeIO_Web_API.Services
             return employee;
         }
         public int Add(Employee emp) {
-
             //call insert_employee('000000C1','Sathish','sathish@gmail.com','123456',1,0,now(),1);
-            int isDone = Emp.Database.ExecuteSqlCommand("call insert_employee({0},{1},{2},{3},{4},{5},now(),{6});", emp.emp_number,emp.emp_name,emp.email,emp.pass_word,emp.is_admin,emp.is_contract,emp.card_number);
+            int isDone = Emp.Database.ExecuteSqlCommand("call insert_employee({0},{1},{2},{3},{4},{5},{6});", emp.emp_number,emp.emp_name,emp.email,emp.pass_word,emp.is_admin,emp.is_contract,emp.card_number);
             return isDone;
         }
         public IEnumerable<Employee> GetAll()
         {
             // return users without passwords 
-            var _employees=Emp.Employee.FromSql("call get_all_employee;");
+            Employee[] _employees = Emp.Employee.FromSql("call get_employees();").ToArray();
             return _employees;
         }
 

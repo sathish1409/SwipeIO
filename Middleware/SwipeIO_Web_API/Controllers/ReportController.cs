@@ -9,18 +9,24 @@ using SwipeIO_Web_API.Services;
 
 namespace SwipeIO_Web_API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReportController : ControllerBase
     {
         private IReportService _reportService;
 
+
         public ReportController(IReportService reportService)
         {
             _reportService = reportService;
         }
 
+
+
+
+
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("get_report")]
         public IActionResult Add([FromBody]ReportParameters reportParameters)
         {
@@ -33,14 +39,17 @@ namespace SwipeIO_Web_API.Controllers
         }
 
 
+
+
+
+
+
         // GET: api/Report
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
-
-
 
         // POST: api/Report
         [HttpPost]

@@ -46,7 +46,7 @@ namespace SwipeIO_Web_API.Controllers
         }
 
         // GET: api/Log/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";

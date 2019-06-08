@@ -31,18 +31,20 @@ namespace SwipeIO_Web_API.Services
             for (var i = 0; i < dates.Length; i++)
             {
                 report[i] = new Report();
-                var hours = 0.0;
+                TimeSpan hours=new TimeSpan();
                 RefinedLog[] data = Emp.RefinedLog.FromSql("call get_swipe_log({0},{1});", reportParameters.emp_id, dates.ElementAt(i).date_log).ToArray();
                 report[i].emp_id = reportParameters.emp_id;
                 report[i].date = DateTime.Parse(dates.ElementAt(i).date_log.ToString());
                 report[i].in_time = TimeSpan.Parse(data[0].time_log.ToString());
-                report[i].out_time = TimeSpan.Parse(data[data.Length - 1].time_log.ToString());
-                for (var j = 0; j < data.Length; j = j + 2)
+                var padd = (data.Length % 2 == 0) ? 0 : 1;
+                report[i].out_time = TimeSpan.Parse(data[data.Length -padd-1].time_log.ToString());
+                report[i].hours_inside_office =report[i].out_time.Subtract(report[i].in_time);
+                for (var j = 0; j < data.Length-padd; j = j + 2)
                 {
-                    TimeSpan duration = DateTime.Parse(data[j].time_log.ToString()).Subtract(DateTime.Parse(data[j + 1].time_log.ToString()));
-                    hours += Convert.ToSingle(duration.TotalHours);
+                    TimeSpan duration = TimeSpan.Parse(data[j+1].time_log.ToString()).Subtract(TimeSpan.Parse(data[j].time_log.ToString()));
+                    hours =hours.Add(duration);
                 }
-                report[i].hours_worked = Math.Abs(hours);
+                report[i].hours_worked = hours;
             }
             return report;
         }

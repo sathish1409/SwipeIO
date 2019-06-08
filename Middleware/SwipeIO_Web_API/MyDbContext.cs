@@ -14,6 +14,9 @@ namespace SwipeIO_Web_API
     {
         public DbSet<Employee> Employee { get; set; }
         public DbSet<RefinedLog> RefinedLog { get; set; }
+        public DbSet<Card> Card { get; set; }
+        public DbSet<Gate> Gate { get; set; }
+        public DbSet<Leave> Leave { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -84,13 +87,35 @@ namespace SwipeIO_Web_API
         public string to { get; set; }
         
     }
+    public class Card
+    {
+        [Key]
+        public int card_id { get; set; }
+        public string card_number { get; set; }
+
+    }
+    public class Leave
+    {
+        [Key]
+        public int leave_id { get; set; }
+        public string leave_name { get; set; }
+
+    }
+    public class Gate
+    {
+        [Key]
+        public int gate_id { get; set; }
+        public string gate_name { get; set; }
+
+    }
     public class Report
     {
         public int emp_id { get; set; }
         public DateTime date { get; set; }
         public TimeSpan in_time { get; set; }
         public TimeSpan out_time { get; set; }
-        public double hours_worked { get; set; }
+        public TimeSpan hours_worked { get; set; }
+        public TimeSpan hours_inside_office { get; set; }
 
     }
 

@@ -49,15 +49,15 @@ namespace SwipeIO_Web_API.Controllers
             if (employee == 0)
                 return BadRequest(new { message = "Error" });
 
-            return Ok(employee);
+            return Ok();
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users = _employeeService.GetAll();
-            return Ok(users);
+            var employees = _employeeService.GetAll();
+            return Ok(employees);
         }
 
         [HttpGet("{id}")]
