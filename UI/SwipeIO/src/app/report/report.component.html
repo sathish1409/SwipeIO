@@ -1,6 +1,51 @@
 <div class="main-content">
   <div class="container-fluid">
-      <div class="row">
+      
+
+ <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Filter</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="filterForm" (submit)="onSubmit()">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field>
+                                        <input  formControlName="from" matInput [matDatepicker]="from" placeholder="From"
+                                            (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)" [ngClass]="{ 'is-invalid': submitted && f.from.errors }">
+                                        <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+                                        <mat-datepicker #from></mat-datepicker>
+                                        <div *ngIf="submitted && f.from.errors" class="invalid-feedback">
+                                            <div *ngIf="f.from.errors.required">Please Select From Date</div>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field>
+                                        <input  formControlName="to" matInput [matDatepicker]="to" placeholder="To"
+                                            (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)" [ngClass]="{ 'is-invalid': submitted && f.to.errors }">
+                                        <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+                                        <mat-datepicker #to></mat-datepicker>
+                                        <div *ngIf="submitted && f.to.errors" class="invalid-feedback">
+                                            <div *ngIf="f.to.errors.required">Please Select To Date</div>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary" type="submit">
+                                        Get Report
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>      
+            
+            </div>    </div>
+        <div *ngIf='report'  class="row">
           <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="card card-stats">
                   <div class="card-header card-header-danger card-header-icon">
@@ -13,7 +58,7 @@
                   <div class="card-footer">
                       <div class="stats">
                           
-                          <p>Apr 2019</p>
+                          <p>{{currentEmployee.email}}</p>
                       </div>
                   </div>
               </div>
@@ -25,11 +70,11 @@
                           <i class="material-icons">clear</i>
                       </div>
                       <p class="card-category">Present</p>
-                      <h3 class="card-title">23 Days of 30 Days</h3>
+                      <h3 class="card-title">{{present}} Days</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
-                          <p>Apr 2019</p>
+                          <p>{{Params.from | date: 'd/M/yyyy'}} - {{Params.to | date: 'd/M/yyyy'}}</p>
                       </div>
                   </div>
               </div>
@@ -40,53 +85,20 @@
                       <div class="card-icon">
                         <i class="material-icons">warning</i>
                       </div>
-                      <p class="card-category">Default Days</p>
-                      <h3 class="card-title">8</h3>
+                      <p class="card-category">Default</p>
+                      <h3 class="card-title">{{defaultDays}} Days</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
-                          <p>Apr 2019</p>
+                          <p>{{Params.from | date: 'd/M/yyyy'}} - {{Params.to | date: 'd/M/yyyy'}}</p>
                       </div>
                   </div>
               </div>
           </div>
           
     </div>
-
-    <form [formGroup]="filterForm" (submit)="onSubmit()">
-        <div class="row">
-            <div class="col-md-4">
-                <mat-form-field>
-                    <input  formControlName="from" matInput [matDatepicker]="from" placeholder="From"
-                        (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)" [ngClass]="{ 'is-invalid': submitted && f.from.errors }">
-                    <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
-                    <mat-datepicker #from></mat-datepicker>
-                    <div *ngIf="submitted && f.from.errors" class="invalid-feedback">
-                        <div *ngIf="f.from.errors.required">Please Select From Date</div>
-                    </div>
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field>
-                    <input  formControlName="to" matInput [matDatepicker]="to" placeholder="To"
-                           (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)" [ngClass]="{ 'is-invalid': submitted && f.to.errors }">
-                    <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
-                    <mat-datepicker #to></mat-datepicker>
-                    <div *ngIf="submitted && f.to.errors" class="invalid-feedback">
-                        <div *ngIf="f.to.errors.required">Please Select To Date</div>
-                    </div>
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <button class="btn btn-primary" type="submit">
-                    Get Report
-                </button>
-            </div>
-        </div>
-    </form>
-    
         
-      <div class="row">
+      <div *ngIf='report' class="row">
           <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-danger">
@@ -94,7 +106,7 @@
 
                       <p class="card-category"></p>
                   </div>
-                  <div *ngIf='report' class="card-body">
+                  <div  class="card-body">
                       <div class="table-responsive">
                           <table class="table">
                               <thead class=" text-primary">
@@ -107,6 +119,9 @@
                                 <th>
                                    Out
                                 </th>
+                                <th>
+                                      Hours Inside
+                                  </th>
                                   <th>
                                       Hours Worked
                                   </th>
@@ -121,10 +136,13 @@
                                         {{report_rec.in_time}}
                                     </td>
                                     <td>
-                                        {{report_rec.out_time}}
+                                            {{report_rec.out_time}}
                                     </td>
-                                      <td class="text-primary">
-                                          {{report_rec.hours_worked | number:'2.2-2'}}
+                                    <td class="text-info">
+                                          {{report_rec.hours_inside_office}}
+                                      </td>
+                                      <td [ngClass]="{'text-danger':isNotGreater(report_rec.hours_worked),'text-success':!isNotGreater(report_rec.hours_worked)}">
+                                          {{report_rec.hours_worked}}
                                       </td>
                                   </tr>                                
                               </tbody>

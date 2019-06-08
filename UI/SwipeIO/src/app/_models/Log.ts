@@ -15,3 +15,7 @@ export class Log {
     Remark:string;
 
 }
+export class Cards {
+ card_id:number;
+ card_number:string;
+}

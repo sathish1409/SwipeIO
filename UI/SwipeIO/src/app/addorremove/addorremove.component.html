@@ -1,7 +1,7 @@
 <div class="main-content">
     <div class="container-fluid">
             <button routerLink="/add" class="btn btn-success"><span class="material-icons">person_add</span> Add a new Employee</button>
-        <div class="row">
+        <div *ngIf="Employees" class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
@@ -32,7 +32,7 @@
                                 <tbody>
                                     <tr *ngFor="let employee of Employees">
                                         <td>
-                                            {{employee.emp_id}}
+                                            {{employee.emp_number}}
                                         </td>
                                         <td>
                                             {{employee.emp_name}}

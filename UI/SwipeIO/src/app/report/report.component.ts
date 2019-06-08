@@ -8,6 +8,7 @@ import { first } from 'rxjs/operators';
 import { from } from 'rxjs';
 import { ReportParams, Report } from 'app/_models/Report';
 import{ReportService} from '../_services/Report.service'
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -22,7 +23,11 @@ export class ReportComponent implements OnInit {
   toDate: NgbDate;
  Params:ReportParams;
   currentEmployee : Employee;
-  constructor( private EmployeeService:EmployeeService,  private reportService:ReportService,private formBuilder: FormBuilder, ) {
+  present:number;
+  defaultDays=0;
+  threshold=9;
+
+  constructor(private ngxService: NgxUiLoaderService, private EmployeeService:EmployeeService,  private reportService:ReportService,private formBuilder: FormBuilder, ) {
     this.currentEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
    }
    events: string[] = [];
@@ -31,11 +36,14 @@ export class ReportComponent implements OnInit {
      this.events.push(`${type}: ${event.value}`);
    }
   
-  report:Report[]=[];
+  report:Report[];
+  
   get f() { return this.filterForm.controls; }
 
   onSubmit() {
+    this.ngxService.start();
       this.submitted = true;
+      this.loading = true; 
       
       // stop here if form is invalid
       if (this.filterForm.invalid) {
@@ -48,18 +56,29 @@ export class ReportComponent implements OnInit {
       }
       this.reportService.getReport(this.Params).pipe(first()).subscribe(report_in => { 
         this.report = report_in; 
-        console.log(this.report);
+        this.present=this.report.length;
+        this.report.forEach(row => {
+          if(this.isNotGreater(row.hours_worked)){
+            this.defaultDays+=1;
+          }
+        });
     });
-      console.log(this.Params)
-      this.loading = true;
 
-      
+      this.ngxService.stop();   
   }
+  isNotGreater(n){
+    return parseInt(n)<this.threshold? 1:0;
+  }
+
+
+
   ngOnInit() {
+    this.ngxService.start();   
     this.filterForm = this.formBuilder.group({
       from:  ['', Validators.required],
       to:  ['', Validators.required],
   });
+  this.ngxService.stop();   
   }
 
 }
