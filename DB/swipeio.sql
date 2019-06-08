@@ -17,6 +17,8 @@
 ##																																			##|
 ##############################################################################################################################################|
 
+SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS = 1;
 
 create database swipeio;
 use swipeio;
@@ -30,275 +32,666 @@ drop table if exists Leave_log;
 drop table incharge_log;
 
 
-################# Creation of tables #######################
+############################################################################################################
+########################################## Creation of tables ##############################################
+############################################################################################################
 
-create table Cards(card_id int primary key not null auto_increment,card_number varchar(8) unique,updated_on datetime,created_on datetime);
-create table Employee(emp_id int primary key NOT NULL auto_increment,emp_number varchar(10) unique not null,emp_name varchar(25),email varchar(50),card_id int,is_admin bit,is_contract bit,pass_word varchar(20),created_on datetime,updated_on datetime,is_delete bit default 0,foreign key (card_id) references cards(card_id));
-create table Gate(gate_id int primary key not null auto_increment,gate_name varchar(20),updated_on datetime,created_on datetime);
-create table Main_swipe(log_id int primary key not null auto_increment ,date_log date,time_log time,inorout bit,emp_id int,gate_id int,card_id int,remarks varchar(50),foreign key (emp_id) references Employee(emp_id),foreign key (gate_id) references Gate(gate_id),foreign key (card_id) references Cards(card_id));
-create table Temp_card_log(entry_id int primary key auto_increment not null,name_of_contracter varchar(25),date_of_log varchar(10),emp_id int,card_id int,foreign key (emp_id) references Employee(emp_id),foreign key (card_id) references cards(card_id));
-create table Leave_description(leave_id int primary key not null auto_increment,leave_name varchar(25),updated_on datetime,created_on datetime);
-create table Leave_log(leave_log_id int primary key not null auto_increment,from_date varchar(10),to_date varchar(10),emp_id int,leave_id int,foreign key (emp_id) references Employee(emp_id),foreign key (leave_id) references Leave_description(leave_id));
-create table Incharge_log(incharge_log_id int primary key not null auto_increment,emp_id int,incharge_id int);
+create table Cards	(
+						card_id int primary key not null auto_increment,
+                        card_number varchar(8) unique,
+                        updated_on datetime,
+                        created_on datetime,
+                        is_delete bit default 0
+					);
+                    
+create table Employee	(
+							emp_id int primary key NOT NULL auto_increment,
+                            emp_number varchar(10) unique not null,
+                            emp_name varchar(25),
+                            email varchar(50),
+                            card_id int,
+                            is_admin bit,
+                            is_contract bit,
+                            pass_word varchar(20),
+                            created_on datetime,
+                            updated_on datetime,
+                            is_delete bit default 0,
+                            foreign key (card_id) references cards(card_id)
+						);
+                        
+create table Gate	(
+						gate_id int primary key not null auto_increment,
+                        gate_name varchar(20),
+                        updated_on datetime,
+                        created_on datetime,
+                        is_delete bit default 0
+					);
+                    
+create table Main_swipe	(
+							log_id int primary key not null auto_increment ,
+                            date_log date,
+                            time_log time,
+                            inorout bit,
+                            emp_id int,
+                            gate_id int,
+                            card_id int,
+                            remarks varchar(50),
+                            foreign key (emp_id) references Employee(emp_id),
+                            foreign key (gate_id) references Gate(gate_id),
+                            foreign key (card_id) references Cards(card_id)
+						);
+                        
+create table Temp_card_log	(
+								temp_card_log_id int primary key auto_increment not null,
+                                date_of_usage date,
+                                emp_id int,
+                                card_id int,
+                                foreign key (emp_id) references Employee(emp_id),
+                                foreign key (card_id) references cards(card_id)
+							);
+                            
+create table Leave_description	(
+									leave_id int primary key not null auto_increment,
+									leave_name varchar(25),
+                                    updated_on datetime,
+                                    created_on datetime,
+									is_delete bit default 0
+								);
+                                
+create table Leave_log	(	
+							leave_log_id int primary key not null auto_increment,
+                            from_date date,
+                            to_date date,
+                            emp_id int,
+                            leave_id int,
+                            foreign key (emp_id) references Employee(emp_id),
+                            foreign key (leave_id) references Leave_description(leave_id)
+						);
+                        
+create table Incharge_log	(
+								incharge_log_id int primary key not null auto_increment,
+                                emp_id int,
+                                incharge_id int
+							);
 
-################################## Cards Stored Procedures ###############################
 
+
+
+############################################################################################################
+######################################## Cards Stored Procedures ###########################################
+############################################################################################################
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a Card <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+drop procedure insert_cards;
 delimiter //
-create procedure insert_cards(in card_number1 varchar(8),in created_on1 datetime)
-begin
-insert into Cards (card_number,created_on) values (card_number1,created_on1);
-select * from Cards;
-end//
+create procedure insert_cards	(
+									in card_number1 varchar(8)
+								)
+	begin
+		insert into Cards (card_number,created_on) 
+					values (card_number1,now());
+	end //
 delimiter ;
 
+#----------------- <Calls> -----------------#
+call insert_cards('11111111');
+call insert_cards('00103691');
+call insert_cards('00105746');
+call insert_cards('00110554');
+call insert_cards('00113084');
+call insert_cards('00113577');
+call insert_cards('00116301');
+call insert_cards('00116726');
+call insert_cards('00116959');
+call insert_cards('00121938');
+call insert_cards('00121971');
+call insert_cards('00125838');
+call insert_cards('00128341');
+call insert_cards('00129692');
+call insert_cards('00133243');
+call insert_cards('00133942');
+call insert_cards('00136154');
+call insert_cards('00136472');
+call insert_cards('03026090');
+call insert_cards('03217728');
+call insert_cards('03218772');
+call insert_cards('03223979');
+call insert_cards('03224988');
+call insert_cards('03225867');
+call insert_cards('04376776');
+call insert_cards('04377436');
+call insert_cards('05437274');
+call insert_cards('05438436');
+call insert_cards('05438564');
+call insert_cards('05473558');
+call insert_cards('07686186');
+call insert_cards('07688324');
+call insert_cards('07689910');
+call insert_cards('07697131');
+call insert_cards('07697132');
+call insert_cards('07697830');
+call insert_cards('07698959');
+call insert_cards('07699042');
+call insert_cards('07700287');
+call insert_cards('07704451');
+call insert_cards('07717440');
+call insert_cards('07718314');
+call insert_cards('07732879');
+call insert_cards('07733912');
+call insert_cards('07739921');
+call insert_cards('07740867');
+call insert_cards('08849623');
+call insert_cards('08851276');
+call insert_cards('08853219');
+call insert_cards('08857043');
+call insert_cards('08874664');
+call insert_cards('08875889');
+call insert_cards('08875905');
+call insert_cards('08876864');
+call insert_cards('08876880');
+call insert_cards('08939198');
+call insert_cards('08940071');
+call insert_cards('08948409');
+call insert_cards('08951495');
+call insert_cards('08952279');
+call insert_cards('08953435');
+call insert_cards('08957086');
+call insert_cards('08957921');
+
+#----------------- </Calls> -----------------#
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete a Card <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+
+#drop procedure delete_cards;
 delimiter //
-create procedure delete_cards(in card_id1 int)
-begin
-delete from Cards where card_id=card_id1;
-select * from Cards;
-end//
+create procedure delete_cards	(
+									in card_id1 int
+								)
+	begin
+		UPDATE Cards SET is_delete=1 where card_id=card_id1;
+	end //
 delimiter ;
 
+#----------------- <Calls> -----------------#
+#call delete_cards(64);
+#----------------- </Calls> -----------------#
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get all Cards <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure get_cards
+delimiter //
+create procedure get_cards()
+	begin
+		select * from Cards where is_delete=0;
+	end//
+delimiter ;
+#----------------- <Calls> -----------------#
+call get_cards();
+#----------------- </Calls> -----------------#
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update a Card <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure update_card;
 delimiter //
 create procedure update_card(in card_id1 int,in card_number1 varchar(8))
-begin
-UPDATE Cards SET card_number=card_number1,updated_on=now() where card_id=card_id1;
-select * from Cards;
-end//
+	begin
+		UPDATE Cards SET card_number=card_number1,updated_on=now() where card_id=card_id1;
+	end //
 delimiter ;
 
-call insert_cards('00131006',now());
-call insert_cards('00103691',now());
-call insert_cards('00105746',now());
-call insert_cards('00110554',now());
-call insert_cards('00113084',now());
-call insert_cards('00113577',now());
-call insert_cards('00116301',now());
-call insert_cards('00116726',now());
-call insert_cards('00116959',now());
-call insert_cards('00121938',now());
-call insert_cards('00121971',now());
-call insert_cards('00125838',now());
-call insert_cards('00128341',now());
-call insert_cards('00129692',now());
-call insert_cards('00131006',now());
-call insert_cards('00133243',now());
-call insert_cards('00133942',now());
-call insert_cards('00136154',now());
-call insert_cards('00136472',now());
-call insert_cards('03026090',now());
-call insert_cards('03217728',now());
-call insert_cards('03218772',now());
-call insert_cards('03223979',now());
-call insert_cards('03224988',now());
-call insert_cards('03225867',now());
-call insert_cards('04376776',now());
-call insert_cards('04377436',now());
-call insert_cards('05437274',now());
-call insert_cards('05438436',now());
-call insert_cards('05438564',now());
-call insert_cards('05473558',now());
-call insert_cards('07686186',now());
-call insert_cards('07688324',now());
-call insert_cards('07689910',now());
-call insert_cards('07697131',now());
-call insert_cards('07697132',now());
-call insert_cards('07697830',now());
-call insert_cards('07698959',now());
-call insert_cards('07699042',now());
-call insert_cards('07700287',now());
-call insert_cards('07704451',now());
-call insert_cards('07717440',now());
-call insert_cards('07718314',now());
-call insert_cards('07732879',now());
-call insert_cards('07733912',now());
-call insert_cards('07739921',now());
-call insert_cards('07740867',now());
-call insert_cards('08849623',now());
-call insert_cards('08851276',now());
-call insert_cards('08853219',now());
-call insert_cards('08857043',now());
-call insert_cards('08874664',now());
-call insert_cards('08875889',now());
-call insert_cards('08875905',now());
-call insert_cards('08876864',now());
-call insert_cards('08876880',now());
-call insert_cards('08939198',now());
-call insert_cards('08940071',now());
-call insert_cards('08948409',now());
-call insert_cards('08951495',now());
-call insert_cards('08952279',now());
-call insert_cards('08953435',now());
-call insert_cards('08957086',now());
-call insert_cards('08957921',now());
+#----------------- <Calls> -----------------#
+#call update_card(65,'01010101');
+#----------------- </Calls> -----------------#
 
-#call update_card(1,'12345678');
 
-########################### Gate Starts #########################
 
+
+
+############################################################################################################
+######################################## Gate Stored Procedures ############################################
+############################################################################################################
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a gate <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+
+#drop procedure insert_gate;
 delimiter //
-create procedure insert_gate(in gate_name1 varchar(20),in created_on1 datetime)
-begin
-insert into Gate (gate_name,created_on) values (gate_name1,created_on1);
-select * from Gate;
-end//
+create procedure insert_gate	(
+									in gate_name1 varchar(20),
+                                    in created_on1 datetime
+								)
+	begin
+		insert into Gate (gate_name,created_on) values (gate_name1,created_on1);
+	end //
 delimiter ;
 
-delimiter //
-create procedure update_gate(in gate_id1 int,in gate_name1 varchar(10))
-begin
-update Gate set gate_name=gate_name1,updated_on=now() where gate_id=gate_id1;
-select * from Gate;
-end//
-delimiter ;
-
-#call update_gate(1,'enter');
+#----------------- <Calls> -----------------#
 call insert_gate('Entrance',now());
 call insert_gate('Server Room',now());
+#----------------- </Calls> -----------------#
 
-########################### Leave Description ############################
 
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete a gate <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure delete_gate;
 delimiter //
-create procedure insert_leave_description(in leave_name varchar(25),in created datetime)
-begin
-insert into Leave_description (leave_name,created_on) values (leave_name,created);
-select * from Leave_description;
-end //
+create procedure delete_gate	(
+									in gate_id1 int
+								)
+	begin
+		update Gate set is_delete=1 where gate_id=gate_id1;
+	end //
+delimiter ;
+#----------------- <Calls> -----------------#
+#call delete_gate(1);
+#----------------- </Calls> -----------------#
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get All Gates <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure get_gates;
+delimiter //
+create procedure get_gates	()
+	begin
+		select * from gate where is_delete=0;
+	end //
+delimiter ;
+#----------------- <Calls> -----------------#
+call get_gates();
+#----------------- </Calls> -----------------#
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update a Gate<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure update_gate;
+delimiter //
+create procedure update_gate	(	
+									in gate_id1 int,
+                                    in gate_name1 varchar(10)
+								)
+	begin
+		update Gate set gate_name=gate_name1,updated_on=now() where gate_id=gate_id1;
+	end//
 delimiter ;
 
+#----------------- <Calls> -----------------#
+#call update_gate(3,'Pantry');
+#----------------- </Calls> -----------------#
+
+
+
+############################################################################################################
+################################# Leave Description Stored Procedures ######################################
+############################################################################################################
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a Leave Descripton <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+
+#drop procedure insert_leave_description;
 delimiter //
-create procedure update_leave_description(in leave_id1 int,in leave_name1 varchar(10))
-begin
-update Leave_description set leave_name=leave_name1,updated_on=now() where leave_id=leave_id1;
-select * from Leave_description;
-end//
+create procedure insert_leave_description	(
+												in leave_name1 varchar(25)
+											)
+	begin
+		insert into Leave_description (leave_name,created_on) values (leave_name1,now());
+	end //
 delimiter ;
+
+#----------------- <Calls> -----------------#
+call insert_leave_description('Casual');
+call insert_leave_description('Privillage');
+call insert_leave_description('Loss of Pay');
+call insert_leave_description('Work From Home');
+call insert_leave_description('Gonna be deleted');
+#----------------- </Calls> -----------------#
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete a Leave Descripton <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure delete_leave_description;
+delimiter //
+create procedure delete_leave_description	(
+												in leave_id1 int
+											)
+	begin
+		update Leave_description set is_delete=1 where leave_id=leave_id1;
+	end //
+delimiter ;
+#----------------- <Calls> -----------------#
+call delete_leave_description(5);
+#----------------- </Calls> -----------------#
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get All Leave Descriptons <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure get_leave_descriptions	;
+delimiter //
+create procedure get_leave_descriptions	()
+	begin
+		select * from Leave_description where is_delete=0;
+	end //
+delimiter ;
+#----------------- <Calls> -----------------#
+call get_leave_descriptions();
+#----------------- </Calls> -----------------#
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update a Leave Descripton <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure update_leave_description;
+delimiter //
+create procedure update_leave_description	(
+												in leave_id1 int,
+												in leave_name1 varchar(25)
+											)
+	begin
+		update Leave_description set leave_name=leave_name1,updated_on=now() where leave_id=leave_id1;
+	end//
+delimiter ;
+
+#----------------- <Calls> -----------------#
 #call update_leave_description(1,'privilege');
+#----------------- </Calls> -----------------#
 
-call insert_leave_description('casual',now());
-call insert_leave_description('privillage',now());
-call insert_leave_description('lose of pay',now());
-call insert_leave_description('work from home',now());
 
-########################### Employee #####################################
 
+############################################################################################################
+###################################### Employee Stored Procedures ##########################################
+############################################################################################################
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Insert an Employee  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+
+
+#drop procedure insert_employee;
 delimiter //
-create procedure insert_employee(in emp_number1 varchar(10),in emp_name1 varchar(25),in email1 varchar(50),in pass_word1 varchar(20),in is_admin1 bit,in is_contract1 bit,in created_on1 datetime, in card_id1 varchar(20))
-begin
-select card_id into @new_card_id from Cards where card_number=card_id1;
-insert into Employee (emp_number,emp_name,email,pass_word,is_contract,is_admin,created_on, card_id) values(emp_number1,emp_name1,email1,pass_word1,is_contract1,is_admin1,created_on1,@new_card_id); 
-select * from Employee;
-end //
+create procedure insert_employee(	
+									in emp_number1 varchar(10),
+									in emp_name1 varchar(25),
+                                    in email1 varchar(50),
+                                    in pass_word1 varchar(20),
+                                    in is_admin1 bit,
+                                    in is_contract1 bit,
+                                    in card_id1 varchar(20)
+								)
+	begin
+		select card_id 	into @new_card_id 
+						from Cards where card_number=card_id1;
+    
+	insert into Employee	(
+								emp_number,
+                                emp_name,
+                                email,
+                                pass_word,
+                                is_contract,
+                                is_admin,
+                                created_on,
+                                card_id
+							) 
+				values		(
+								emp_number1,
+                                emp_name1,
+                                email1,
+                                pass_word1,
+                                is_contract1,
+                                is_admin1,
+                                now(),
+                                @new_card_id
+							); 
+	end //
 delimiter ;
-call insert_employee('000000C2','Kavi','kavi@gmail.com','123456',1,0,now(),'00129692');
-drop procedure insert_employee;
+
+#----------------- <Calls> -----------------#
+#call insert_employee('000000C4','Manimozhiyal','mani@gmail.com','123456',0,0,'08876880');
+#----------------- </Calls> -----------------#
+
+
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Delete an Employee  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+
+
+#drop procedure delete_employee;
 delimiter //
-create procedure update_employee(in emp_number1 varchar(10),in emp_name1 varchar(25), in email1 varchar(25), in is_admin1 bit, in is_contract1 bit,in pass_word1 varchar(20))
-begin
-update Employee set emp_name=emp_name1,email=email1, is_admin=is_admin1,is_contract=is_contract1,updated_on=now(),pass_word=pass_word1 where emp_number=emp_number1;
-select * from Employee;
-end //
+create procedure delete_employee	(
+										in emp_id1 int
+									)
+	begin
+		update Employee set is_delete=1 where emp_id=emp_id1;
+	end //
 delimiter ;
 
+#----------------- <Calls> -----------------#
+#call delete_employee(2);
+#----------------- </Calls> -----------------#
+
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get All Employees <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+drop procedure get_employees;
 delimiter //
-create procedure delete_employee(in emp_id1 int)
-begin
-update Employee set is_delete=1 where emp_id=emp_id1;
-select * from Employee;
-end //
+create procedure get_employees()
+	begin
+		select * from Employee where is_delete=0;
+	end //
 delimiter ;
-#call delete_employee(3);
 
-#call update_employee('1234','Sathish','sathish@cg.com',1,1,'dert');
+#----------------- <Calls> -----------------#
+call get_employees;
+#----------------- </Calls> -----------------#
 
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update an Employee <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure update_employee;
 delimiter //
-create procedure total_employees()
-begin
-select count(*) from Employee;
-end //
+create procedure update_employee	(	
+										in emp_id1 int,
+										in emp_number1 varchar(10),
+										in emp_name1 varchar(25),
+										in email1 varchar(50),
+										in pass_word1 varchar(20),
+										in is_admin1 bit,
+										in is_contract1 bit,
+										in card_id1 varchar(20)
+									)
+	begin
+		select card_id 	into @new_card_id 
+						from Cards where card_number=card_id1;
+                        
+		update Employee set 
+								emp_number=emp_number1,
+                                emp_name=emp_name1,
+								email=email1, 
+								pass_word=pass_word1,
+                                is_admin=is_admin1,
+                                is_contract=is_contract1,
+                                card_id=@new_card_id,
+                                updated_on=now()
+						where 
+								emp_id=emp_id1;
+	end //
 delimiter ;
-#call total_employees();
 
+#----------------- <Calls> -----------------#
+#call update_employee(5,'000000C5','Mani','mani@gmail.com',123456,1,1,'05438564');
+#----------------- </Calls> -----------------#
+
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Validate an Employee <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 delimiter //
-create procedure get_all_employee()
-begin
-select * from Employee where is_delete=0;
-end //
+	create procedure Validate(in email1 varchar(50),in pass_word1 varchar(10))
+	begin
+		select * from Employee where email=email1 and pass_word=pass_word1;
+	end//
 delimiter ;
-call get_all_employee;
 
-
-delimiter //
-create procedure Validate(in email1 varchar(50),in pass_word1 varchar(10))
-begin
-select * from Employee where email=email1 and pass_word=pass_word1;
-end//
-delimiter ;
+#----------------- <Calls> -----------------#
 #call Validate('sathish@gmail.com','123456');
+#----------------- </Calls> ----------------#
 
 
-SET FOREIGN_KEY_CHECKS = 0;
-SET FOREIGN_KEY_CHECKS = 1;
 
-########################### Leave Log ##################################
+
+
+############################################################################################################
+###################################### Leave Log Stored Procedures #########################################
+############################################################################################################
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a leave log <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure insert_leave_log;
 delimiter //
-create procedure insert_leave_log(in from_date1 varchar(10),in to_date1 varchar(10),in emp_id1 int,in leave_id1 int)
-begin
-insert into Leave_log (from_date,to_date,emp_id,leave_id) values (from_date1,to_date1,emp_id1,leave_id1);
+create procedure insert_leave_log	(
+										in from_date1 date,
+										in to_date1 date,
+                                        in emp_id1 int,
+                                        in leave_id1 int
+									)
+	begin
+		insert into Leave_log	(
+									from_date,
+                                    to_date,
+                                    emp_id,
+                                    leave_id
+								) 
+						values 	(
+									from_date1,
+                                    to_date1,
+                                    emp_id1,
+                                    leave_id1
+								);
+	end //
+delimiter ;
+
+#----------------- <Calls> -----------------#
+call insert_leave_log('2019/5/6','2019/5/8',1,1);
+#----------------- </Calls> -----------------#
+
 select * from Leave_log;
-end //
-delimiter ;
-SET FOREIGN_KEY_CHECKS = 0;
-SET FOREIGN_KEY_CHECKS = 1;
-call insert_leave_log('23-06-2019','23-06-2019',1,1);
 
-########################## Temp Card Log ################################
 
+
+
+############################################################################################################
+#################################### Temp Card Log Stored Procedures #######################################
+############################################################################################################
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a temp card log <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure insert_temp_card_log;
 delimiter //
-create procedure insert_temp_card_log(in name_of_contracter1 varchar(25),in log_date1 varchar(10),in emp_id1 int(11),card_id1 int(11))
-begin
-insert into Temp_card_log (name_of_contracter,date_of_log,emp_id,card_id) values (name_of_contracter1,log_date1,emp_id1,card_id1);
-select * from Temp_card_log;
-end //
+create procedure insert_temp_card_log	(
+											in date_of_usage1 date,
+                                            in emp_id1 int,
+                                            in card_id1 int
+										)
+	begin
+		insert into Temp_card_log	(
+                                        date_of_usage,
+                                        emp_id,
+                                        card_id
+									) 
+							values 	(
+										date_of_usage1,
+										emp_id1,
+                                        card_id1
+									);
+	end //
 delimiter ;
-call insert_temp_card_log('suganya','2-2-2019',12,1);
+#----------------- <Calls> -----------------#
+#call insert_temp_card_log('2019/04/09',1,36);
+#----------------- </Calls> -----------------#
 
 
-############################## Incharge Log ##############################
 
+############################################################################################################
+##################################### Incharge Log Stored Procedures #######################################
+############################################################################################################
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a incharge maps <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure insert_incharge_log;
 delimiter //
 create procedure insert_incharge_log(in emp_id1 int,in incharge_id1 int)
-begin
-insert into Incharge_log (emp_id,incharge_id) values (emp_id1,incharge_id1);
+	begin
+		if(not emp_id1 = incharge_id1) then
+		insert into Incharge_log (emp_id,incharge_id) values (emp_id1,incharge_id1);
+        end if;
+	end //
+delimiter ;
+
+
+#----------------- <Calls> -----------------#
+#call insert_incharge_log(2,1);
+#----------------- </Calls> -----------------#
+
 select * from Incharge_log;
-end//
-delimiter ;
-call insert_incharge_log(1,1);
 
-############################################## IMPORT #########################################
 
+
+
+#############################################################################################################
+######################################## Import Stored Procedures ###########################################
+#############################################################################################################
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Import data to main swipe <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 drop procedure import_to_swipe;
+
 delimiter //
-#SET FOREIGN_KEY_CHECKS = 1;
-create procedure import_to_swipe(in date1 date,in time1 varchar(10),in card_number1 varchar(10),in emp_number1 varchar(10),in gate_name1 varchar(20),in inorout1 varchar(5),in remark1 varchar(30))
-begin
-
-	select emp_id into @new_emp_id from Employee where emp_number=emp_number1;
-    select gate_id into @new_gate_id from Gate where gate_name=gate_name1;
-    select card_id into @new_card_id from Cards where card_number=card_number1;
-    if(inorout1="In") then
-    set @io=1;
-    else
-    set @io=0;
-    end if;
-    insert into Main_swipe(date_log,time_log,inorout,emp_id,gate_id,card_id,remarks)  values (date1,time1,@io,@new_emp_id,@new_gate_id,@new_card_id,remark1);
-    select * from Main_swipe;
-end //
+create procedure import_to_swipe	(
+										in date1 date,
+                                        in time1 varchar(10),
+                                        in card_number1 varchar(10),
+                                        in emp_number1 varchar(10),
+                                        in gate_name1 varchar(20),
+                                        in inorout1 varchar(5),
+                                        in remark1 varchar(30)
+									)
+	begin
+		select emp_id into @new_emp_id from Employee where emp_number=emp_number1;
+        select count(*) into @lesscount from Main_swipe where date_log >=  date1 and time_log>time1 and emp_id=@new_emp_id;
+        if(@lesscount=0) then
+			select card_id into @new_card_id from Cards where card_number=card_number1;
+			select gate_id into @new_gate_id from Gate where gate_name=gate_name1;
+			if(inorout1="In") then
+				set @io=1;
+			else
+				set @io=0;
+			end if;
+			
+			insert into Main_swipe	(
+										date_log,
+										time_log,
+										inorout,
+										emp_id,
+										gate_id,
+										card_id,
+										remarks
+									)  
+							values 	(
+										date1,
+										time1,
+										@io,
+										@new_emp_id,
+										@new_gate_id,
+										@new_card_id,
+										remark1
+									);
+		end if;
+	end //
 delimiter ;
-#call import_to_swipe('26/09/2019','11:54:01','00103100','000000C1','Entrance','In','Successful');
+select * from Main_swipe order by date_log ASC, time_log ASC limit 5;
+#select count(*) from Main_swipe where date_log >= '2019/01/22' and time_log<'21:54:01' and emp_id=2;
+#select @count;
+select * from Main_swipe;
+#call import_to_swipe('2019/01/04','11:52:01','00103100','000000C1','Entrance','In','Successful');
 
-#select * from Main_swipe;
-#truncate Main_swipe;
+
+truncate Main_swipe;
 #select * from cards;
 #select * from employee;
 #########################################
@@ -311,7 +704,7 @@ begin
 end //
 delimiter ;
 drop procedure get_swipe_log;
-call get_swipe_log(1,"26/04/2019");
+call get_swipe_log(1,"2019/05/06");
 
 delimiter //
 create procedure get_dates(in emp_id1 int,in from_date varchar(20),in to_date varchar(20))
