@@ -17,7 +17,7 @@ import {AddComponent} from '../../add/add.component'
 import {SettingsComponent} from '../../settings/settings.component';
 import {ImportComponent} from '../../import/import.component';
 
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {
@@ -44,7 +44,8 @@ import {
     MatTooltipModule,
     ReactiveFormsModule,
     MatDatepickerModule,MatNativeDateModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   declarations: [
     DashboardComponent,

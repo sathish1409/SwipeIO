@@ -44,7 +44,7 @@ import { AddComponent } from './add/add.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ImportComponent } from './import/import.component';
 //import { EmployeereportComponent } from './Employeereport/Employeereport.component';
-
+import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { NgDatepickerModule } from 'ng2-datepicker';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -89,7 +89,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-    NgDatepickerModule
+    NgDatepickerModule,
+    SelectDropDownModule
     
   ],
   declarations: [
