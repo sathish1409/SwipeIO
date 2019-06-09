@@ -47,13 +47,13 @@
                                             {{employee.is_admin}}
                                         </td>
                                         <td class="td-actions">
-                                                <button routerLink="/report" mat-raised-button type="button" matTooltip="View Employee Report" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
+                                                <button routerLink="/report" mat-raised-button type="button" matTooltip="View {{employee.emp_name}}'s Report" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
                                                         <i class="material-icons">poll</i>
                                                 </button>
-                                                <button routerLink="/edit/{{employee.emp_id}}" mat-raised-button type="button" matTooltip="Edit Employee Detail" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-md btn-just-icon">
+                                                <button routerLink="/edit/{{employee.emp_id}}" mat-raised-button type="button" matTooltip="Edit {{employee.emp_name}} Details" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-md btn-just-icon">
                                                     <i class="material-icons">edit</i>
                                                 </button>
-                                                <button (click)="deleteUser(employee.emp_id)" mat-raised-button type="button" matTooltip="Remove Employee" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+                                                <button (click)="deleteEmployee(employee.emp_id)" mat-raised-button type="button" matTooltip="Remove {{employee.emp_name}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
                                                     <i class="material-icons">close</i>
                                                 </button>
                                         </td>

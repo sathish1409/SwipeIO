@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthGuard } from './_guards/auth.guard';
-import { AuthenticationService } from './_services/authentication.service';
+import { EmployeeReportComponent } from './employee-report/employee-report.component';
 //import { UserreportComponent } from './userreport/userreport.component';
 const routes: Routes =[
   {
@@ -16,6 +16,10 @@ const routes: Routes =[
   {
     path: 'login',
     component:LoginComponent,
+  },
+  {
+    path:'employee_report',
+    component:EmployeeReportComponent
   },
    {
     path: '',

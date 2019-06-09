@@ -8,4 +8,5 @@ export class Employee {
     is_contract:boolean;
     card_id:number;
     card_number:string;
+    incharges:number[];
 }

@@ -16,9 +16,9 @@
                             <button type="button" (click)="onSubmit()" class="btn btn-info btn-md" >Upload</button>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div  *ngIf='data' class="card-body">
                         <div class="table-responsive">
-                            <table *ngIf='data' class="table">
+                            <table class="table">
                                 <thead class=" text-primary">
                                    <th>Date</th>
                                    <th>Time</th>

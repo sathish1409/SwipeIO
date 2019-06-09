@@ -33,7 +33,7 @@ export class EditComponent implements OnInit {
   this.EmployeeService.getById(this.id).pipe(first()).subscribe(employee => { 
     console.log(employee);
     this.selectedEmployee = employee;
-});
+  });
 
     this.editForm = this.formBuilder.group({
       name:  ['', Validators.required],

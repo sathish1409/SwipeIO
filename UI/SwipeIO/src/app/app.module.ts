@@ -34,7 +34,7 @@ import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
-
+import {MatTabsModule} from '@angular/material/tabs';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ReportComponent } from './report/report.component';
 import { AddorremoveComponent } from './addorremove/addorremove.component';
@@ -46,7 +46,10 @@ import { ImportComponent } from './import/import.component';
 //import { EmployeereportComponent } from './Employeereport/Employeereport.component';
 import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { NgDatepickerModule } from 'ng2-datepicker';
-
+import { EmployeeReportComponent } from './employee-report/employee-report.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "#00ACC1",
   bgsOpacity: 0.5,
@@ -90,14 +93,19 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatInputModule,
     MatNativeDateModule,
     NgDatepickerModule,
-    SelectDropDownModule
-    
+    SelectDropDownModule,
+    MatTabsModule,
+    MatMenuModule,
+    MatIconModule,
+    MatToolbarModule
+
   ],
   declarations: [
     AppComponent,
     AlertComponent,
     AdminLayoutComponent,
     LoginComponent,
+    EmployeeReportComponent,
     //EmployeereportComponent,
   ],
   providers: [

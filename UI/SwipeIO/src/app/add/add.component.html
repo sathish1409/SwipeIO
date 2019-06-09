@@ -45,64 +45,65 @@
                                     <div *ngIf="submitted && f.pass_word.errors" class="invalid-feedback">
                                       <div *ngIf="f.pass_word.errors.required">Password is required</div>
                                       <div *ngIf="f.pass_word.errors.minlength">Password must be at least 6 characters</div>
-                                  </div>
+                                    </div>
                                   </mat-form-field>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
-                                  <ng-multiselect-dropdown
-                                  [ngModelOptions]="{standalone: true}"
-                                  [placeholder]="'Select Card'"
-                                  [data]="Cards"
-                                  [(ngModel)]="card"
-                                  [settings]="cardDropdownSettings"
-                                  class="dropdown"
-                                >
-                                </ng-multiselect-dropdown>
+                              <div class="col-md-6">
+                                <mat-form-field>
+                                  <mat-label>Select Card</mat-label>
+                                  <mat-select  class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.card_id.errors }"  formControlName="card_id" required>
+                                    <mat-option>--</mat-option>
+                                    <mat-option *ngFor="let card of Cards" [value]="card">
+                                      {{card.card_number}}
+                                    </mat-option>
+                                  </mat-select>
+                                  <div *ngIf="submitted && f.card_id.errors" class="invalid-feedback">
+                                      <div *ngIf="f.card_id.errors.required">Please select a card</div>
+                                  </div>
+                                </mat-form-field>
                               </div>
                               <div class="col-md-6">
-                                <ng-multiselect-dropdown
-                                [ngModelOptions]="{standalone: true}"
-                                [placeholder]="'Select Incharges'"
-                                [data]="Employees"
-                                [(ngModel)]="incharges"
-                                [settings]="inchargeDropdownSettings"
-                                class="dropdown"
-                              >
-                              </ng-multiselect-dropdown>
+                                  <mat-form-field>
+                                      <mat-label>Select Incharges</mat-label>
+                                      <mat-select  class="form-control" formControlName="incharges" [ngClass]="{ 'is-invalid': submitted && f.incharges.errors }" multiple>
+                                        <mat-option *ngFor="let Employee of Employees" [value]="Employee.emp_id">{{Employee.emp_name}}</mat-option>
+                                      </mat-select>
+                                  </mat-form-field>                                    
+                              </div>  
                             </div>
-                              
-                          </div>
 
                             <div class="row">
                                 <div class="col-md-6">
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" formControlName="is_admin" [ngClass]="{ 'is-invalid': submitted && f.is_admin.errors }" type="checkbox" value=""> Admin
-                                <span class="form-check-sign">
-                                  <span class="check">
-                                  </span>
-                                </span>
-                                </label>
-                                <div *ngIf="submitted && f.is_admin.errors" class="invalid-feedback">
-                                </div>
-                              </div>
-                                </div>
-                                
-                                    <div class="col-md-6">
-                                    <div class="form-check">
-                                  <label class="form-check-label">
-                                    <input class="form-check-input" formControlName="is_contract" [ngClass]="{ 'is-invalid': submitted && f.is_contract.errors }"  type="checkbox" value=""> Contract
-                                    <span class="form-check-sign">
-                                      <span class="check">
+                                  <div class="form-check">
+                                    <label class="form-check-label">
+                                      <input class="form-check-input" formControlName="is_admin" [ngClass]="{ 'is-invalid': submitted && f.is_admin.errors }" type="checkbox" value=""> Admin
+                                      <span class="form-check-sign">
+                                        <span class="check">
+                                        </span>
                                       </span>
-                                    </span>
                                     </label>
                                     <div *ngIf="submitted && f.is_admin.errors" class="invalid-feedback">
                                     </div>
-                                  </div></div></div>
+                                  </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                  <div class="form-check">
+                                    <label class="form-check-label">
+                                      <input class="form-check-input" formControlName="is_contract" [ngClass]="{ 'is-invalid': submitted && f.is_contract.errors }"  type="checkbox" value=""> Contract
+                                      <span class="form-check-sign">
+                                        <span class="check">
+                                        </span>
+                                      </span>
+                                    </label>
+                                    <div *ngIf="submitted && f.is_contract.errors" class="invalid-feedback">
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
                               
                             
                             <button mat-raised-button type="submit" class="btn btn-success pull-right">Add</button>

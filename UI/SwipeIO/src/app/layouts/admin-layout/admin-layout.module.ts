@@ -16,10 +16,10 @@ import { EditComponent } from '../../edit/edit.component';
 import {AddComponent} from '../../add/add.component'
 import {SettingsComponent} from '../../settings/settings.component';
 import {ImportComponent} from '../../import/import.component';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
-
+import {MatDialogModule} from '@angular/material/dialog';
 import {
   MatButtonModule,
   MatInputModule,
@@ -29,7 +29,8 @@ import {
   MatFormFieldModule,
   MatTooltipModule,
   MatSelectModule,
-  MAT_DATE_LOCALE
+  MAT_DATE_LOCALE,
+  MAT_CHECKBOX_CLICK_ACTION
 } from '@angular/material';
 @NgModule({
   imports: [
@@ -45,7 +46,9 @@ import {
     ReactiveFormsModule,
     MatDatepickerModule,MatNativeDateModule,
     NgbDatepickerModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    MatCheckboxModule,
+    MatDialogModule
   ],
   declarations: [
     DashboardComponent,
@@ -64,6 +67,7 @@ import {
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    {provide: MAT_CHECKBOX_CLICK_ACTION, useValue: 'check'}
   ],
 })
 

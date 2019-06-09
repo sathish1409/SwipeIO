@@ -22,7 +22,7 @@
                                         Gate Name
                                     </th>
                                     <th>
-                                        Edit / Remove
+                                        Remove
                                     </th>
                                 </thead>
                                 <tbody>
@@ -34,10 +34,52 @@
                                             {{Gate.gate_name}}
                                         </td>
                                         <td class="td-actions">
-                                                <button mat-raised-button type="button" matTooltip="Edit {{Gate.gate_name}}" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-md btn-just-icon">
-                                                    <i class="material-icons">edit</i>
-                                                </button>
                                                 <button mat-raised-button type="button" matTooltip="Remove {{Gate.gate_name}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header card-header-warning">
+                        <h4 class="card-title ">Leave Descriptions
+                                <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right">
+                                        <i class="material-icons">add</i> Add Leave
+                                </button>
+                        </h4>
+                        
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Leave ID
+                                    </th>
+                                    <th>
+                                        Leave Description
+                                    </th>
+                                    <th>
+                                        Remove
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let Leave of Leaves">
+                                        <td>
+                                            {{Leave.leave_id}}
+                                        </td>
+                                        <td>
+                                            {{Leave.leave_name}}
+                                        </td>
+                                        <td class="td-actions">
+                                                <button mat-raised-button type="button" matTooltip="Remove  {{Leave.leave_name}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
                                                     <i class="material-icons">close</i>
                                                 </button>
                                         </td>
@@ -70,7 +112,7 @@
                                             Card Number
                                         </th>
                                         <th>
-                                            Edit / Remove
+                                            Remove
                                         </th>
                                     </thead>
                                     <tbody>
@@ -82,9 +124,6 @@
                                                 {{Card.card_number}}
                                             </td>
                                             <td class="td-actions">
-                                                    <button mat-raised-button type="button" matTooltip="Edit {{Card.card_number}}" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-md btn-just-icon">
-                                                        <i class="material-icons">edit</i>
-                                                    </button>
                                                     <button mat-raised-button type="button" matTooltip="Remove  {{Card.card_number}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
                                                         <i class="material-icons">close</i>
                                                     </button>
@@ -97,54 +136,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header card-header-warning">
-                            <h4 class="card-title ">Leave Descriptions
-                                    <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right">
-                                            <i class="material-icons">add</i> Add Leave
-                                    </button>
-                            </h4>
-                            
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead class=" text-primary">
-                                        <th>
-                                            Leave ID
-                                        </th>
-                                        <th>
-                                            Leave Description
-                                        </th>
-                                        <th>
-                                            Edit / Remove
-                                        </th>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let Leave of Leaves">
-                                            <td>
-                                                {{Leave.leave_id}}
-                                            </td>
-                                            <td>
-                                                {{Leave.leave_name}}
-                                            </td>
-                                            <td class="td-actions">
-                                                    <button mat-raised-button type="button" matTooltip="Edit {{Leave.leave_name}}" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-md btn-just-icon">
-                                                        <i class="material-icons">edit</i>
-                                                    </button>
-                                                    <button mat-raised-button type="button" matTooltip="Remove  {{Leave.leave_name}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
-                                                        <i class="material-icons">close</i>
-                                                    </button>
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
         </div>
     </div>
   </div>

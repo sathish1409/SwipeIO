@@ -11,7 +11,7 @@
                           <div class="row">
                               <div class="col-md-6">
                                   <mat-form-field class="example-full-width">
-                                    <input  matInput type="text" value="{{selectedEmployee.name}}" formControlName="name" class="form-control" placeholder="Employee Name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                                    <input  matInput type="text" value="{{selectedEmployee.emp_name}}" formControlName="name" class="form-control" placeholder="Employee Name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
                                     <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                                         <div *ngIf="f.name.errors.required">Name is required</div>
                                     </div>
@@ -36,7 +36,7 @@
                               </div>
                               <div class="col-md-6">
                                 <mat-form-field class="example-full-width">
-                                  <input matInput formControlName="password" value="{{selectedEmployee.password}}" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" type="password">
+                                  <input matInput formControlName="password" value="{{selectedEmployee.pass_word}}" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" type="password">
                                   <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                                     <div *ngIf="f.password.errors.required">Password is required</div>
                                     <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
@@ -86,7 +86,7 @@
                                 </div></div></div>
                             
                           
-                          <button mat-raised-button type="submit" class="btn btn-success pull-right">Add</button>
+                          <button mat-raised-button type="submit" class="btn btn-success pull-right">Edit</button>
                           <div class="clearfix"></div>
                       </form>
                   </div>

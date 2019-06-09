@@ -10,11 +10,11 @@ import { ReportParams, Report } from 'app/_models/Report';
 import{ReportService} from '../_services/Report.service'
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss']
+  selector: 'app-employee-report',
+  templateUrl: './employee-report.component.html',
+  styleUrls: ['./employee-report.component.scss']
 })
-export class ReportComponent implements OnInit {
+export class EmployeeReportComponent implements OnInit  {
   hoveredDate: NgbDate;
   filterForm: FormGroup;
   loading = false;
