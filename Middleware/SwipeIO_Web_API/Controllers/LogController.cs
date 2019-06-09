@@ -68,6 +68,7 @@ namespace SwipeIO_Web_API.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+
         }
     }
 }

@@ -63,9 +63,9 @@ namespace SwipeIO_Web_API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var user = _employeeService.GetById(id);
+            var employee = _employeeService.GetById(id);
 
-            if (user == null)
+            if (employee == null)
             {
                 return NotFound();
             }
@@ -77,7 +77,7 @@ namespace SwipeIO_Web_API.Controllers
                 return Forbid();
             }
 
-            return Ok(user);
+            return Ok(employee);
         }
 
 
@@ -89,9 +89,17 @@ namespace SwipeIO_Web_API.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var isDelete = _employeeService.Delete(id);
+
+            if (isDelete == 0)
+            {
+                return NotFound();
+            }
+            return Ok();
         }
     }
 }

@@ -39,6 +39,8 @@ namespace SwipeIO_Web_API
         public string Token { get; set; }
         [NotMapped]
         public string card_number{ get; set; }
+        [NotMapped]
+        public int[] incharges { get; set; }
 
     }
     public static class Role

@@ -18,6 +18,7 @@ namespace SwipeIO_Web_API.Services
         IEnumerable<Employee> GetAll();
         int Add(Employee emp);
         Employee GetById(int id);
+        int Delete(int id);
     }
 
     public class EmployeeService : IEmployeeService
@@ -61,9 +62,14 @@ namespace SwipeIO_Web_API.Services
             return employee;
         }
         public int Add(Employee emp) {
+            int isDone = 0;
             //call insert_employee('000000C1','Sathish','sathish@gmail.com','123456',1,0,now(),1);
-            int isDone = Emp.Database.ExecuteSqlCommand("call insert_employee({0},{1},{2},{3},{4},{5},{6});", emp.emp_number,emp.emp_name,emp.email,emp.pass_word,emp.is_admin,emp.is_contract,emp.card_number);
-            return isDone;
+            Employee[] insertedEmployee = Emp.Employee.FromSql("call insert_employee({0},{1},{2},{3},{4},{5},{6});", emp.emp_number,emp.emp_name,emp.email,emp.pass_word,emp.is_admin,emp.is_contract,emp.card_number).ToArray();
+            for (var i = 0; i < emp.incharges.Length; i++)
+            {
+                isDone = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});", insertedEmployee.First().emp_id, emp.incharges[i]);
+            }
+            return isDone ;
         }
         public IEnumerable<Employee> GetAll()
         {
@@ -74,7 +80,13 @@ namespace SwipeIO_Web_API.Services
 
         public Employee GetById(int id)
         {
-            throw new NotImplementedException();
+            Employee _employee = Emp.Employee.FromSql("call get_employee({0});",id).ToArray().First();
+            return _employee;
+        }
+        public int Delete(int id)
+        {
+            int isDelete = Emp.Database.ExecuteSqlCommand("call delete_employee({0});", id);
+            return isDelete;
         }
     }
 }

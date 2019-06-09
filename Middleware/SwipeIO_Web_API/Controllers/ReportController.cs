@@ -26,12 +26,16 @@ namespace SwipeIO_Web_API.Controllers
 
 
 
-        [Authorize(Roles = Role.Admin)]
+        
         [HttpPost("get_report")]
         public IActionResult Add([FromBody]ReportParameters reportParameters)
         {
             var data = _reportService.GetReport(reportParameters);
-
+            var currentUserId = int.Parse(User.Identity.Name);
+            if (reportParameters.emp_id != currentUserId && !User.IsInRole(Role.Admin))
+            {
+                return Forbid();
+            }
             if (data == null)
                 return BadRequest(new { message = "Error" });
 
