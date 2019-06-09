@@ -1,21 +1,4 @@
 ##############################################################################################################################################|
-##																																			##|
-##		Procudure Name																		Desciption										##|
-##																																			##|
-##		insert_cards(in card_number1 varchar(8),in created_on1 datetime)					Inserts an employee.							##|
-##		delete_cards(in card_id1 int)														Deletes a card.									##|
-##		update_card(in card_id1 int,in card_number1 varchar(8))								Updates a card.									##|
-##																																			##|
-##		insert_gate(in gate_name1 varchar(20),in created_on1 datetime)						Inserts a gate.									##|
-##		update_gate(in gate_id1 int,in gate_name1 varchar(10))								Updates a gate.									##|
-##																																			##|
-##		insert_leave_description(in leave_name varchar(25),in created datetime)				Inserts a leave desc.							##|
-##		update_leave_description(in leave_id1 int,in leave_name1 varchar(10))				Updates a leave desc.							##|
-##		insert_employee(in emp_number1 varchar(10),in emp_name1 varchar(25),																##|
-##		-- in email1 varchar(50),in pass_word1 varchar(20),in is_admin1 bit,																##|
-##		-- in is_contract1 bit,in created_on1 datetime, in card_id1 int)					Insert an Employee.								##|																												##
-##																																			##|
-##############################################################################################################################################|
 
 SET FOREIGN_KEY_CHECKS = 0;
 SET FOREIGN_KEY_CHECKS = 1;
@@ -439,6 +422,7 @@ create procedure insert_employee(
                                 now(),
                                 @new_card_id
 							); 
+	select * from Employee where emp_number=emp_number1;
 	end //
 delimiter ;
 
@@ -483,7 +467,18 @@ delimiter ;
 call get_employees;
 #----------------- </Calls> -----------------#
 
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get All Employees <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+drop procedure get_employee;
+delimiter //
+create procedure get_employee(in emp_id1 int)
+	begin
+		select * from Employee where emp_id=emp_id1 and is_delete=0;
+	end //
+delimiter ;
 
+#----------------- <Calls> -----------------#
+call get_employee(1);
+#----------------- </Calls> -----------------#
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update an Employee <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 #drop procedure update_employee;
@@ -639,8 +634,7 @@ select * from Incharge_log;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Import data to main swipe <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-drop procedure import_to_swipe;
-
+#drop procedure import_to_swipe;
 delimiter //
 create procedure import_to_swipe	(
 										in date1 date,
@@ -652,9 +646,13 @@ create procedure import_to_swipe	(
                                         in remark1 varchar(30)
 									)
 	begin
+		set @is_exist=0;
+        set @new_emp_id=0;
+        set @lesscount=0;
+		select count(emp_id) into @is_exist from Employee where emp_number=emp_number1;
 		select emp_id into @new_emp_id from Employee where emp_number=emp_number1;
         select count(*) into @lesscount from Main_swipe where date_log >=  date1 and time_log>time1 and emp_id=@new_emp_id;
-        if(@lesscount=0) then
+        if(@lesscount=0 and @is_exist=1) then
 			select card_id into @new_card_id from Cards where card_number=card_number1;
 			select gate_id into @new_gate_id from Gate where gate_name=gate_name1;
 			if(inorout1="In") then
@@ -684,40 +682,54 @@ create procedure import_to_swipe	(
 		end if;
 	end //
 delimiter ;
-select * from Main_swipe order by date_log ASC, time_log ASC limit 5;
+
+
+#----------------- <Calls> -----------------#
+#call import_to_swipe('2019/07/04','11:52:01','00103100','000000i1','Entrance','In','Successful');
+#----------------- </Calls> -----------------#
+
+
+#select * from Main_swipe order by date_log DESC, time_log DESC limit 5 ;
 #select count(*) from Main_swipe where date_log >= '2019/01/22' and time_log<'21:54:01' and emp_id=2;
 #select @count;
-select * from Main_swipe;
-#call import_to_swipe('2019/01/04','11:52:01','00103100','000000C1','Entrance','In','Successful');
-
+#select count(*) from Main_swipe;
 
 truncate Main_swipe;
-#select * from cards;
-#select * from employee;
-#########################################
 
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get swipe log for a given date and emp id <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure get_swipe_log;
 delimiter //
-#SET FOREIGN_KEY_CHECKS = 1;
-create procedure get_swipe_log(in emp_id1 int,in date1 varchar(30))
+create procedure get_swipe_log	(
+									in emp_id1 int,
+                                    in date1 varchar(30)
+								)
 begin
     select * from Main_swipe where emp_id=emp_id1 and gate_id=1 and date_log=date1;
 end //
 delimiter ;
-drop procedure get_swipe_log;
-call get_swipe_log(1,"2019/05/06");
 
+#----------------- <Calls> -----------------#
+#call get_swipe_log(1,"2019/07/04");
+#----------------- </Calls> -----------------#
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get Dates between the given range <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+#drop procedure get_dates;
 delimiter //
 create procedure get_dates(in emp_id1 int,in from_date varchar(20),in to_date varchar(20))
 begin
     select * from Main_swipe where emp_id=emp_id1 and gate_id=1 and date_log between from_date and to_date group by date_log;
 end //
 delimiter ;
-drop procedure get_dates;
-call get_dates(1,"26/04/2019","30/04/2019");
+
+#----------------- <Calls> -----------------#
+#call get_dates(1,"26/04/2019","30/04/2019");
+#----------------- </Calls> -----------------#
 
 
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get Last logs <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 delimiter //
-#SET FOREIGN_KEY_CHECKS = 1;
 create procedure get_last_dates_of_employee(in emp_id1 int, in limit1 int)
 begin
     SELECT date_log FROM Main_swipe  where emp_id=emp_id1 and remarks="Successful"  group by date_log
@@ -725,8 +737,6 @@ begin
 	LIMIT limit1;
 end //
 delimiter ;
-
-
 call get_last_dates_of_employee(1,7);
 select * from Main_swipe;
 
