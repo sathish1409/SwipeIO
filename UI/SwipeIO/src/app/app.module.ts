@@ -50,6 +50,7 @@ import { EmployeeReportComponent } from './employee-report/employee-report.compo
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { ReportModelComponent } from './report-model/report-model.component';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "#00ACC1",
   bgsOpacity: 0.5,
@@ -105,8 +106,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AlertComponent,
     AdminLayoutComponent,
     LoginComponent,
-    EmployeeReportComponent,
-    //EmployeereportComponent,
+    EmployeeReportComponent,    //EmployeereportComponent,
   ],
   providers: [
     AuthGuard,

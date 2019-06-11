@@ -82,6 +82,13 @@ namespace SwipeIO_Web_API
 
     }
 
+    public class LastReportParameters
+    {
+        public int emp_id { get; set; }
+
+        public int days { get; set; }
+    }
+
     public class ReportParameters
     {
         public int emp_id { get; set; }

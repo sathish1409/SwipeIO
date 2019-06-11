@@ -16,6 +16,15 @@ export class SettingService {
     getLeaves() {
         return this.http.get<Leave[]>(`${environment.apiUrl}/setting/leaves`);
     }
+    addCard(Card: Card) {
+        return this.http.post(`${environment.apiUrl}/setting/addCard`, Card);
+    }
+    addGate(Gate: Gate) {
+        return this.http.post(`${environment.apiUrl}/setting/addGate`, Gate);
+    }
+    addLeave(Leave: Leave) {
+        return this.http.post(`${environment.apiUrl}/setting/addLeave`, Leave);
+    }
 /*
     getById(id: number) {
         return this.http.get<Employee>(`${environment.apiUrl}/Employee/` + id);

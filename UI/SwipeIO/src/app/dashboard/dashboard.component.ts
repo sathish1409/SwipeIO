@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
+import { EmployeeService } from 'app/_services/Employee.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { MatDialog } from '@angular/material';
+import { Employee } from 'app/_models/Employee';
+import { first } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
+import { LastReportParams, Report, ReportArray } from 'app/_models/Report';
+import { ReportService } from 'app/_services/Report.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,70 +15,56 @@ import * as Chartist from 'chartist';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
-
-  startAnimationForLineChart(chart){
-      let seq: any, delays: any, durations: any;
-      seq = 0;
-      delays = 80;
-      durations = 600;
-
-      chart.on('draw', function(data) {
-        if(data.type === 'line' || data.type === 'area') {
-          data.element.animate({
-            d: {
-              begin: 600,
-              dur: 700,
-              from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-              to: data.path.clone().stringify(),
-              easing: Chartist.Svg.Easing.easeOutQuint
-            }
-          });
-        } else if(data.type === 'point') {
-              seq++;
-              data.element.animate({
-                opacity: {
-                  begin: seq * delays,
-                  dur: durations,
-                  from: 0,
-                  to: 1,
-                  easing: 'ease'
-                }
-              });
-          }
-      });
-
-      seq = 0;
+  filterForm: FormGroup;
+  loading = false;
+  submitted = false;
+  Params={
+    emp_id:1,
+    days:1
   };
-  
+  currentEmployee : Employee;
+  present:number;
+  defaultDays=0;
+  threshold=9;
+  Employees:Employee[];
+  reportArray:Report[];
+  days=5;
+  constructor(private EmployeeService: EmployeeService,private ngxService: NgxUiLoaderService, private reportService:ReportService,public dialog: MatDialog) { }
+
+
+  isNotGreater(n){
+    return parseInt(n)<this.threshold? 1:0;
+  }
   ngOnInit() {
-      /* ----------==========     Daily Attendance Chart initialization For Documentation    ==========---------- */
-
-      const dataDailyAttendanceChart: any = {
-          labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-          series: [
-              [12, 17, 7, 17, 23, 18, 38]
-          ]
-      };
-
-     const optionsDailyAttendanceChart: any = {
-          lineSmooth: Chartist.Interpolation.cardinal({
-              tension: 0
-          }),
-          low: 0,
-          high: 60, 
-          chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
-      }
-
-      var dailyAttendanceChart = new Chartist.Line('#dailySalesChart', dataDailyAttendanceChart, optionsDailyAttendanceChart);
-
-      this.startAnimationForLineChart(dailyAttendanceChart);
-
-
-
-
-   
+    this.ngxService.start();
+    this.loadAllEmployees();
+    this.ngxService.stop();
+  }
+  loadAllEmployees(){
+      this.EmployeeService.getAll().pipe(first()).subscribe(Employees => { 
+            this.Employees = Employees;
+            this.Employees.forEach(employee => {
+            employee.report=this.LoadReport(employee.emp_id)
+            console.log(employee);
+            });
+          
+          console.log(this.Employees);
+      });
+      
   }
 
+  LoadReport(emp_id):Report[]{
+      this.Params.emp_id=emp_id;
+      this.Params.days=this.days;
+      report:Report;
+      console.log(this.Params);
+      this.reportService.getLastReport(this.Params).pipe(first()).subscribe(report_in => { 
+        console.log(report_in);
+        this.reportArray=report_in
+       });
+       return this.reportArray;
+  }
+  GetReport(){
+    
+}
 }

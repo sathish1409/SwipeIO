@@ -9,7 +9,7 @@ using SwipeIO_Web_API.Services;
 
 namespace SwipeIO_Web_API.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReportController : ControllerBase
@@ -28,7 +28,7 @@ namespace SwipeIO_Web_API.Controllers
 
         
         [HttpPost("get_report")]
-        public IActionResult Add([FromBody]ReportParameters reportParameters)
+        public IActionResult GetReport([FromBody]ReportParameters reportParameters)
         {
             var data = _reportService.GetReport(reportParameters);
             var currentUserId = int.Parse(User.Identity.Name);
@@ -36,6 +36,21 @@ namespace SwipeIO_Web_API.Controllers
             {
                 return Forbid();
             }
+            if (data == null)
+                return BadRequest(new { message = "Error" });
+
+            return Ok(data);
+        }
+
+        [HttpPost("get_last_report")]
+        public IActionResult Add([FromBody]LastReportParameters lastReportParameters)
+        {
+            var data = _reportService.GetLastReports(lastReportParameters.emp_id,lastReportParameters.days);
+            //var currentUserId = int.Parse(User.Identity.Name);
+           /* if (lastReportParameters.emp_id != currentUserId && !User.IsInRole(Role.Admin))
+            {
+                return Forbid();
+            }*/
             if (data == null)
                 return BadRequest(new { message = "Error" });
 

@@ -20,6 +20,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatDialogModule} from '@angular/material/dialog';
+import {ReportModelComponent} from '../../report-model/report-model.component';
 import {
   MatButtonModule,
   MatInputModule,
@@ -48,7 +49,8 @@ import {
     NgbDatepickerModule,
     NgMultiSelectDropDownModule.forRoot(),
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    
   ],
   declarations: [
     DashboardComponent,
@@ -63,7 +65,11 @@ import {
     EditComponent,
     AddComponent,
     SettingsComponent,
-    ImportComponent
+    ImportComponent,
+    ReportModelComponent
+  ],
+  entryComponents: [
+    ReportModelComponent
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},

@@ -27,6 +27,7 @@
                                    <th>IN / OUT</th>
                                    <th>Gate</th>
                                    <th>Department</th>
+                                   <th>Remarks</th>
                                 </thead>
                                 <tbody>
                                    <tr *ngFor="let datum of data">
@@ -51,6 +52,9 @@
                                           <td>
                                              {{datum.Department}}
                                            </td>
+                                           <td>
+                                            {{datum.Remark}}
+                                          </td>
                                    </tr>
                                 </tbody>
                             </table>

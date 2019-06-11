@@ -1,35 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { Employee } from 'app/_models/Employee';
-import { EmployeeService } from 'app/_services/Employee.service';
-import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
-import { MatDatepickerInputEvent } from '@angular/material';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { from } from 'rxjs';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReportParams, Report } from 'app/_models/Report';
-import{ReportService} from '../_services/Report.service'
+import { Employee } from 'app/_models/Employee';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { EmployeeService } from 'app/_services/Employee.service';
+import { ReportService } from 'app/_services/Report.service';
+import { first } from 'rxjs/operators';
+
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss']
+  selector: 'app-report-model',
+  templateUrl: './report-model.component.html',
+  styleUrls: ['./report-model.component.scss']
 })
-export class ReportComponent implements OnInit {
+export class ReportModelComponent implements OnInit {
   hoveredDate: NgbDate;
   filterForm: FormGroup;
   loading = false;
   submitted = false;
   fromDate: NgbDate;
   toDate: NgbDate;
- Params:ReportParams;
+  Params:ReportParams;
   currentEmployee : Employee;
   present:number;
   defaultDays=0;
   threshold=9;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private ngxService: NgxUiLoaderService, private EmployeeService:EmployeeService,  private reportService:ReportService,private formBuilder: FormBuilder) {
 
-  constructor(private ngxService: NgxUiLoaderService, private EmployeeService:EmployeeService,  private reportService:ReportService,private formBuilder: FormBuilder, ) {
-    this.currentEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
    }
+
    events: string[] = [];
 
    addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -44,15 +44,14 @@ export class ReportComponent implements OnInit {
     
       this.submitted = true;
       
-      
       // stop here if form is invalid
       if (this.filterForm.invalid) {
           return;
       }
       this.ngxService.start();
-      this.loading = true; 
+      this.loading = true;
       this.Params={
-        emp_id:this.currentEmployee.emp_id,
+        emp_id:this.data.employee.emp_id,
         from: this.filterForm.value.from.getFullYear()+"/"+(this.filterForm.value.from.getMonth()+1)+"/"+this.filterForm.value.from.getDate(),
         to: this.filterForm.value.to.getFullYear()+"/"+(this.filterForm.value.to.getMonth()+1)+"/"+this.filterForm.value.to.getDate(),
       }
@@ -71,8 +70,6 @@ export class ReportComponent implements OnInit {
   isNotGreater(n){
     return parseInt(n)<this.threshold? 1:0;
   }
-
-
 
   ngOnInit() {
     this.ngxService.start();   

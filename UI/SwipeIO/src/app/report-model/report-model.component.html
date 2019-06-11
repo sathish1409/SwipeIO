@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="container-fluid">
-      
-
+    <h2 mat-dialog-title>{{data.employee.emp_name}}'s Report</h2>
+    <mat-dialog-content class="mat-typography">
  <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -15,7 +15,7 @@
                                 <div class="col-md-4">
                                     <mat-form-field>
                                         <input  formControlName="from" matInput [matDatepicker]="from" placeholder="From"
-                                        (focus)="from.open()"  [ngClass]="{ 'is-invalid': submitted && f.from.errors }">
+                                        (focus)="from.open()" [ngClass]="{ 'is-invalid': submitted && f.from.errors }" required>
                                         <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
                                         <mat-datepicker #from></mat-datepicker>
                                         <div *ngIf="submitted && f.from.errors" class="invalid-feedback">
@@ -26,7 +26,7 @@
                                 <div class="col-md-4">
                                     <mat-form-field>
                                         <input  formControlName="to" matInput [matDatepicker]="to" placeholder="To"
-                                        (focus)="to.open()"  [ngClass]="{ 'is-invalid': submitted && f.to.errors }">
+                                        (focus)="to.open()" [ngClass]="{ 'is-invalid': submitted && f.to.errors }" required>
                                         <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
                                         <mat-datepicker #to></mat-datepicker>
                                         <div *ngIf="submitted && f.to.errors" class="invalid-feedback">
@@ -52,13 +52,13 @@
                       <div class="card-icon">
                           <i class="material-icons">account_circle</i>
                       </div>
-                      <p class="card-category">{{currentEmployee.emp_number}}</p>
-                      <h3 class="card-title">{{currentEmployee.emp_name}}</h3>
+                      <p class="card-category">{{data.employee.emp_number}}</p>
+                      <h3 class="card-title">{{data.employee.emp_name}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
                           
-                          <p>{{currentEmployee.email}}</p>
+                          <p>{{data.employee.email}}</p>
                       </div>
                   </div>
               </div>
@@ -153,5 +153,6 @@
           </div>
         
       </div>
+      </mat-dialog-content>
   </div>
 </div>

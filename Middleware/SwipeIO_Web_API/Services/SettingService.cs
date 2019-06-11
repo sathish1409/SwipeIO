@@ -12,6 +12,10 @@ namespace SwipeIO_Web_API.Services
         IEnumerable<Gate> GetGates();
         IEnumerable<Leave> GetLeaves();
 
+        int AddCard(Card card);
+        int AddGate(Gate gate);
+        int AddLeave(Leave leave);
+
     }
     public class SettingService : ISettingService
     {
@@ -32,6 +36,22 @@ namespace SwipeIO_Web_API.Services
         {
             Leave[] _leaves = setting.Leave.FromSql("call get_leave_descriptions();").ToArray();
             return _leaves;
+        }
+
+        public int AddCard(Card card)
+        {
+            int isDone = setting.Database.ExecuteSqlCommand("call insert_card({0});", card.card_number);
+            return isDone;
+        }
+        public int AddGate(Gate gate)
+        {
+            int isDone = setting.Database.ExecuteSqlCommand("call insert_gate({0});", gate.gate_name);
+            return isDone;
+        }
+        public int AddLeave(Leave leave)
+        {
+            int isDone = setting.Database.ExecuteSqlCommand("call insert_leave_description({0});", leave.leave_name);
+            return isDone;
         }
     }
 }

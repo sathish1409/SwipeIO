@@ -1,4 +1,5 @@
 import { Time } from "@angular/common";
+import { Employee } from "./Employee";
 
 export class Report {
     emp_id:number;
@@ -12,4 +13,12 @@ export class ReportParams{
     emp_id:number;
     from:string;
     to:string;
+}
+export class LastReportParams{
+    emp_id:number;
+    days:number;
+}
+export class ReportArray{
+    employee:Employee;
+    repArray: Report[];
 }

@@ -31,7 +31,7 @@ create table Employee	(
 							emp_id int primary key NOT NULL auto_increment,
                             emp_number varchar(10) unique not null,
                             emp_name varchar(25),
-                            email varchar(50),
+                            email varchar(50) unique not null,
                             card_id int,
                             is_admin bit,
                             is_contract bit,
@@ -51,7 +51,7 @@ create table Gate	(
 					);
                     
 create table Main_swipe	(
-							log_id int primary key not null auto_increment ,
+							log_id int not null auto_increment ,
                             date_log date,
                             time_log time,
                             inorout bit,
@@ -59,6 +59,7 @@ create table Main_swipe	(
                             gate_id int,
                             card_id int,
                             remarks varchar(50),
+                            primary key(log_id,date_log,time_log,emp_id),
                             foreign key (emp_id) references Employee(emp_id),
                             foreign key (gate_id) references Gate(gate_id),
                             foreign key (card_id) references Cards(card_id)
@@ -107,9 +108,9 @@ create table Incharge_log	(
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a Card <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-drop procedure insert_cards;
+drop procedure insert_card;
 delimiter //
-create procedure insert_cards	(
+create procedure insert_card	(
 									in card_number1 varchar(8)
 								)
 	begin
@@ -119,70 +120,69 @@ create procedure insert_cards	(
 delimiter ;
 
 #----------------- <Calls> -----------------#
-call insert_cards('11111111');
-call insert_cards('00103691');
-call insert_cards('00105746');
-call insert_cards('00110554');
-call insert_cards('00113084');
-call insert_cards('00113577');
-call insert_cards('00116301');
-call insert_cards('00116726');
-call insert_cards('00116959');
-call insert_cards('00121938');
-call insert_cards('00121971');
-call insert_cards('00125838');
-call insert_cards('00128341');
-call insert_cards('00129692');
-call insert_cards('00133243');
-call insert_cards('00133942');
-call insert_cards('00136154');
-call insert_cards('00136472');
-call insert_cards('03026090');
-call insert_cards('03217728');
-call insert_cards('03218772');
-call insert_cards('03223979');
-call insert_cards('03224988');
-call insert_cards('03225867');
-call insert_cards('04376776');
-call insert_cards('04377436');
-call insert_cards('05437274');
-call insert_cards('05438436');
-call insert_cards('05438564');
-call insert_cards('05473558');
-call insert_cards('07686186');
-call insert_cards('07688324');
-call insert_cards('07689910');
-call insert_cards('07697131');
-call insert_cards('07697132');
-call insert_cards('07697830');
-call insert_cards('07698959');
-call insert_cards('07699042');
-call insert_cards('07700287');
-call insert_cards('07704451');
-call insert_cards('07717440');
-call insert_cards('07718314');
-call insert_cards('07732879');
-call insert_cards('07733912');
-call insert_cards('07739921');
-call insert_cards('07740867');
-call insert_cards('08849623');
-call insert_cards('08851276');
-call insert_cards('08853219');
-call insert_cards('08857043');
-call insert_cards('08874664');
-call insert_cards('08875889');
-call insert_cards('08875905');
-call insert_cards('08876864');
-call insert_cards('08876880');
-call insert_cards('08939198');
-call insert_cards('08940071');
-call insert_cards('08948409');
-call insert_cards('08951495');
-call insert_cards('08952279');
-call insert_cards('08953435');
-call insert_cards('08957086');
-call insert_cards('08957921');
-
+call insert_card('11111111');
+call insert_card('00103691');
+call insert_card('00105746');
+call insert_card('00110554');
+call insert_card('00113084');
+call insert_card('00113577');
+call insert_card('00116301');
+call insert_card('00116726');
+call insert_card('00116959');
+call insert_card('00121938');
+call insert_card('00121971');
+call insert_card('00125838');
+call insert_card('00128341');
+call insert_card('00129692');
+call insert_card('00133243');
+call insert_card('00133942');
+call insert_card('00136154');
+call insert_card('00136472');
+call insert_card('03026090');
+call insert_card('03217728');
+call insert_card('03218772');
+call insert_card('03223979');
+call insert_card('03224988');
+call insert_card('03225867');
+call insert_card('04376776');
+call insert_card('04377436');
+call insert_card('05437274');
+call insert_card('05438436');
+call insert_card('05438564');
+call insert_card('05473558');
+call insert_card('07686186');
+call insert_card('07688324');
+call insert_card('07689910');
+call insert_card('07697131');
+call insert_card('07697132');
+call insert_card('07697830');
+call insert_card('07698959');
+call insert_card('07699042');
+call insert_card('07700287');
+call insert_card('07704451');
+call insert_card('07717440');
+call insert_card('07718314');
+call insert_card('07732879');
+call insert_card('07733912');
+call insert_card('07739921');
+call insert_card('07740867');
+call insert_card('08849623');
+call insert_card('08851276');
+call insert_card('08853219');
+call insert_card('08857043');
+call insert_card('08874664');
+call insert_card('08875889');
+call insert_card('08875905');
+call insert_card('08876864');
+call insert_card('08876880');
+call insert_card('08939198');
+call insert_card('08940071');
+call insert_card('08948409');
+call insert_card('08951495');
+call insert_card('08952279');
+call insert_card('08953435');
+call insert_card('08957086');
+call insert_card('08957921');
 #----------------- </Calls> -----------------#
 
 
@@ -244,20 +244,19 @@ delimiter ;
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a gate <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 
-#drop procedure insert_gate;
+drop procedure insert_gate;
 delimiter //
 create procedure insert_gate	(
-									in gate_name1 varchar(20),
-                                    in created_on1 datetime
+									in gate_name1 varchar(20)
 								)
 	begin
-		insert into Gate (gate_name,created_on) values (gate_name1,created_on1);
+		insert into Gate (gate_name,created_on) values (gate_name1,now());
 	end //
 delimiter ;
 
 #----------------- <Calls> -----------------#
-call insert_gate('Entrance',now());
-call insert_gate('Server Room',now());
+call insert_gate('Entrance');
+call insert_gate('Server Room');
 #----------------- </Calls> -----------------#
 
 
@@ -325,7 +324,7 @@ delimiter ;
 
 #----------------- <Calls> -----------------#
 call insert_leave_description('Casual');
-call insert_leave_description('Privillage');
+call insert_leave_description('Privilege');
 call insert_leave_description('Loss of Pay');
 call insert_leave_description('Work From Home');
 call insert_leave_description('Gonna be deleted');
@@ -477,7 +476,7 @@ create procedure get_employee(in emp_id1 int)
 delimiter ;
 
 #----------------- <Calls> -----------------#
-call get_employee(1);
+call get_employee(17);
 #----------------- </Calls> -----------------#
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update an Employee <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
@@ -634,7 +633,7 @@ select * from Incharge_log;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Import data to main swipe <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure import_to_swipe;
+drop procedure import_to_swipe;
 delimiter //
 create procedure import_to_swipe	(
 										in date1 date,
@@ -646,53 +645,61 @@ create procedure import_to_swipe	(
                                         in remark1 varchar(30)
 									)
 	begin
-		set @is_exist=0;
+		set @is_exist_employee=0;
+        set @is_exist_card=0;
         set @new_emp_id=0;
         set @lesscount=0;
-		select count(emp_id) into @is_exist from Employee where emp_number=emp_number1;
+        
+        select count(card_id) into @is_exist_card from Cards where card_number=card_number1;
+        if(@is_exist_card=0)then
+			call insert_card(card_number1);
+        end if;
+		select count(emp_id) into @is_exist_employee from Employee where emp_number=emp_number1;
+        if(@is_exist_employee=0)then
+			set @new_email=conv(floor(rand() * 99999999999999), 20, 36) ;
+			call insert_employee(emp_number1,'Not Registered',@new_email,'123456',0,0,card_number1);
+        end if;
 		select emp_id into @new_emp_id from Employee where emp_number=emp_number1;
-        select count(*) into @lesscount from Main_swipe where date_log >=  date1 and time_log>time1 and emp_id=@new_emp_id;
-        if(@lesscount=0 and @is_exist=1) then
-			select card_id into @new_card_id from Cards where card_number=card_number1;
-			select gate_id into @new_gate_id from Gate where gate_name=gate_name1;
-			if(inorout1="In") then
-				set @io=1;
-			else
-				set @io=0;
-			end if;
-			
-			insert into Main_swipe	(
-										date_log,
-										time_log,
-										inorout,
-										emp_id,
-										gate_id,
-										card_id,
-										remarks
-									)  
-							values 	(
-										date1,
-										time1,
-										@io,
-										@new_emp_id,
-										@new_gate_id,
-										@new_card_id,
-										remark1
-									);
+		select card_id into @new_card_id from Cards where card_number=card_number1;
+		select gate_id into @new_gate_id from Gate where gate_name=gate_name1;
+		if(inorout1="In") then
+			set @io=1;
+		else
+			set @io=0;
 		end if;
+
+		insert into Main_swipe	(
+									date_log,
+									time_log,
+									inorout,
+									emp_id,
+									gate_id,
+									card_id,
+									remarks
+								)  
+						values 	(
+									date1,
+									time1,
+									@io,
+									@new_emp_id,
+									@new_gate_id,
+									@new_card_id,
+									remark1
+								)
+			ON DUPLICATE KEY UPDATE inorout=@io,gate_id=@new_gate_id,remarks=remark1,card_id=@new_card_id;
+
 	end //
 delimiter ;
 
 
 #----------------- <Calls> -----------------#
-#call import_to_swipe('2019/07/04','11:52:01','00103100','000000i1','Entrance','In','Successful');
+call import_to_swipe('2019/07/04','11:52:01','00103100','000000i1','Entrance','In','Successful');
 #----------------- </Calls> -----------------#
-
 
 #select * from Main_swipe order by date_log DESC, time_log DESC limit 5 ;
 #select count(*) from Main_swipe where date_log >= '2019/01/22' and time_log<'21:54:01' and emp_id=2;
 #select @count;
-#select count(*) from Main_swipe;
+select count(*) from Main_swipe;
 
 truncate Main_swipe;
 
@@ -710,9 +717,9 @@ end //
 delimiter ;
 
 #----------------- <Calls> -----------------#
-#call get_swipe_log(1,"2019/07/04");
+call get_swipe_log(2,"2019/05/15");
 #----------------- </Calls> -----------------#
-
+delete from Main_swipe where log_id=120;
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get Dates between the given range <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 #drop procedure get_dates;
@@ -732,11 +739,11 @@ delimiter ;
 delimiter //
 create procedure get_last_dates_of_employee(in emp_id1 int, in limit1 int)
 begin
-    SELECT date_log FROM Main_swipe  where emp_id=emp_id1 and remarks="Successful"  group by date_log
+    SELECT * FROM Main_swipe  where emp_id=emp_id1 and remarks="Successful"  group by date_log
 	ORDER BY log_id DESC
 	LIMIT limit1;
 end //
 delimiter ;
 call get_last_dates_of_employee(1,7);
 select * from Main_swipe;
-
+drop procedure get_last_dates_of_employee;

@@ -20,6 +20,9 @@ export class ReportService {
     getReport(reportParams:any) {
         return this.http.post<Report[]>(`${environment.apiUrl}/Report/get_report`,reportParams);
     }
+    getLastReport(reportParams:any) {
+        return this.http.post<Report[]>(`${environment.apiUrl}/Report/get_last_report`,reportParams);
+    }
 
     // update(Employee: Employee) {
     //     return this.http.put(`${environment.apiUrl}/Employee/` + Employee.emp_id, Employee);

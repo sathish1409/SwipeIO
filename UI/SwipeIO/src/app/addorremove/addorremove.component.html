@@ -47,7 +47,7 @@
                                             {{employee.is_admin}}
                                         </td>
                                         <td class="td-actions">
-                                                <button routerLink="/report" mat-raised-button type="button" matTooltip="View {{employee.emp_name}}'s Report" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
+                                                <button (click)="viewReport(employee)" mat-raised-button type="button" matTooltip="View {{employee.emp_name}}'s Report" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
                                                         <i class="material-icons">poll</i>
                                                 </button>
                                                 <button routerLink="/edit/{{employee.emp_id}}" mat-raised-button type="button" matTooltip="Edit {{employee.emp_name}} Details" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-md btn-just-icon">

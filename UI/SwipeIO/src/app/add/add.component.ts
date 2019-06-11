@@ -45,7 +45,7 @@ export class AddComponent implements OnInit{
         emp_name:  ['', Validators.required],
         email:  ['', [Validators.required, Validators.email]],
         emp_id: ['', [Validators.required,Validators.minLength(8)]],
-        pass_word:  ['', [Validators.required,Validators.minLength(6)]],
+        pass_word:  ['', [Validators.required,Validators.minLength(8)]],
         card_id:['',Validators.required],
         is_admin: [''],
         is_contract: [''],
@@ -78,7 +78,8 @@ export class AddComponent implements OnInit{
         is_contract:this.addForm.value.is_contract==null?false:true,
         card_id:this.addForm.value.card_id.card_id,
         card_number:this.addForm.value.card_id.card_number,
-        incharges:this.addForm.value.incharges
+        incharges:this.addForm.value.incharges,
+        report:null
         }
         console.log(this.param);
         

@@ -1,3 +1,5 @@
+import { Report } from "./Report";
+
 export class Employee {
     emp_id: number;
     email: string;
@@ -9,4 +11,5 @@ export class Employee {
     card_id:number;
     card_number:string;
     incharges:number[];
+    report:Report[];
 }

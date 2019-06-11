@@ -39,19 +39,38 @@ namespace SwipeIO_Web_API.Controllers
             return data;
         }
 
-        [HttpPost("cards")]
-        public IActionResult AddCards([FromBody] string value)
+        
+        //[Authorize(Roles = Role.Admin)]
+        [HttpPost("addCard")]
+        public IActionResult AddCard([FromBody]Card card)
         {
+            var done = _settingService.AddCard(card);
+
+            if (done == 0)
+                return BadRequest(new { message = "Error" });
+
             return Ok();
         }
-        [HttpPost("gates")]
-        public IActionResult AddGates([FromBody] string value)
+        //[Authorize(Roles = Role.Admin)]
+        [HttpPost("addGate")]
+        public IActionResult AddGate([FromBody]Gate gate)
         {
+            var done = _settingService.AddGate(gate);
+
+            if (done == 0)
+                return BadRequest(new { message = "Error" });
+
             return Ok();
         }
-        [HttpPost("leaves")]
-        public IActionResult AddLeaves([FromBody] string value)
+        //[Authorize(Roles = Role.Admin)]
+        [HttpPost("addLeave")]
+        public IActionResult AddLeave([FromBody]Leave leave)
         {
+            var done = _settingService.AddLeave(leave);
+
+            if (done == 0)
+                return BadRequest(new { message = "Error" });
+
             return Ok();
         }
 
