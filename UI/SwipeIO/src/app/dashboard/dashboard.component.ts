@@ -8,6 +8,7 @@ import { first } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { LastReportParams, Report, ReportArray } from 'app/_models/Report';
 import { ReportService } from 'app/_services/Report.service';
+import { Time } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +29,8 @@ export class DashboardComponent implements OnInit {
   threshold=9;
   Employees:Employee[];
   reportArray:Report[];
-  days=5;
+  days=3;
+  AvgTime:Time;
   constructor(private EmployeeService: EmployeeService,private ngxService: NgxUiLoaderService, private reportService:ReportService,public dialog: MatDialog) { }
 
 
@@ -44,7 +46,17 @@ export class DashboardComponent implements OnInit {
       this.EmployeeService.getAll().pipe(first()).subscribe(Employees => { 
             this.Employees = Employees;
             this.Employees.forEach(employee => {
-            employee.report=this.LoadReport(employee.emp_id)
+            this.Params.emp_id=employee.emp_id;
+            this.Params.days=this.days;
+
+            console.log(this.Params);
+
+            this.reportService.getLastReport(this.Params).pipe(first()).subscribe(report_in => { 
+              console.log(report_in);
+              employee.report=report_in;
+              
+             });
+
             console.log(employee);
             });
           
@@ -54,14 +66,7 @@ export class DashboardComponent implements OnInit {
   }
 
   LoadReport(emp_id):Report[]{
-      this.Params.emp_id=emp_id;
-      this.Params.days=this.days;
-      report:Report;
-      console.log(this.Params);
-      this.reportService.getLastReport(this.Params).pipe(first()).subscribe(report_in => { 
-        console.log(report_in);
-        this.reportArray=report_in
-       });
+     
        return this.reportArray;
   }
   GetReport(){

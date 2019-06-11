@@ -476,7 +476,7 @@ create procedure get_employee(in emp_id1 int)
 delimiter ;
 
 #----------------- <Calls> -----------------#
-call get_employee(17);
+call get_employee(1);
 #----------------- </Calls> -----------------#
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update an Employee <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
@@ -705,14 +705,14 @@ truncate Main_swipe;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get swipe log for a given date and emp id <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure get_swipe_log;
+drop procedure get_swipe_log;
 delimiter //
 create procedure get_swipe_log	(
 									in emp_id1 int,
                                     in date1 varchar(30)
 								)
 begin
-    select * from Main_swipe where emp_id=emp_id1 and gate_id=1 and date_log=date1;
+    select * from Main_swipe where emp_id=emp_id1 and gate_id=1 and date_log=date1 and time_log > '07:00:00';
 end //
 delimiter ;
 
@@ -731,7 +731,27 @@ end //
 delimiter ;
 
 #----------------- <Calls> -----------------#
-#call get_dates(1,"26/04/2019","30/04/2019");
+call get_dates(1,"2019/04/15","2019/05/30");
+#----------------- </Calls> -----------------#
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get swipe log for a given date and emp id <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+drop procedure get_swipe_log_ref;
+delimiter //
+create procedure get_swipe_log_ref	(
+									in emp_id1 int,
+                                    in today1 varchar(30),
+                                    in tomorrow1 varchar(30),
+                                    in gate_id1 int
+								)
+begin
+   ( select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log=today1 and time_log>'07:00:00')union
+    (select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log=tomorrow1 and time_log<'07:00:00');
+end //
+delimiter ;
+
+#----------------- <Calls> -----------------#
+call get_swipe_log_ref(1,"2019/04/23","2019/04/24",1);
 #----------------- </Calls> -----------------#
 
 

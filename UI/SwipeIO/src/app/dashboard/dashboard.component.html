@@ -56,11 +56,36 @@
             <div *ngFor="let employee of Employees" class="col-md-3">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title ">{{employee.emp_name}}</h4>
+                        <h4 class="card-title ">{{employee.emp_name}} <span class="pull-right">{{employee.emp_number}}</span></h4>
 
                         <p class="card-category"></p>
                     </div>
-                    
+                    <div  class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Date
+                                    </th>
+
+                                    <th>
+                                        Hours Worked
+                                    </th>
+                                    
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let report_rec of employee.report">
+                                        <td>
+                                            {{report_rec.date | date: 'd/M/yyyy'}}
+                                        </td>
+                                        <td  [ngClass]="{'text-danger':isNotGreater(report_rec.hours_worked),'text-success':!isNotGreater(report_rec.hours_worked)}">
+                                            {{report_rec.hours_worked}}
+                                        </td>
+                                    </tr>                                
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
           
