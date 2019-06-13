@@ -51,7 +51,6 @@ create table Gate	(
 					);
                     
 create table Main_swipe	(
-							log_id int not null auto_increment ,
                             date_log date,
                             time_log time,
                             inorout bit,
@@ -59,7 +58,7 @@ create table Main_swipe	(
                             gate_id int,
                             card_id int,
                             remarks varchar(50),
-                            primary key(log_id,date_log,time_log,emp_id),
+                            primary key(date_log,time_log,emp_id),
                             foreign key (emp_id) references Employee(emp_id),
                             foreign key (gate_id) references Gate(gate_id),
                             foreign key (card_id) references Cards(card_id)
@@ -617,12 +616,29 @@ create procedure insert_incharge_log(in emp_id1 int,in incharge_id1 int)
 	end //
 delimiter ;
 
-
 #----------------- <Calls> -----------------#
 #call insert_incharge_log(2,1);
 #----------------- </Calls> -----------------#
 
 select * from Incharge_log;
+
+drop procedure get_reporting_employees;
+delimiter //
+create procedure get_reporting_employees(in incharge_id1 int)
+	begin
+		select * from Incharge_log where incharge_id=incharge_id1;
+	end //
+delimiter ;
+call get_reporting_employees(1);
+
+drop procedure get_reporting_employees;
+delimiter //
+create procedure get_incharges(in emp_id1 int)
+	begin
+		select * from Incharge_log where emp_id=emp_id1;
+	end //
+delimiter ;
+call get_incharges(2);
 
 
 
@@ -751,7 +767,7 @@ end //
 delimiter ;
 
 #----------------- <Calls> -----------------#
-call get_swipe_log_ref(1,"2019/04/23","2019/04/24",1);
+call get_swipe_log_ref(11,"2019/04/22","2019/04/23",1);
 #----------------- </Calls> -----------------#
 
 
@@ -760,10 +776,21 @@ delimiter //
 create procedure get_last_dates_of_employee(in emp_id1 int, in limit1 int)
 begin
     SELECT * FROM Main_swipe  where emp_id=emp_id1 and remarks="Successful"  group by date_log
-	ORDER BY log_id DESC
+	ORDER BY date_log DESC
 	LIMIT limit1;
 end //
 delimiter ;
 call get_last_dates_of_employee(1,7);
 select * from Main_swipe;
 drop procedure get_last_dates_of_employee;
+
+
+
+delimiter //
+create procedure get_last_date()
+begin
+    SELECT * FROM Main_swipe group by date_log	ORDER BY date_log DESC LIMIT 1;
+end //
+delimiter ;
+
+call get_last_date();

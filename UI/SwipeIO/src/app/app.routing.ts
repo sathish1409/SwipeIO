@@ -6,6 +6,7 @@ import {LoginComponent} from './login/login.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { EmployeeReportComponent } from './employee-report/employee-report.component';
+import { EmployeeLayoutComponent } from './layouts/employee-layout/employee-layout.component';
 //import { UserreportComponent } from './userreport/userreport.component';
 const routes: Routes =[
   {
@@ -17,10 +18,6 @@ const routes: Routes =[
     path: 'login',
     component:LoginComponent,
   },
-  {
-    path:'employee_report',
-    component:EmployeeReportComponent
-  },
    {
     path: '',
     component: AdminLayoutComponent,
@@ -29,6 +26,14 @@ const routes: Routes =[
       loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
     }],
     canActivate: [AuthGuard] 
+  },
+  {
+    path: '',
+    component: EmployeeLayoutComponent,
+    children: [{
+      path: '',
+      loadChildren: './layouts/employee-layout/employee-layout.module#EmployeeLayoutModule'
+    }],
   },
  
   { path: '**', redirectTo: '' }

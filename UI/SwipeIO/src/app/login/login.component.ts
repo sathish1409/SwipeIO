@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit{
   loading = false;
   submitted = false;
   returnUrl: string;
+  test : Date = new Date();
 
   constructor(
       private formBuilder: FormBuilder,

@@ -16,9 +16,11 @@ namespace SwipeIO_Web_API.Services
     {
         Employee Authenticate(string email, string password);
         IEnumerable<Employee> GetAll();
+        IEnumerable<Employee> GetReportingEmployees(int id);
         int Add(Employee emp);
         Employee GetById(int id);
         int Delete(int id);
+        IEnumerable<Employee> GetIncharges(int id);
     }
 
     public class EmployeeService : IEmployeeService
@@ -87,6 +89,26 @@ namespace SwipeIO_Web_API.Services
         {
             int isDelete = Emp.Database.ExecuteSqlCommand("call delete_employee({0});", id);
             return isDelete;
+        }
+
+        public IEnumerable<Employee> GetReportingEmployees(int id)
+        {
+            Incharge_log[] incharge_log= Emp.Incharge_log.FromSql("call get_reporting_employees({0});",id).ToArray();
+            Employee[] _employees=new Employee[incharge_log.Length];
+            for (var i = 0; i < incharge_log.Length; i++) {
+                 _employees[i]= Emp.Employee.FromSql("call get_employee({0});",incharge_log[i].emp_id).ToArray().First();
+            }
+            return _employees;
+        }
+        public IEnumerable<Employee> GetIncharges(int id)
+        {
+            Incharge_log[] incharge_log = Emp.Incharge_log.FromSql("call get_incharges({0});", id).ToArray();
+            Employee[] _employees = new Employee[incharge_log.Length];
+            for (var i = 0; i < incharge_log.Length; i++)
+            {
+                _employees[i] = Emp.Employee.FromSql("call get_employee({0});", incharge_log[i].emp_id).ToArray().First();
+            }
+            return _employees;
         }
     }
 }

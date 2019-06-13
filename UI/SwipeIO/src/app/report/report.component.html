@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <form [formGroup]="filterForm" (submit)="onSubmit()">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <mat-form-field>
                                         <input  formControlName="from" matInput [matDatepicker]="from" placeholder="From"
                                         (focus)="from.open()"  [ngClass]="{ 'is-invalid': submitted && f.from.errors }">
@@ -23,7 +23,7 @@
                                         </div>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <mat-form-field>
                                         <input  formControlName="to" matInput [matDatepicker]="to" placeholder="To"
                                         (focus)="to.open()"  [ngClass]="{ 'is-invalid': submitted && f.to.errors }">
@@ -34,7 +34,28 @@
                                         </div>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-4">
+                                
+                                <div class="col-md-2">
+                                    <mat-form-field>
+                                        <mat-label>Select Employee</mat-label>
+                                        <mat-select [(ngModel)]="selectedEmployee" (ngModelChange)="onSubmit()" formControlName="selectedEmployee1">
+                                          <mat-option *ngFor="let Employee of Employees" [value]="Employee">
+                                            {{Employee.emp_name}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                        <mat-form-field>
+                                            <mat-label>Select Gate</mat-label>
+                                            <mat-select [(ngModel)]="selectedGate" (ngModelChange)="onSubmit()" formControlName="gate">
+                                              <mat-option *ngFor="let gate of Gates" [value]="gate">
+                                                {{gate.gate_name}}
+                                              </mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+                                    </div>
+                                <div class="col-md-2">
                                     <button class="btn btn-primary" type="submit">
                                         Get Report
                                     </button>
@@ -52,13 +73,13 @@
                       <div class="card-icon">
                           <i class="material-icons">account_circle</i>
                       </div>
-                      <p class="card-category">{{currentEmployee.emp_number}}</p>
-                      <h3 class="card-title">{{currentEmployee.emp_name}}</h3>
+                      <p class="card-category">{{selectedEmployee.emp_number}}</p>
+                      <h3 class="card-title">{{selectedEmployee.emp_name}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
                           
-                          <p>{{currentEmployee.email}}</p>
+                          <p>{{selectedEmployee.email}}</p>
                       </div>
                   </div>
               </div>
@@ -67,7 +88,7 @@
               <div class="card card-stats">
                   <div class="card-header card-header-info card-header-icon">
                       <div class="card-icon">
-                          <i class="material-icons">clear</i>
+                          <i class="material-icons">done</i>
                       </div>
                       <p class="card-category">Present</p>
                       <h3 class="card-title">{{present}} Days</h3>
@@ -98,7 +119,7 @@
           
     </div>
         
-      <div *ngIf='report' class="row">
+      <div *ngIf='data; else elseBlock' class="row">
           <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-danger">
@@ -128,20 +149,22 @@
                                   
                               </thead>
                               <tbody>
-                                  <tr *ngFor="let report_rec of report">
-                                      <td>
-                                          {{report_rec.date | date: 'd/M/yyyy'}}
+                                  <tr *ngFor="let report_rec of report" mat-raised-button matTooltip="Click to View Detailed Logs"  [ngClass]="{'text-danger':report_rec.doubt_flag}" (click)="viewDates(selectedEmployee,report_rec.date)" >
+                                      <td *ngIf="report_rec.date"><span>
+                                        {{report_rec.date | date: 'd/M/yyyy'}}
+                                      </span>
+                                          
                                       </td>
-                                      <td>
+                                      <td *ngIf="report_rec.in_time">
                                         {{report_rec.in_time}}
                                     </td>
-                                    <td>
+                                    <td *ngIf="report_rec.out_time">
                                             {{report_rec.out_time}}
                                     </td>
-                                    <td class="text-info">
+                                    <td *ngIf="report_rec.hours_inside_office" class="text-info">
                                           {{report_rec.hours_inside_office}}
                                       </td>
-                                      <td [ngClass]="{'text-danger':isNotGreater(report_rec.hours_worked),'text-success':!isNotGreater(report_rec.hours_worked)}">
+                                      <td *ngIf="report_rec.hours_worked" [ngClass]="{'text-danger':isNotGreater(report_rec.hours_worked),'text-success':!isNotGreater(report_rec.hours_worked)}">
                                           {{report_rec.hours_worked}}
                                       </td>
                                   </tr>                                
@@ -153,5 +176,6 @@
           </div>
         
       </div>
+      <ng-template #elseBlock><p>No Data Available</p></ng-template>
   </div>
 </div>

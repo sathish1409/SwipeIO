@@ -19,9 +19,13 @@ export class DashboardComponent implements OnInit {
   filterForm: FormGroup;
   loading = false;
   submitted = false;
+  gate_id=1;
+
+  
   Params={
     emp_id:1,
-    days:1
+    days:1,
+    gate_id:1
   };
   currentEmployee : Employee;
   present:number;
@@ -48,6 +52,7 @@ export class DashboardComponent implements OnInit {
             this.Employees.forEach(employee => {
             this.Params.emp_id=employee.emp_id;
             this.Params.days=this.days;
+            this.Params.gate_id=this.gate_id;
 
             console.log(this.Params);
 

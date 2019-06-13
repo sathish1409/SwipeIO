@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { NgxUiLoaderModule, NgxUiLoaderConfig, POSITION, SPINNER, PB_DIRECTION } from  'ngx-ui-loader';
-
+import{EmployeeLayoutComponent} from './layouts/employee-layout/employee-layout.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
@@ -26,31 +26,17 @@ import {  EmployeeService } from './_services/Employee.service';
 import {  LogService } from './_services/Log.service';
 import{ReportService} from './_services/Report.service'
 import{SettingService} from './_services/Setting.service'
-
-
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { TableListComponent } from './table-list/table-list.component';
-import { TypographyComponent } from './typography/typography.component';
-import { IconsComponent } from './icons/icons.component';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { UpgradeComponent } from './upgrade/upgrade.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { ReportComponent } from './report/report.component';
-import { AddorremoveComponent } from './addorremove/addorremove.component';
 import { LoginComponent } from './login/login.component';
-import { EditComponent } from './edit/edit.component';
-import { AddComponent } from './add/add.component';
-import { SettingsComponent } from './settings/settings.component';
-import { ImportComponent } from './import/import.component';
 //import { EmployeereportComponent } from './Employeereport/Employeereport.component';
 import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { NgDatepickerModule } from 'ng2-datepicker';
-import { EmployeeReportComponent } from './employee-report/employee-report.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { ReportModelComponent } from './report-model/report-model.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
+
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "#00ACC1",
   bgsOpacity: 0.5,
@@ -99,14 +85,15 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatMenuModule,
     MatIconModule,
     MatToolbarModule
-
   ],
   declarations: [
     AppComponent,
     AlertComponent,
     AdminLayoutComponent,
+    EmployeeLayoutComponent,
     LoginComponent,
-    EmployeeReportComponent,    //EmployeereportComponent,
+    ConfirmationComponent,
+
   ],
   providers: [
     AuthGuard,

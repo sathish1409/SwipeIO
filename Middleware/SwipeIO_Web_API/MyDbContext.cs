@@ -1,11 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SwipeIO_Web_API
 {
@@ -17,7 +13,16 @@ namespace SwipeIO_Web_API
         public DbSet<Card> Card { get; set; }
         public DbSet<Gate> Gate { get; set; }
         public DbSet<Leave> Leave { get; set; }
+        public DbSet<Incharge_log> Incharge_log { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<RefinedLog>().HasKey(table => new {
+                table.date_log,
+                table.time_log,
+                table.emp_id
+            });
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("server = localhost; port = 3306; database = swipeio; uid = root; password = ");
@@ -38,7 +43,7 @@ namespace SwipeIO_Web_API
         [NotMapped]
         public string Token { get; set; }
         [NotMapped]
-        public string card_number{ get; set; }
+        public string card_number { get; set; }
         [NotMapped]
         public int[] incharges { get; set; }
 
@@ -48,7 +53,13 @@ namespace SwipeIO_Web_API
         public const string Admin = "Admin";
         public const string Employee = "Employee";
     }
-
+    public class Incharge_log
+    {
+        [Key]
+        public int incharge_log_id { get; set; }
+        public int emp_id { get; set; }
+        public int incharge_id { get; set; }
+    }
 
     public class Log
     {
@@ -70,11 +81,11 @@ namespace SwipeIO_Web_API
     public class RefinedLog
     {
         [Key]
-        public int log_id { get; set; }
-
         public DateTime date_log { get; set; }
+        [Key]
         public TimeSpan time_log { get; set; }
         public bool inorout { get; set; }
+        [Key]
         public int emp_id { get; set; }
         public int gate_id { get; set; }
         public int card_id { get; set; }
@@ -87,6 +98,14 @@ namespace SwipeIO_Web_API
         public int emp_id { get; set; }
 
         public int days { get; set; }
+        public int gate_id { get; set; }
+    }
+    public class RefinedLogParameter
+    {
+        public int emp_id { get; set; }
+
+        public string date { get; set; }
+        public int gate_id { get; set; }
     }
 
     public class ReportParameters
@@ -94,7 +113,8 @@ namespace SwipeIO_Web_API
         public int emp_id { get; set; }
         public string from { get; set; }
         public string to { get; set; }
-        
+        public int gate_id { get; set; }
+
     }
     public class Card
     {
@@ -125,7 +145,7 @@ namespace SwipeIO_Web_API
         public TimeSpan out_time { get; set; }
         public TimeSpan hours_worked { get; set; }
         public TimeSpan hours_inside_office { get; set; }
+        public Boolean doubt_flag { get; set; }
 
     }
-
 }

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Log } from '../_models/Log';
 import { environment } from 'environments/environment';
-import { ReportParams, Report } from 'app/_models/Report';
+import { ReportParams, Report, RefinedLog, RefinedLogParams } from 'app/_models/Report';
 
 @Injectable()
 export class ReportService {
@@ -23,7 +23,13 @@ export class ReportService {
     getLastReport(reportParams:any) {
         return this.http.post<Report[]>(`${environment.apiUrl}/Report/get_last_report`,reportParams);
     }
-
+    getRefinedLog(reportParams:RefinedLogParams) {
+        return this.http.post<RefinedLog[]>(`${environment.apiUrl}/Report/get_refined_log`,reportParams);
+    }
+    getLastRefinedLog() {
+        return this.http.get<RefinedLog[]>(`${environment.apiUrl}/Report/last_log`);
+    }
+    
     // update(Employee: Employee) {
     //     return this.http.put(`${environment.apiUrl}/Employee/` + Employee.emp_id, Employee);
     // }

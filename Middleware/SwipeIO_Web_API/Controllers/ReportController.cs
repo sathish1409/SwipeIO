@@ -9,21 +9,20 @@ using SwipeIO_Web_API.Services;
 
 namespace SwipeIO_Web_API.Controllers
 {
-   // [Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReportController : ControllerBase
     {
         private IReportService _reportService;
+        private IEmployeeService _employeeService;
 
 
-        public ReportController(IReportService reportService)
+        public ReportController(IReportService reportService, IEmployeeService employeeService)
         {
             _reportService = reportService;
+            _employeeService = employeeService;
         }
-
-
-
 
 
         
@@ -32,10 +31,14 @@ namespace SwipeIO_Web_API.Controllers
         {
             var data = _reportService.GetReport(reportParameters);
             var currentUserId = int.Parse(User.Identity.Name);
-            if (reportParameters.emp_id != currentUserId && !User.IsInRole(Role.Admin))
-            {
-                return Forbid();
+            Employee[] incharges = _employeeService.GetIncharges(currentUserId).ToArray();
+            for (var i=0;i<incharges.Length;i++) {
+                if (reportParameters.emp_id != currentUserId && incharges[i].emp_id != currentUserId && !User.IsInRole(Role.Admin))
+                {
+                    return Forbid();
+                }
             }
+            
             if (data == null)
                 return BadRequest(new { message = "Error" });
 
@@ -43,9 +46,9 @@ namespace SwipeIO_Web_API.Controllers
         }
 
         [HttpPost("get_last_report")]
-        public IActionResult Add([FromBody]LastReportParameters lastReportParameters)
+        public IActionResult GetLastReport([FromBody]LastReportParameters lastReportParameters)
         {
-            var data = _reportService.GetLastReports(lastReportParameters.emp_id,lastReportParameters.days);
+            var data = _reportService.GetLastReports(lastReportParameters.emp_id,lastReportParameters.days,lastReportParameters.gate_id);
             //var currentUserId = int.Parse(User.Identity.Name);
            /* if (lastReportParameters.emp_id != currentUserId && !User.IsInRole(Role.Admin))
             {
@@ -54,6 +57,35 @@ namespace SwipeIO_Web_API.Controllers
             if (data == null)
                 return BadRequest(new { message = "Error" });
 
+            return Ok(data);
+        }
+
+        [HttpPost("get_refined_log")]
+        public IActionResult GetRefinedLog([FromBody]RefinedLogParameter refinedLogParameter)
+        {
+            var data = _reportService.GetRefinedLog(refinedLogParameter.emp_id, refinedLogParameter.date, refinedLogParameter.gate_id);
+            //var currentUserId = int.Parse(User.Identity.Name);
+            /* if (lastReportParameters.emp_id != currentUserId && !User.IsInRole(Role.Admin))
+             {
+                 return Forbid();
+             }*/
+            if (data == null)
+                return BadRequest(new { message = "Error" });
+            return Ok(data);
+        }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpGet("last_log")]
+        public IActionResult GetLastLog()
+        {
+            var data = _reportService.GetLastRefinedLog();
+            //var currentUserId = int.Parse(User.Identity.Name);
+            /* if (lastReportParameters.emp_id != currentUserId && !User.IsInRole(Role.Admin))
+             {
+                 return Forbid();
+             }*/
+            if (data == null)
+                return BadRequest(new { message = "Error" });
             return Ok(data);
         }
 

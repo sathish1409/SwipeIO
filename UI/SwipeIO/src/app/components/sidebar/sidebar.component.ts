@@ -23,6 +23,15 @@ export const ROUTES: RouteInfo[] = [
     { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
     { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },*/
 ];
+export const ROUTES_Employee: RouteInfo[] = [
+  { path: '/employee_report', title: 'Report',  icon: 'person', class: '' },
+/*  { path: '/Employee-profile', title: 'Employee Profile',  icon:'person', class: '' },
+  { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
+  { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },
+  { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
+  { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
+  { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },*/
+];
 
 @Component({
   selector: 'app-sidebar',
@@ -31,6 +40,7 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
   menuItems: any[];
+  menuItems_employee: any[];
   currentEmployee: Employee;
   constructor(private EmployeeService: EmployeeService) {
     this.currentEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
@@ -38,6 +48,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.menuItems_employee=ROUTES_Employee.filter(menuItem => menuItem);
   }
   isMobileMenu() {
       if ($(window).width() > 991) {

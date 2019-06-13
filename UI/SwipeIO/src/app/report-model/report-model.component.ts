@@ -26,6 +26,8 @@ export class ReportModelComponent implements OnInit {
   present:number;
   defaultDays=0;
   threshold=9;
+  gate_id=1;
+  data1:boolean;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private ngxService: NgxUiLoaderService, private EmployeeService:EmployeeService,  private reportService:ReportService,private formBuilder: FormBuilder) {
 
    }
@@ -38,6 +40,7 @@ export class ReportModelComponent implements OnInit {
   
   report:Report[];
   
+  
   get f() { return this.filterForm.controls; }
 
   onSubmit() {
@@ -48,16 +51,18 @@ export class ReportModelComponent implements OnInit {
       if (this.filterForm.invalid) {
           return;
       }
-      this.ngxService.start();
+      
       this.loading = true;
       this.Params={
         emp_id:this.data.employee.emp_id,
         from: this.filterForm.value.from.getFullYear()+"/"+(this.filterForm.value.from.getMonth()+1)+"/"+this.filterForm.value.from.getDate(),
         to: this.filterForm.value.to.getFullYear()+"/"+(this.filterForm.value.to.getMonth()+1)+"/"+this.filterForm.value.to.getDate(),
+        gate_id:this.gate_id
       }
       this.reportService.getReport(this.Params).pipe(first()).subscribe(report_in => { 
         this.report = report_in; 
         this.present=this.report.length;
+        this.data=(report_in.length>0)?true:false;
         this.report.forEach(row => {
           if(this.isNotGreater(row.hours_worked)){
             this.defaultDays+=1;
@@ -65,20 +70,20 @@ export class ReportModelComponent implements OnInit {
         });
     });
 
-      this.ngxService.stop();   
+
   }
   isNotGreater(n){
     return parseInt(n)<this.threshold? 1:0;
   }
 
   ngOnInit() {
-    this.ngxService.start();   
+
     this.filterForm = this.formBuilder.group({
       from:  ['', Validators.required],
       to:  ['', Validators.required],
   });
   
-  this.ngxService.stop();   
+
   }
 
 }

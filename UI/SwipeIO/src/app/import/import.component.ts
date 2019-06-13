@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { LogService } from 'app/_services/Log.service';
 import { AlertService } from 'app/_services/alert.service';
 import { Log } from 'app/_models/Log';
+import { ReportService } from 'app/_services/Report.service';
+import { RefinedLog } from 'app/_models/Report';
 @Component({
   selector: 'app-import',
   templateUrl: './import.component.html',
@@ -16,9 +18,13 @@ export class ImportComponent implements OnInit {
   constructor(private ngxService: NgxUiLoaderService,
     private router: Router,
       private LogService: LogService,
-      private alertService: AlertService) { }
-
+      private alertService: AlertService,
+      private reportService:ReportService) { }
+ refinedLog:RefinedLog;
   ngOnInit() {
+    this.reportService.getLastRefinedLog().pipe(first()).subscribe(report_in => { 
+      this.refinedLog = report_in[0]; 
+  });
   }
   data:Log[];
   arrayBuffer:any;
@@ -60,7 +66,6 @@ export class ImportComponent implements OnInit {
                 this.alertService.success('Swipe Log Updated Successfully', true);
                 this.ngxService.stop();
                 this.router.navigate(['/import']);
-
             },
             error => {
                 this.alertService.error(error);

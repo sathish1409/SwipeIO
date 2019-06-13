@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-//import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
@@ -19,8 +18,11 @@ import {ImportComponent} from '../../import/import.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import {ReportModelComponent} from '../../report-model/report-model.component';
+import{RefinedLogComponent} from '../../refined-log/refined-log.component'
+import {ConfirmationBoxComponent} from '../../confirmation-box/confirmation-box.component';
+
 import {
   MatButtonModule,
   MatInputModule,
@@ -66,14 +68,19 @@ import {
     AddComponent,
     SettingsComponent,
     ImportComponent,
-    ReportModelComponent
+    ReportModelComponent,
+    RefinedLogComponent,
+    ConfirmationBoxComponent
   ],
   entryComponents: [
-    ReportModelComponent
+    ReportModelComponent,
+    RefinedLogComponent,
+    ConfirmationBoxComponent
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    {provide: MAT_CHECKBOX_CLICK_ACTION, useValue: 'check'}
+    {provide: MAT_CHECKBOX_CLICK_ACTION, useValue: 'check'},
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
   ],
 })
 

@@ -11,7 +11,9 @@ export class EmployeeService {
     getAll() {
         return this.http.get<Employee[]>(`${environment.apiUrl}/Employee`);
     }
-
+    getReportingEmployee(employee:Employee) {
+        return this.http.post<Employee[]>(`${environment.apiUrl}/Employee/get_reporting_employees`,employee);
+    }
     getById(id: number) {
         return this.http.get<Employee>(`${environment.apiUrl}/Employee/` + id);
     }

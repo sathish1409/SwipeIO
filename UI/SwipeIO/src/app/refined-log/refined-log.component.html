@@ -1,0 +1,54 @@
+
+    <h2 mat-dialog-title>{{data.employee.emp_name}}</h2>
+    <mat-dialog-content class="mat-typography">
+
+        
+      <div *ngIf='reportLog' class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title ">Logs on {{data.date | date: 'd/M/yyyy'}}</h4>
+
+                      <p class="card-category"></p>
+                  </div>
+                  <div  class="card-body">
+                      <div class="table-responsive">
+                          <table class="table">
+                              <thead class=" text-primary">
+                                  <th>
+                                      Date
+                                  </th>
+                                  <th>
+                                      Time
+                                  </th>
+                                  <th>
+                                    In / Out
+                                </th>
+                                
+                                  
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let report_rec of reportLog">
+                                      <td>
+                                          {{report_rec.date_log | date: 'd/M/yyyy'}}
+                                      </td>
+                                      <td>
+                                        {{report_rec.time_log}}
+                                    </td>
+                                    <td>
+                                            {{report_rec.inorout}}
+                                    </td>
+                                    
+                                 </tr>                                
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        
+      </div>
+      </mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+  </mat-dialog-actions>

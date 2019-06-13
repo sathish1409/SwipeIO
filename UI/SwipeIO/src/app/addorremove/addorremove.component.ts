@@ -6,6 +6,7 @@ import { EmployeeService } from '../_services/Employee.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { MatDialog } from '@angular/material';
 import { ReportModelComponent } from 'app/report-model/report-model.component';
+import { ConfirmationBoxComponent } from 'app/confirmation-box/confirmation-box.component';
 @Component({
   selector: 'app-addorremove',
   templateUrl: './addorremove.component.html',
@@ -34,12 +35,17 @@ export class AddorremoveComponent implements OnInit {
     this.ngxService.stop();
   }
   
-  deleteEmployee(id: number) {
-    this.ngxService.start();
-    this.EmployeeService.delete(id).pipe(first()).subscribe(() => { 
+  deleteEmployee(employee:Employee) {
+    const dialogRef = this.dialog.open(ConfirmationBoxComponent,{
+      data: {name:employee.emp_name}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result==true)
+      this.EmployeeService.delete(employee.emp_id).pipe(first()).subscribe(() => { 
         this.loadAllEmployees() 
     });
-    this.ngxService.stop();
+    });
 }
 
 private loadAllEmployees() {

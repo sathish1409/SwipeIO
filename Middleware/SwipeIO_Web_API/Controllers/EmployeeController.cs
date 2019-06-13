@@ -60,6 +60,14 @@ namespace SwipeIO_Web_API.Controllers
             return Ok(employees);
         }
 
+        [Authorize(Roles = Role.Employee)]
+        [HttpPost("get_reporting_employees")]
+        public IActionResult GetReportingEmployees(Employee emp)
+        {
+            var employees = _employeeService.GetReportingEmployees(emp.emp_id);
+            return Ok(employees);
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {

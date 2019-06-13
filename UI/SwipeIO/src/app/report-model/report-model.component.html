@@ -67,7 +67,7 @@
               <div class="card card-stats">
                   <div class="card-header card-header-info card-header-icon">
                       <div class="card-icon">
-                          <i class="material-icons">clear</i>
+                          <i class="material-icons">done</i>
                       </div>
                       <p class="card-category">Present</p>
                       <h3 class="card-title">{{present}} Days</h3>
@@ -98,7 +98,7 @@
           
     </div>
         
-      <div *ngIf='report' class="row">
+      <div *ngIf='data1; else elseBlock'  class="row">
           <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-danger">
@@ -153,6 +153,10 @@
           </div>
         
       </div>
+      <ng-template #elseBlock><p>No Data Available</p></ng-template>
       </mat-dialog-content>
+      <mat-dialog-actions align="end">
+            <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+          </mat-dialog-actions>
   </div>
 </div>
