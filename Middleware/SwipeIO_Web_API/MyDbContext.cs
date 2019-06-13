@@ -14,7 +14,7 @@ namespace SwipeIO_Web_API
         public DbSet<Gate> Gate { get; set; }
         public DbSet<Leave> Leave { get; set; }
         public DbSet<Incharge_log> Incharge_log { get; set; }
-
+        public DbSet<Config> Config { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<RefinedLog>().HasKey(table => new {
@@ -137,6 +137,19 @@ namespace SwipeIO_Web_API
         public string gate_name { get; set; }
 
     }
+    public class Config
+    {
+        [Key]
+        public int config_id { get; set; }
+        public string description { get; set; }
+        public string value { get; set; }
+    }
+    public class ConfigParam
+    {
+
+        public string description { get; set; }
+   
+    }
     public class Report
     {
         public int emp_id { get; set; }
@@ -146,6 +159,7 @@ namespace SwipeIO_Web_API
         public TimeSpan hours_worked { get; set; }
         public TimeSpan hours_inside_office { get; set; }
         public Boolean doubt_flag { get; set; }
+        public string day_cons { get; set; }
 
     }
 }

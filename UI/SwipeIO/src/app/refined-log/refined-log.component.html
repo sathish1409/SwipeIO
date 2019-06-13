@@ -3,7 +3,7 @@
     <mat-dialog-content class="mat-typography">
 
         
-      <div *ngIf='reportLog' class="row">
+      <div *ngIf='refinedLog' class="row">
           <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-danger">
@@ -28,7 +28,7 @@
                                   
                               </thead>
                               <tbody>
-                                  <tr *ngFor="let report_rec of reportLog">
+                                  <tr *ngFor="let report_rec of refinedLog">
                                       <td>
                                           {{report_rec.date_log | date: 'd/M/yyyy'}}
                                       </td>
@@ -36,7 +36,7 @@
                                         {{report_rec.time_log}}
                                     </td>
                                     <td>
-                                            {{report_rec.inorout}}
+                                            {{InOrOut(report_rec.inorout)}}
                                     </td>
                                     
                                  </tr>                                

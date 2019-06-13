@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SwipeIO_Web_API.Services;
 
 namespace SwipeIO_Web_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SettingController : ControllerBase
@@ -74,16 +76,63 @@ namespace SwipeIO_Web_API.Controllers
             return Ok();
         }
 
+
+
+
+        // DELETE: api/ApiWithActions/5
+        [Authorize(Roles = Role.Admin)]
+        [HttpDelete("gates/{id}")]
+        public IActionResult Delete(int id)
+        {
+            var isDelete = _settingService.DeleteGates(id);
+
+            if (isDelete == 0)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
+        // DELETE: api/ApiWithActions/5
+        [Authorize(Roles = Role.Admin)]
+        [HttpDelete("cards/{id}")]
+
+        public IActionResult DeleteCards(int id)
+        {
+            var isDelete = _settingService.DeleteCards(id);
+
+            if (isDelete == 0)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
+        // DELETE: api/ApiWithActions/5
+        [Authorize(Roles = Role.Admin)]
+        [HttpDelete("leaves/{id}")]
+
+        public IActionResult DeleteLeaves(int id)
+        {
+            var isDelete = _settingService.DeleteLeaves(id);
+
+            if (isDelete == 0)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
+
+
+
+
         // PUT: api/Setting/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
     }
 }

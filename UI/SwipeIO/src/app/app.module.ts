@@ -10,7 +10,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers/fake-backend';
-import {MatDatepickerModule, MatInputModule,MatNativeDateModule} from '@angular/material';
+import {MatDatepickerModule, MatInputModule,MatNativeDateModule, MatButtonModule, MatDialogModule} from '@angular/material';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
@@ -36,6 +36,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashboard.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "#00ACC1",
@@ -68,6 +70,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 @NgModule({
   imports: [
     BrowserAnimationsModule,
+    MatButtonModule,
     FormsModule,
     HttpModule,
     ComponentsModule,
@@ -84,7 +87,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatTabsModule,
     MatMenuModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatDialogModule,
   ],
   declarations: [
     AppComponent,
@@ -93,7 +97,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     EmployeeLayoutComponent,
     LoginComponent,
     ConfirmationComponent,
+    ForgotPasswordComponent,
+    EmployeeDashboardComponent,
 
+  ],
+  entryComponents: [
+    ForgotPasswordComponent,
   ],
   providers: [
     AuthGuard,

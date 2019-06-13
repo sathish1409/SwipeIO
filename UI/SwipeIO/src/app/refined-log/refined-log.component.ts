@@ -15,9 +15,12 @@ export class RefinedLogComponent implements OnInit {
 Params:RefinedLogParams;
 refinedLog:RefinedLog[];
 showLog:ShowLog[];
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
    private reportService:ReportService,) { }
-   
+  InOrOut(inorout){
+      return (inorout)?'In':'Out';
+  }
   ngOnInit() {
       this.Params={
         emp_id:this.data.employee.emp_id,
@@ -25,8 +28,7 @@ showLog:ShowLog[];
         gate_id:this.data.gate_id
       }
       this.reportService.getRefinedLog(this.Params).pipe(first()).subscribe(report_in => { 
-       this.refinedLog = report_in; 
-       
+       this.refinedLog = report_in;
     });
   }
 

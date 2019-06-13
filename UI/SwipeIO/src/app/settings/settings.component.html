@@ -3,9 +3,9 @@
         <div *ngIf="Leaves" class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header card-header-warning">
+                    <div class="card-header card-header-danger">
                         <h4 class="card-title ">Gates
-                                <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right">
+                                <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right disabled">
                                         <i class="material-icons">add</i> Add Gate
                                 </button>
                         </h4>
@@ -34,7 +34,7 @@
                                             {{Gate.gate_name}}
                                         </td>
                                         <td class="td-actions">
-                                                <button mat-raised-button type="button" matTooltip="Remove {{Gate.gate_name}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+                                                <button mat-raised-button type="button" (click)="deleteGate(Gate)" matTooltip="Remove {{Gate.gate_name}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
                                                     <i class="material-icons">close</i>
                                                 </button>
                                         </td>
@@ -48,9 +48,9 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header card-header-warning">
+                    <div class="card-header card-header-danger">
                         <h4 class="card-title ">Leave Descriptions
-                                <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right">
+                                <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right disabled">
                                         <i class="material-icons">add</i> Add Leave
                                 </button>
                         </h4>
@@ -79,7 +79,7 @@
                                             {{Leave.leave_name}}
                                         </td>
                                         <td class="td-actions">
-                                                <button mat-raised-button type="button" matTooltip="Remove  {{Leave.leave_name}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+                                                <button mat-raised-button type="button" (click)="deleteLeaves(Leave)"  matTooltip="Remove  {{Leave.leave_name}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
                                                     <i class="material-icons">close</i>
                                                 </button>
                                         </td>
@@ -93,9 +93,9 @@
             </div>
             <div class="col-md-4">
                     <div class="card">
-                        <div class="card-header card-header-warning">
+                        <div class="card-header card-header-danger">
                             <h4 class="card-title ">Cards
-                                    <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right">
+                                    <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right disabled">
                                             <i class="material-icons">add</i> Add Card
                                     </button>
                             </h4>
@@ -124,7 +124,7 @@
                                                 {{Card.card_number}}
                                             </td>
                                             <td class="td-actions">
-                                                    <button mat-raised-button type="button" matTooltip="Remove  {{Card.card_number}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+                                                    <button mat-raised-button type="button" (click)="deleteCards(Card)"  matTooltip="Remove  {{Card.card_number}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                             </td>

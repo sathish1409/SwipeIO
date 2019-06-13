@@ -6,7 +6,7 @@ import { MatDatepickerInputEvent, MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { from } from 'rxjs';
-import { ReportParams, Report } from 'app/_models/Report';
+import { ReportParams, Report, Config, ConfigParam } from 'app/_models/Report';
 import{ReportService} from '../_services/Report.service'
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { RefinedLogComponent } from 'app/refined-log/refined-log.component';
@@ -29,12 +29,14 @@ export class ReportComponent implements OnInit {
   present:number;
   defaultDays=0;
   threshold=9;
- selectedGate:Gate;
+  selectedGate:Gate;
   data:boolean;
   selectedEmployee:Employee;
-
+  configSwipeIO:Config;
   Employees:Employee[];
-
+  confParam={
+    description:'day_consideration'
+  }
 
   viewDates(employee,date) {
    // var date1=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
@@ -52,6 +54,7 @@ export class ReportComponent implements OnInit {
     this.currentEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
     this.selectedEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
    }
+   
    events: string[] = [];
 
    addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -112,6 +115,10 @@ export class ReportComponent implements OnInit {
       this.Gates=gates; 
       this.selectedGate=gates[0];
     });
+
+    this.reportService.getConfig(this.confParam).pipe(first()).subscribe(report_in => { 
+      this.configSwipeIO = report_in; 
+  });
     this.filterForm = this.formBuilder.group({
       from:  ['', Validators.required],
       to:  ['', Validators.required],

@@ -45,3 +45,13 @@ export class ShowLog{
     time_log:Time;
     inorout:string;
 }
+export class ConfigParam
+{
+description:string;
+}
+export class Config
+{
+config_id:number;
+description:string;
+value:string
+}

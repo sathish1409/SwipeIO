@@ -1,7 +1,11 @@
 <div class="main-content">
   <div class="container-fluid">
       
-
+        <div class="row">
+                <div class="col-md-12">
+                
+                <div class="alert alert-info"><span > Considering A day from {{configSwipeIO.value}} AM to Next Day's {{configSwipeIO.value}} AM</span></div>
+        </div></div>
  <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -10,6 +14,7 @@
                         <p class="card-category"></p>
                     </div>
                     <div class="card-body">
+                            
                         <form [formGroup]="filterForm" (submit)="onSubmit()">
                             <div class="row">
                                 <div class="col-md-2">
@@ -61,11 +66,14 @@
                                     </button>
                                 </div>
                             </div>
+                            <ng-template #elseBlock><div class="alert alert-danger"><span>No Data Availabe</span></div></ng-template>
                         </form>
+                        
                     </div>
                 </div>      
             
-            </div>    </div>
+            </div>    
+        </div>
         <div *ngIf='report'  class="row">
           <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="card card-stats">
@@ -176,6 +184,6 @@
           </div>
         
       </div>
-      <ng-template #elseBlock><p>No Data Available</p></ng-template>
+      
   </div>
 </div>

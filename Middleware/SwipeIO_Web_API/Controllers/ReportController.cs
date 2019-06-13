@@ -88,6 +88,16 @@ namespace SwipeIO_Web_API.Controllers
                 return BadRequest(new { message = "Error" });
             return Ok(data);
         }
+        [Authorize(Roles = Role.Admin)]
+        [HttpPost("config")]
+        public IActionResult GetConfig(ConfigParam desc)
+        {
+            var data = _reportService.GetConfig(desc);
+            if (data == null)
+                return BadRequest(new { message = "Error" });
+            return Ok(data);
+        }
+
 
 
 

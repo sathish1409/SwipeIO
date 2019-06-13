@@ -25,6 +25,19 @@ export class SettingService {
     addLeave(Leave: Leave) {
         return this.http.post(`${environment.apiUrl}/setting/addLeave`, Leave);
     }
+    delete(id: number) {
+        console.log('Called',id);
+        return this.http.delete(`${environment.apiUrl}/Setting/gates/` + id);
+    }
+    deletecards(id: number) {
+        console.log('Called',id);
+        return this.http.delete(`${environment.apiUrl}/Setting/cards/` + id);
+    }
+    deleteleaves(id: number) {
+        console.log('Called',id);
+        return this.http.delete(`${environment.apiUrl}/Setting/leaves/` + id);
+    }
+
 /*
     getById(id: number) {
         return this.http.get<Employee>(`${environment.apiUrl}/Employee/` + id);

@@ -47,7 +47,9 @@ export class AddorremoveComponent implements OnInit {
     });
     });
 }
-
+isAdmin(isadmin){
+  return (isadmin)?'Admin':'Employee';
+}
 private loadAllEmployees() {
   this.ngxService.start();
     this.EmployeeService.getAll().pipe(first()).subscribe(Employees => { 

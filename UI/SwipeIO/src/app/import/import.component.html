@@ -13,7 +13,7 @@
                                 <button class="btn btn-info">Choose .xlsx file</button>
                               <input class="btn" type="file" (change)="incomingfile($event)" accept=".xlsx">   
                             </div>                         
-                            <button type="button" (click)="onSubmit()" class="btn btn-info btn-md" >Upload</button>
+                            <button *ngIf='data' type="button" (click)="onSubmit()" class="btn btn-info btn-md" >Upload</button>
                         </div>
                     </div>
                     <div  *ngIf='data' class="card-body">

@@ -16,7 +16,7 @@ namespace SwipeIO_Web_API.Services
         RefinedLog[] GetRefinedLog(int emp_id,string date,int gate_id);
         IEnumerable<Report> GetLastReports(int emp_id,int days, int gate_id);
         RefinedLog[] GetLastRefinedLog();
-
+        Config GetConfig(ConfigParam desc);
     }
     public class ReportService : IReportService
     {
@@ -53,7 +53,7 @@ namespace SwipeIO_Web_API.Services
                 var today = DateTime.Parse(dates.ElementAt(i).date_log.ToString());
                 DateTime tomo = today.AddDays(1);
                 TimeSpan day1 = new TimeSpan(23, 59, 59);
-                RefinedLog[] data = Emp.RefinedLog.FromSql("call get_swipe_log_ref({0},{1},{2},{3});", emp_id,today,tomo,gate_id ).ToArray();
+                RefinedLog[] data = Emp.RefinedLog.FromSql("call get_swipe_log_ref({0},{1},{2},{3});", emp_id, today, tomo, gate_id).ToArray();
                 if (data.Length > 1)
                 {
                     hours = new TimeSpan(0, 0, 0);
@@ -112,6 +112,12 @@ namespace SwipeIO_Web_API.Services
         {
             
             RefinedLog[] data = Emp.RefinedLog.FromSql("call get_last_date();").ToArray();
+            return data;
+        }
+        public Config GetConfig(ConfigParam desc)
+        {
+
+            Config data = Emp.Config.FromSql("call get_config({0});",desc.description).FirstOrDefault();
             return data;
         }
     }

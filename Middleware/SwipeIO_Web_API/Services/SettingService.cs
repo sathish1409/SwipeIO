@@ -15,6 +15,10 @@ namespace SwipeIO_Web_API.Services
         int AddCard(Card card);
         int AddGate(Gate gate);
         int AddLeave(Leave leave);
+        int DeleteGates(int id);
+        int DeleteCards(int id);
+        int DeleteLeaves(int id);
+
 
     }
     public class SettingService : ISettingService
@@ -53,5 +57,22 @@ namespace SwipeIO_Web_API.Services
             int isDone = setting.Database.ExecuteSqlCommand("call insert_leave_description({0});", leave.leave_name);
             return isDone;
         }
+        public int DeleteGates(int id)
+        {
+            int isDelete = setting.Database.ExecuteSqlCommand("call delete_gate({0});", id);
+            return isDelete;
+        }
+        public int DeleteCards(int id)
+        {
+            int isDelete = setting.Database.ExecuteSqlCommand("call delete_cards({0});", id);
+            return isDelete;
+        }
+
+        public int DeleteLeaves(int id)
+        {
+            int isDelete = setting.Database.ExecuteSqlCommand("call delete_leave_description({0});", id);
+            return isDelete;
+        }
+
     }
 }

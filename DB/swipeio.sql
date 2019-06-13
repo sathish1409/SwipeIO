@@ -13,6 +13,7 @@ drop table if exists Gate;
 drop table if exists Leave_description;
 drop table if exists Leave_log;
 drop table incharge_log;
+drop table swipeio_config;
 
 
 ############################################################################################################
@@ -96,14 +97,28 @@ create table Incharge_log	(
                                 emp_id int,
                                 incharge_id int
 							);
+                            
+create table swipeio_config	(
+								config_id int primary key not null auto_increment,
+                                description varchar(50),
+                                value varchar(20)
+							);
+                            
+insert into swipeio_config(description,value) values('day_consideration','07:00:00');
+drop procedure get_config;
+delimiter //
+create procedure get_config	(
+									in description1 varchar(50)
+								)
+	begin
+		select * from swipeio_config where description=description1;
+	end //
+delimiter ;
 
-
-
-
+call get_config('day_consideration');
 ############################################################################################################
 ######################################## Cards Stored Procedures ###########################################
 ############################################################################################################
-
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a Card <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
@@ -672,8 +687,8 @@ create procedure import_to_swipe	(
         end if;
 		select count(emp_id) into @is_exist_employee from Employee where emp_number=emp_number1;
         if(@is_exist_employee=0)then
-			set @new_email=conv(floor(rand() * 99999999999999), 20, 36) ;
-			call insert_employee(emp_number1,'Not Registered',@new_email,'123456',0,0,card_number1);
+			set @new_email=concat(emp_number1,"@congruentglobal.com") ;
+			call insert_employee(emp_number1,'N/A',@new_email,'12345678',0,0,card_number1);
         end if;
 		select emp_id into @new_emp_id from Employee where emp_number=emp_number1;
 		select card_id into @new_card_id from Cards where card_number=card_number1;
@@ -761,8 +776,9 @@ create procedure get_swipe_log_ref	(
                                     in gate_id1 int
 								)
 begin
-   ( select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log=today1 and time_log>'07:00:00')union
-    (select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log=tomorrow1 and time_log<'07:00:00');
+	select value into @day_cons from swipeio_config where description='day_consideration';
+   ( select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log=today1 and time_log>@day_cons)union
+    (select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log=tomorrow1 and time_log<@day_cons);
 end //
 delimiter ;
 

@@ -7,6 +7,8 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 import { AuthenticationService } from '../_services/authentication.service';
 import { AlertService } from '../_services/alert.service';
+import { ForgotPasswordComponent } from 'app/forgot-password/forgot-password.component';
+import { MatDialog } from '@angular/material';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -25,7 +27,8 @@ export class LoginComponent implements OnInit{
       private router: Router,
       private authenticationService: AuthenticationService,
       private alertService: AlertService,
-      private ngxService: NgxUiLoaderService) {}
+      private ngxService: NgxUiLoaderService,
+      public dialog: MatDialog) {}
 
   ngOnInit() {
     this.ngxService.start();
@@ -45,6 +48,15 @@ export class LoginComponent implements OnInit{
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
+
+  forgot() {
+    const dialogRef = this.dialog.open(ForgotPasswordComponent,{
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 
   onSubmit() {
     
