@@ -95,7 +95,8 @@ create table Leave_log	(
 create table Incharge_log	(
 								incharge_log_id int primary key not null auto_increment,
                                 emp_id int,
-                                incharge_id int
+                                incharge_id int,
+                                is_delete bit default 0
 							);
                             
 create table swipeio_config	(
@@ -229,6 +230,19 @@ create procedure get_cards()
 delimiter ;
 #----------------- <Calls> -----------------#
 call get_cards();
+#----------------- </Calls> -----------------#
+
+
+
+#drop procedure get_cards
+delimiter //
+create procedure get_card(in card_id1 int)
+	begin
+		select * from Cards where card_id=card_id1;
+	end//
+delimiter ;
+#----------------- <Calls> -----------------#
+call get_card(1);
 #----------------- </Calls> -----------------#
 
 
@@ -456,6 +470,7 @@ create procedure delete_employee	(
 										in emp_id1 int
 									)
 	begin
+    call clear_incharge_log(emp_id1);
 		update Employee set is_delete=1 where emp_id=emp_id1;
 	end //
 delimiter ;
@@ -490,28 +505,25 @@ create procedure get_employee(in emp_id1 int)
 delimiter ;
 
 #----------------- <Calls> -----------------#
-call get_employee(1);
+call get_employee(5);
 #----------------- </Calls> -----------------#
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update an Employee <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure update_employee;
+drop procedure update_employee;
 delimiter //
 create procedure update_employee	(	
 										in emp_id1 int,
-										in emp_number1 varchar(10),
 										in emp_name1 varchar(25),
 										in email1 varchar(50),
 										in pass_word1 varchar(20),
 										in is_admin1 bit,
 										in is_contract1 bit,
-										in card_id1 varchar(20)
+										in card_id1 varchar(10)
 									)
 	begin
 		select card_id 	into @new_card_id 
 						from Cards where card_number=card_id1;
-                        
 		update Employee set 
-								emp_number=emp_number1,
                                 emp_name=emp_name1,
 								email=email1, 
 								pass_word=pass_word1,
@@ -525,10 +537,11 @@ create procedure update_employee	(
 delimiter ;
 
 #----------------- <Calls> -----------------#
-#call update_employee(5,'000000C5','Mani','mani@gmail.com',123456,1,1,'05438564');
+call update_employee(5,'Mani','mani1@gmail.com',123456,1,1,'00110554');
+call get_employee(5);
 #----------------- </Calls> -----------------#
-
-
+set foreign_key_checks=0;
+delete from Employee where emp_id=48;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Validate an Employee <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
@@ -637,6 +650,35 @@ delimiter ;
 
 select * from Incharge_log;
 
+
+###################################
+
+#drop procedure insert_incharge_log;
+delimiter //
+create procedure clear_incharge_log(in emp_id1 int)
+	begin
+		delete from Incharge_log where emp_id=emp_id1;
+	end //
+delimiter ;
+SET SQL_SAFE_UPDATES = 0;
+
+call clear_incharge_log(48);
+#----------------- <Calls> -----------------#
+#call insert_incharge_log(2,1);
+#----------------- </Calls> -----------------#
+
+
+select * from Incharge_log;
+####################################
+
+
+
+
+
+
+
+
+
 drop procedure get_reporting_employees;
 delimiter //
 create procedure get_reporting_employees(in incharge_id1 int)
@@ -644,8 +686,8 @@ create procedure get_reporting_employees(in incharge_id1 int)
 		select * from Incharge_log where incharge_id=incharge_id1;
 	end //
 delimiter ;
-call get_reporting_employees(1);
-
+call get_reporting_employees(7);
+call get_employee(12);
 drop procedure get_reporting_employees;
 delimiter //
 create procedure get_incharges(in emp_id1 int)
@@ -653,7 +695,7 @@ create procedure get_incharges(in emp_id1 int)
 		select * from Incharge_log where emp_id=emp_id1;
 	end //
 delimiter ;
-call get_incharges(2);
+call get_incharges(4);
 
 
 
@@ -776,7 +818,7 @@ create procedure get_swipe_log_ref	(
                                     in gate_id1 int
 								)
 begin
-	select value into @day_cons from swipeio_config where description='day_consideration';
+	select DISTINCTROW value into @day_cons from swipeio_config where description='day_consideration';
    ( select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log=today1 and time_log>@day_cons)union
     (select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log=tomorrow1 and time_log<@day_cons);
 end //
@@ -798,6 +840,7 @@ end //
 delimiter ;
 call get_last_dates_of_employee(1,7);
 select * from Main_swipe;
+select count(*) from  Main_swipe;
 drop procedure get_last_dates_of_employee;
 
 
@@ -810,3 +853,4 @@ end //
 delimiter ;
 
 call get_last_date();
+delete * from employee where 

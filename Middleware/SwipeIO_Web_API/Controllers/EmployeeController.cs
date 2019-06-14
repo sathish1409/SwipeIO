@@ -21,10 +21,11 @@ namespace SwipeIO_Web_API.Controllers
 
         MyDbContext Emp = new MyDbContext();
         private IEmployeeService _employeeService;
-
-        public EmployeeController(IEmployeeService employeeService)
+        private ISettingService _settingService;
+        public EmployeeController(IEmployeeService employeeService,ISettingService settingService)
         {
             _employeeService = employeeService;
+            _settingService = settingService;
         }
 
         // POST: api/Employee/authenticate
@@ -60,7 +61,6 @@ namespace SwipeIO_Web_API.Controllers
             return Ok(employees);
         }
 
-        [Authorize(Roles = Role.Employee)]
         [HttpPost("get_reporting_employees")]
         public IActionResult GetReportingEmployees(Employee emp)
         {
@@ -91,9 +91,13 @@ namespace SwipeIO_Web_API.Controllers
 
         // PUT: api/Employee/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Employee employeeParam)
         {
-
+            Card card = this._settingService.getCard(employeeParam.card_id);
+            int isUpdate = _employeeService.Update(id,employeeParam,card.card_number);
+            if (isUpdate == 0)
+                return BadRequest(new { message = "Error" });
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5

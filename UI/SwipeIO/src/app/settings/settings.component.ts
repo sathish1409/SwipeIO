@@ -18,27 +18,45 @@ export class SettingsComponent implements OnInit {
   Cards:Card[];
   Leaves:Leave[];
   deleteGate(gate: Gate) {
-   
-    if(this.confirm(gate.gate_name)){
+
+    
+    const dialogRef = this.dialog.open(ConfirmationBoxComponent,{
+      data: {name:gate.gate_name}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result)
       this.settingService.delete(gate.gate_id).pipe(first()).subscribe(() => { 
         this.getGates();
       });
-    }
- 
+    }); 
+    
   }
+
+
   deleteCards(card: Card) {
-  
-    if(this.confirm(card.card_number)){
-    this.settingService. deletecards(card.card_id).pipe(first()).subscribe(() => { 
-     
-      this.getCards();
-  });this.ngxService.stop();  }}
+    const dialogRef = this.dialog.open(ConfirmationBoxComponent,{
+      data: {name:card.card_number}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result)
+      this.settingService.delete(card.card_id).pipe(first()).subscribe(() => { 
+        this.getCards();
+      });
+    }); 
+}
   deleteLeaves(leave: Leave) {
 
-    if(this.confirm(leave.leave_name)){
-    this.settingService.deleteleaves(leave.leave_id).pipe(first()).subscribe(() => { 
-      this.getLeaves();
-  }); }}
+    const dialogRef = this.dialog.open(ConfirmationBoxComponent,{
+      data: {name:leave.leave_name}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result)
+      this.settingService.delete(leave.leave_id).pipe(first()).subscribe(() => { 
+        this.getLeaves();
+      });
+    }); 
+
+}
 
 
 
@@ -60,17 +78,6 @@ export class SettingsComponent implements OnInit {
     });
   
   }
-
-
-confirm(name):boolean{
-  const dialogRef = this.dialog.open(ConfirmationBoxComponent,{
-    data: {name:name}
-  });
-  dialogRef.afterClosed().subscribe(result => {
-    return result;
-  });
-  return false;
-}
   
   
   ngOnInit() {

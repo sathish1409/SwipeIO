@@ -52,7 +52,7 @@ export class ReportComponent implements OnInit {
   Gates:Gate[];
   constructor(private settingService:SettingService,private ngxService: NgxUiLoaderService,public dialog: MatDialog, private EmployeeService:EmployeeService,  private reportService:ReportService,private formBuilder: FormBuilder, ) {
     this.currentEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
-    this.selectedEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
+    
    }
    
    events: string[] = [];
@@ -104,6 +104,11 @@ export class ReportComponent implements OnInit {
     this.ngxService.start();
       this.EmployeeService.getAll().pipe(first()).subscribe(Employees => { 
           this.Employees = Employees; 
+          this.Employees.forEach(element => {
+            if(element.emp_id==this.currentEmployee.emp_id)
+            this.selectedEmployee=element;
+          });
+          
       });
       this.ngxService.stop();
   }
@@ -115,6 +120,7 @@ export class ReportComponent implements OnInit {
       this.Gates=gates; 
       this.selectedGate=gates[0];
     });
+    
 
     this.reportService.getConfig(this.confParam).pipe(first()).subscribe(report_in => { 
       this.configSwipeIO = report_in; 

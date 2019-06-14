@@ -22,8 +22,8 @@ export class EmployeeService {
         return this.http.post(`${environment.apiUrl}/Employee/add`, Employee);
     }
 
-    update(Employee: Employee) {
-        return this.http.put(`${environment.apiUrl}/Employee/` + Employee.emp_id, Employee);
+    update(id:number,Employee: Employee) {
+        return this.http.put(`${environment.apiUrl}/Employee/` + id, Employee);
     }
 
     delete(id: number) {

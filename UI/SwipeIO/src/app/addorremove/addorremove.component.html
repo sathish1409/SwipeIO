@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-hover">
                                 <thead class=" text-primary">
                                     <th>
                                         Employee ID
@@ -21,11 +21,9 @@
                                     <th>
                                         Email ID
                                     </th>
+                                    
                                     <th>
-                                        Card ID
-                                    </th>
-                                    <th>
-                                        isAdmin
+                                        Admin / Employee
                                     </th>
                                     <th>View / Edit / Remove</th>
                                 </thead>
@@ -40,9 +38,7 @@
                                         <td>
                                             {{employee.email}}
                                         </td>
-                                        <td>
-                                            {{employee.card_id}}
-                                        </td>
+                                        
                                         <td>
                                             {{isAdmin(employee.is_admin)}}
                                         </td>
@@ -50,7 +46,7 @@
                                                 <button (click)="viewReport(employee)" mat-raised-button type="button" matTooltip="View {{employee.emp_name}}'s Report" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
                                                         <i class="material-icons">poll</i>
                                                 </button>
-                                                <button routerLink="/edit/{{employee.emp_id}}" mat-raised-button type="button" matTooltip="Edit {{employee.emp_name}} Details" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-md btn-just-icon disabled">
+                                                <button routerLink="/edit/{{employee.emp_id}}" mat-raised-button type="button" matTooltip="Edit {{employee.emp_name}} Details" [matTooltipPosition]="'above'" class="btn btn-warning btn-link btn-md btn-just-icon">
                                                     <i class="material-icons">edit</i>
                                                 </button>
                                                 <button (click)="deleteEmployee(employee)" mat-raised-button type="button" matTooltip="Remove {{employee.emp_name}}" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">

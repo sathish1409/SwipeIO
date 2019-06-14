@@ -1,11 +1,7 @@
 <div class="main-content">
   <div class="container-fluid">
       
-        <div class="row">
-                <div class="col-md-12">
-                
-                <div class="alert alert-info"><span > Considering A day from {{configSwipeIO.value}} AM to Next Day's {{configSwipeIO.value}} AM</span></div>
-        </div></div>
+        
  <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -66,7 +62,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <ng-template #elseBlock><div class="alert alert-danger"><span>No Data Availabe</span></div></ng-template>
+                           
                         </form>
                         
                     </div>
@@ -74,7 +70,23 @@
             
             </div>    
         </div>
-        <div *ngIf='report'  class="row">
+        <ng-template #elseBlock>
+            <div  class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title ">No Data Available</h4>
+      
+                            <p class="card-category"></p>
+                        </div>
+                        <div  class="card-body"></div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+            
+          <div *ngIf='report'  class="row">
           <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="card card-stats">
                   <div class="card-header card-header-danger card-header-icon">
@@ -86,7 +98,6 @@
                   </div>
                   <div class="card-footer">
                       <div class="stats">
-                          
                           <p>{{selectedEmployee.email}}</p>
                       </div>
                   </div>
@@ -137,19 +148,19 @@
                   </div>
                   <div  class="card-body">
                       <div class="table-responsive">
-                          <table class="table">
+                          <table class="table table-hover">
                               <thead class=" text-primary">
                                   <th>
                                       Date
                                   </th>
                                   <th>
-                                    In
+                                    In Time
                                 </th>
                                 <th>
-                                   Out
+                                   Out Time
                                 </th>
                                 <th>
-                                      Hours Inside
+                                      Total Hours
                                   </th>
                                   <th>
                                       Hours Worked
@@ -169,7 +180,7 @@
                                     <td *ngIf="report_rec.out_time">
                                             {{report_rec.out_time}}
                                     </td>
-                                    <td *ngIf="report_rec.hours_inside_office" class="text-info">
+                                    <td *ngIf="report_rec.hours_inside_office">
                                           {{report_rec.hours_inside_office}}
                                       </td>
                                       <td *ngIf="report_rec.hours_worked" [ngClass]="{'text-danger':isNotGreater(report_rec.hours_worked),'text-success':!isNotGreater(report_rec.hours_worked)}">
@@ -184,6 +195,10 @@
           </div>
         
       </div>
-      
+      <div class="row">
+        <div class="col-md-12">
+        
+        <div class="alert alert-primary"><span > Considering A day from {{configSwipeIO.value}} AM to Next Day's {{configSwipeIO.value}} AM</span></div>
+</div></div>
   </div>
 </div>

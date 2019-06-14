@@ -21,6 +21,7 @@ namespace SwipeIO_Web_API.Services
         Employee GetById(int id);
         int Delete(int id);
         IEnumerable<Employee> GetIncharges(int id);
+        int Update(int id,Employee emp,string card_number);
     }
 
     public class EmployeeService : IEmployeeService
@@ -82,7 +83,15 @@ namespace SwipeIO_Web_API.Services
 
         public Employee GetById(int id)
         {
+
             Employee _employee = Emp.Employee.FromSql("call get_employee({0});",id).ToArray().First();
+            Incharge_log[] incharge_log = Emp.Incharge_log.FromSql("call get_incharges({0});", id).ToArray();
+            int[] incharges= new int[incharge_log.Length];
+            for(var i = 0; i < incharge_log.Length; i++)
+            {
+                incharges[i] = incharge_log[i].incharge_id;
+            }
+            _employee.incharges = incharges;
             return _employee;
         }
         public int Delete(int id)
@@ -96,7 +105,7 @@ namespace SwipeIO_Web_API.Services
             Incharge_log[] incharge_log= Emp.Incharge_log.FromSql("call get_reporting_employees({0});",id).ToArray();
             Employee[] _employees=new Employee[incharge_log.Length];
             for (var i = 0; i < incharge_log.Length; i++) {
-                 _employees[i]= Emp.Employee.FromSql("call get_employee({0});",incharge_log[i].emp_id).ToArray().First();
+                 _employees[i]= Emp.Employee.FromSql("call get_employee({0});",incharge_log[i].emp_id).First();
             }
             return _employees;
         }
@@ -109,6 +118,17 @@ namespace SwipeIO_Web_API.Services
                 _employees[i] = Emp.Employee.FromSql("call get_employee({0});", incharge_log[i].emp_id).ToArray().First();
             }
             return _employees;
+        }
+        public int Update(int id,Employee emp, string card_number)
+        {
+            //call update_employee(5,'Mani','mani@gmail.com',123456,1,1,12);
+            int isUpdate = Emp.Database.ExecuteSqlCommand("call update_employee({0},{1},{2},{3},{4},{5},{6});", id,emp.emp_name,emp.email,emp.pass_word,emp.is_admin,emp.is_contract,card_number);
+            Emp.Database.ExecuteSqlCommand("call clear_incharge_log({0});", id);
+            for (var i = 0; i < emp.incharges.Length; i++)
+            {
+                isUpdate = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});",id, emp.incharges[i]);
+            }
+            return isUpdate;
         }
     }
 }

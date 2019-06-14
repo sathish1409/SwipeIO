@@ -25,6 +25,8 @@ export class EditComponent implements OnInit {
   selectedEmployee:Employee;
   param:Employee;
   id:number;
+
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -34,33 +36,35 @@ export class EditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private ngxService: NgxUiLoaderService
   ) { }
+
+
   ngOnInit() {
         this.ngxService.start();
         
         this.activatedRoute.params.subscribe(paramsId => {
           this.id = paramsId.id;
-      });
-        console.log(this.id);
-      this.EmployeeService.getById(this.id).pipe(first()).subscribe(employee => { 
-        console.log(employee);
-        this.selectedEmployee = employee;
-      });
-      this.EmployeeService.getAll().pipe(first()).subscribe(Employees => { 
-        this.Employees = Employees; 
-      });
-      this.settingService.getCards().pipe(first()).subscribe(cards => {   
-          this.Cards=cards;});
-
-          this.editForm = this.formBuilder.group({
-            emp_name:  ['', Validators.required],
-            emp_id:  ['', Validators.required],
-            email: [['', Validators.required, Validators.email]],
-            pass_word: [['', Validators.required,Validators.minLength(6)]],
-            card_id: ['',Validators.required],  
-            is_admin: [''],
-            is_contract: ['',Validators.required],
-            incharges:['']
         });
+        console.log(this.id);
+        this.EmployeeService.getById(this.id).pipe(first()).subscribe(employee => { 
+          console.log(employee);
+          this.selectedEmployee = employee;
+        });
+        this.EmployeeService.getAll().pipe(first()).subscribe(Employees => { 
+          this.Employees = Employees;
+        });
+        this.settingService.getCards().pipe(first()).subscribe(cards => {   
+            this.Cards=cards;});
+
+            this.editForm = this.formBuilder.group({
+              emp_name:  ['', Validators.required],
+              emp_id:  ['', Validators.required],
+              email: [['', Validators.required, Validators.email]],
+              pass_word: [['', Validators.required,Validators.minLength(6)]],
+              card_id: ['',Validators.required],  
+              is_admin: [''],
+              is_contract: ['',Validators.required],
+              incharges:['']
+          });
        // this.initialize();
         
       this.ngxService.stop();
@@ -69,19 +73,9 @@ export class EditComponent implements OnInit {
   //this.editForm.get('incharges').setValue(this.selectedEmployee.emp_name);
   
   }
-  initialize() {
-    this.editForm.patchValue({
-      emp_name: this.selectedEmployee.emp_name,
-      emp_id:  this.selectedEmployee.emp_id,
-      email:  this.selectedEmployee.email,
-      pass_word:  this.selectedEmployee.pass_word,
-      card_id:  this.selectedEmployee.card_id,  
-      is_admin:  this.selectedEmployee.is_admin,
-      is_contract: this.selectedEmployee.is_contract,
-      incharges:['']
-    });
-  }
-  
+ isCurrent(Employee){
+    return (Employee.emp_id==this.selectedEmployee.emp_id)?true:false;
+ }
   
   
   get f() { return this.editForm.controls; }
@@ -96,22 +90,22 @@ export class EditComponent implements OnInit {
    
     this.param={
       emp_id:0,
-      emp_number:this.editForm.value.emp_id,
-      emp_name:this.editForm.value.emp_name,
-      email:this.editForm.value.email,
-      pass_word:this.editForm.value.pass_word,
-      is_admin:this.editForm.value.is_admin==null?false:true,
-      is_contract:this.editForm.value.is_contract==null?false:true,
-      card_id:this.editForm.value.card_id.card_id,
-      card_number:this.editForm.value.card_id.card_number,
-      incharges:this.editForm.value.incharges,
+      emp_number:this.selectedEmployee.emp_number,
+      emp_name:this.selectedEmployee.emp_name,
+      email:this.selectedEmployee.email,
+      pass_word:this.selectedEmployee.pass_word,
+      is_admin:this.selectedEmployee.is_admin==null?false:true,
+      is_contract:this.selectedEmployee.is_contract==null||this.selectedEmployee.is_contract==false?false:true,
+      card_id:this.selectedEmployee.card_id,
+      card_number:'',
+      incharges:this.selectedEmployee.incharges,
       report:null
       }
       console.log(this.param);
+      this.ngxService.start();
     
-    
-    this.loading = true;/*
-    this.EmployeeService.register(this.editForm.value)
+    this.loading = true;
+    this.EmployeeService.update(this.id,this.param)
         .pipe(first())
         .subscribe(
             data => {
@@ -120,7 +114,9 @@ export class EditComponent implements OnInit {
             error => {
                 this.alertService.error(error);
                 this.loading = false;
-            });*/
+            });
+            
+            this.ngxService.stop();
     } 
 
   

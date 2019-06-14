@@ -63,7 +63,7 @@ export class ImportComponent implements OnInit {
         .pipe(first())
         .subscribe(
             data => {
-                this.alertService.success('Swipe Log Updated Successfully', true);
+                this.alertService.success('Swipe Log Updated With '+ data +' Records  Successfully', true);
                 this.ngxService.stop();
                 this.router.navigate(['/import']);
             },

@@ -6,7 +6,7 @@ import { MatDatepickerInputEvent, MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { from } from 'rxjs';
-import { ReportParams, Report } from 'app/_models/Report';
+import { ReportParams, Report, Config } from 'app/_models/Report';
 import{ReportService} from '../_services/Report.service'
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { RefinedLogComponent } from 'app/refined-log/refined-log.component';
@@ -17,7 +17,7 @@ import { Gate } from 'app/_models/Setting';
   templateUrl: './employee-report.component.html',
   styleUrls: ['./employee-report.component.scss']
 })
-export class EmployeeReportComponent implements OnInit  {
+export class EmployeeReportComponent implements OnInit {
   hoveredDate: NgbDate;
   filterForm: FormGroup;
   loading = false;
@@ -29,32 +29,32 @@ export class EmployeeReportComponent implements OnInit  {
   present:number;
   defaultDays=0;
   threshold=9;
-  gate_id=1;
+  selectedGate:Gate;
   data:boolean;
   selectedEmployee:Employee;
-  selectedGate:Gate;
+  configSwipeIO:Config;
   Employees:Employee[];
-  Gates:Gate[];
+  confParam={
+    description:'day_consideration'
+  }
 
   viewDates(employee,date) {
    // var date1=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
     const dialogRef = this.dialog.open(RefinedLogComponent,{
-      data: {employee:employee,date:date}
+      data: {employee:employee,date:date,gate_id:this.selectedGate.gate_id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
-
-
-  constructor(private settingService:SettingService,private ngxService: NgxUiLoaderService,
-    public dialog: MatDialog, 
-    private EmployeeService:EmployeeService,  
-    private reportService:ReportService,private formBuilder: FormBuilder, ) {
+  
+  Gates:Gate[];
+  constructor(private settingService:SettingService,private ngxService: NgxUiLoaderService,public dialog: MatDialog, private EmployeeService:EmployeeService,  private reportService:ReportService,private formBuilder: FormBuilder, ) {
     this.currentEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
-    this.selectedEmployee=JSON.parse(localStorage.getItem('currentEmployee'));
+   
    }
+   
    events: string[] = [];
 
    addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -68,7 +68,6 @@ export class EmployeeReportComponent implements OnInit  {
   onSubmit() {
     this.defaultDays=0;
       this.submitted = true;
-      this.gate_id=1;
       
       // stop here if form is invalid
       if (this.filterForm.invalid) {
@@ -80,8 +79,9 @@ export class EmployeeReportComponent implements OnInit  {
         emp_id:this.selectedEmployee.emp_id,
         from: this.filterForm.value.from.getFullYear()+"/"+(this.filterForm.value.from.getMonth()+1)+"/"+this.filterForm.value.from.getDate(),
         to: this.filterForm.value.to.getFullYear()+"/"+(this.filterForm.value.to.getMonth()+1)+"/"+this.filterForm.value.to.getDate(),
-        gate_id:this.gate_id
+        gate_id:this.selectedGate.gate_id
       }
+      console.log(this.Params);
       this.reportService.getReport(this.Params).pipe(first()).subscribe(report_in => { 
         this.report = report_in; 
         this.data=(report_in.length>0)?true:false;
@@ -92,7 +92,7 @@ export class EmployeeReportComponent implements OnInit  {
           }
         });
     });
-
+      console.log(this.report);
       this.ngxService.stop();   
   }
   isNotGreater(n){
@@ -101,12 +101,13 @@ export class EmployeeReportComponent implements OnInit  {
 
 
   private loadAllEmployees() {
-    this.ngxService.start();
-      this.EmployeeService.getReportingEmployee(this.currentEmployee).pipe(first()).subscribe(Employees => { 
-          this.Employees = Employees; 
-      });
-      this.ngxService.stop();
-  }
+    
+    this.EmployeeService.getReportingEmployee(this.currentEmployee).pipe(first()).subscribe(Employees => { 
+        this.Employees = Employees; 
+        this.selectedEmployee=this.currentEmployee;
+        console.log(Employees)
+    });
+}
   
   ngOnInit() {
     this.ngxService.start();  
@@ -115,13 +116,25 @@ export class EmployeeReportComponent implements OnInit  {
       this.Gates=gates; 
       this.selectedGate=gates[0];
     });
+    
+
+    this.reportService.getConfig(this.confParam).pipe(first()).subscribe(report_in => { 
+      this.configSwipeIO = report_in; 
+  });
     this.filterForm = this.formBuilder.group({
       from:  ['', Validators.required],
       to:  ['', Validators.required],
-      selectedEmployee1:['']
+      selectedEmployee1:[''],
+      gate:['']
+
   });
   
   this.ngxService.stop();   
   }
 
 }
+
+
+
+ 
+

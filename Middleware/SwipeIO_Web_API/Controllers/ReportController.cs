@@ -74,7 +74,7 @@ namespace SwipeIO_Web_API.Controllers
             return Ok(data);
         }
 
-        [Authorize(Roles = Role.Admin)]
+
         [HttpGet("last_log")]
         public IActionResult GetLastLog()
         {
@@ -88,7 +88,7 @@ namespace SwipeIO_Web_API.Controllers
                 return BadRequest(new { message = "Error" });
             return Ok(data);
         }
-        [Authorize(Roles = Role.Admin)]
+
         [HttpPost("config")]
         public IActionResult GetConfig(ConfigParam desc)
         {

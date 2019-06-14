@@ -11,7 +11,7 @@
                           <div class="row">
                               <div class="col-md-6">
                                  <mat-form-field class="example-full-width">
-                                    <input  matInput type="text" formControlName="emp_name" class="form-control" placeholder="Employee Name" [ngClass]="{ 'is-invalid': submitted && f.emp_name.errors }" />
+                                    <input  matInput type="text" [(ngModel)]="selectedEmployee.emp_name" formControlName="emp_name" class="form-control" placeholder="Employee Name" [ngClass]="{ 'is-invalid': submitted && f.emp_name.errors }" />
                                     <div *ngIf="submitted && f.emp_name.errors" class="invalid-feedback">
                                         <div *ngIf="f.emp_name.errors.required">Name is required</div>
                                     </div>
@@ -19,7 +19,7 @@
                               </div>
                               <div class="col-md-6">
                                   <mat-form-field class="example-full-width">
-                                    <input matInput formControlName="email" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email address" type="email">
+                                    <input matInput [(ngModel)]="selectedEmployee.email" formControlName="email" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email address" type="email">
                                     <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                                         <div *ngIf="f.email.errors.required">Email is required</div>
                                         <div *ngIf="f.email.errors.email">Enter  a valid email</div>
@@ -31,7 +31,7 @@
                           <div class="row">
                               <div class="col-md-6">
                                 <mat-form-field class="example-full-width">
-                                  <input matInput formControlName="emp_id" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.emp_id.errors }" placeholder="Employee ID" type="text">
+                                  <input matInput [(ngModel)]="selectedEmployee.emp_number" formControlName="emp_id" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.emp_id.errors }" placeholder="Employee ID" type="text">
                                   <div *ngIf="submitted && f.emp_id.errors" class="invalid-feedback">
                                     <div *ngIf="f.emp_id.errors.required">Employee ID is required</div>
                                     <div *ngIf="f.emp_id.errors.minlength">Enter a valid Employee ID</div>
@@ -40,7 +40,7 @@
                               </div>
                               <div class="col-md-6">
                                 <mat-form-field class="example-full-width">
-                                  <input matInput formControlName="pass_word" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.pass_word.errors }" placeholder="Password" type="password">
+                                  <input matInput [(ngModel)]="selectedEmployee.pass_word" formControlName="pass_word" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.pass_word.errors }" placeholder="Password" type="password">
                                   <div *ngIf="submitted && f.pass_word.errors" class="invalid-feedback">
                                     <div *ngIf="f.pass_word.errors.required">Password is required</div>
                                     <div *ngIf="f.pass_word.errors.minlength">Password must be at least 6 characters</div>
@@ -53,9 +53,9 @@
                             <div class="col-md-6">
                               <mat-form-field>
                                 <mat-label>Select Card</mat-label>
-                                <mat-select  class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.card_id.errors }"  formControlName="card_id" required>
+                                <mat-select  class="form-control" [(ngModel)]="selectedEmployee.card_id"  [ngClass]="{ 'is-invalid': submitted && f.card_id.errors }"  formControlName="card_id" required>
                                   <mat-option>--</mat-option>
-                                  <mat-option *ngFor="let card of Cards" [value]="card">
+                                  <mat-option *ngFor="let card of Cards" [value]="card.card_id">
                                     {{card.card_number}}
                                   </mat-option>
                                 </mat-select>
@@ -67,8 +67,8 @@
                             <div class="col-md-6">
                                 <mat-form-field>
                                     <mat-label>Select Incharges</mat-label>
-                                    <mat-select  class="form-control" formControlName="incharges" [ngClass]="{ 'is-invalid': submitted && f.incharges.errors }" multiple>
-                                      <mat-option *ngFor="let Employee of Employees" [value]="Employee.emp_id">{{Employee.emp_name}}</mat-option>
+                                    <mat-select [(ngModel)]="selectedEmployee.incharges"  class="form-control" formControlName="incharges" [ngClass]="{ 'is-invalid': submitted && f.incharges.errors }" multiple>
+                                      <mat-option *ngFor="let Employee of Employees" [disabled]="isCurrent(Employee)" [value]="Employee.emp_id">{{Employee.emp_name}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>                                    
                             </div>  
@@ -78,7 +78,7 @@
                               <div class="col-md-6">
                                 <div class="form-check">
                                   <label class="form-check-label">
-                                    <input class="form-check-input" formControlName="is_admin" [ngClass]="{ 'is-invalid': submitted && f.is_admin.errors }" type="checkbox" value=""> Admin
+                                    <input class="form-check-input" [(ngModel)]="selectedEmployee.is_admin" formControlName="is_admin" [ngClass]="{ 'is-invalid': submitted && f.is_admin.errors }" type="checkbox" value=""> Admin
                                     <span class="form-check-sign">
                                       <span class="check">
                                       </span>
@@ -92,7 +92,7 @@
                               <div class="col-md-6">
                                 <div class="form-check">
                                   <label class="form-check-label">
-                                    <input class="form-check-input" formControlName="is_contract" [ngClass]="{ 'is-invalid': submitted && f.is_contract.errors }"  type="checkbox" value=""> Contract
+                                    <input class="form-check-input" [(ngModel)]="selectedEmployee.is_contract" formControlName="is_contract" [ngClass]="{ 'is-invalid': submitted && f.is_contract.errors }"  type="checkbox" value=""> Contract
                                     <span class="form-check-sign">
                                       <span class="check">
                                       </span>

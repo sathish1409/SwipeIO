@@ -56,10 +56,8 @@ export class ReportModelComponent implements OnInit  {
     private EmployeeService:EmployeeService,  
     private reportService:ReportService,
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any,   
-    ) {
-
-   }
+    @Inject(MAT_DIALOG_DATA) public data: any  
+    ) {}
    events: string[] = [];
 
    addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -81,7 +79,7 @@ export class ReportModelComponent implements OnInit  {
       this.ngxService.start();
       this.loading = true; 
       this.Params={
-        emp_id:this.data.emp_id,
+        emp_id:this.data.employee.emp_id,
         from: this.filterForm.value.from.getFullYear()+"/"+(this.filterForm.value.from.getMonth()+1)+"/"+this.filterForm.value.from.getDate(),
         to: this.filterForm.value.to.getFullYear()+"/"+(this.filterForm.value.to.getMonth()+1)+"/"+this.filterForm.value.to.getDate(),
         gate_id:this.selectedGate.gate_id
@@ -92,6 +90,7 @@ export class ReportModelComponent implements OnInit  {
         this.data1=(report_in.length>0)?true:false;
         this.present=this.report.length;
         this.report.forEach(row => {
+          console.log(row);
           if(this.isNotGreater(row.hours_worked)){
             this.defaultDays+=1;
           }
@@ -107,6 +106,7 @@ export class ReportModelComponent implements OnInit  {
 
   ngOnInit() {
     this.ngxService.start();  
+    this.selectedEmployee=this.data.employee;
     this.settingService.getGates().pipe(first()).subscribe(gates => {  
       this.Gates=gates; 
       this.selectedGate=gates[0];

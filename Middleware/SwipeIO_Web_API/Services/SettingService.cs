@@ -19,6 +19,7 @@ namespace SwipeIO_Web_API.Services
         int DeleteCards(int id);
         int DeleteLeaves(int id);
 
+        Card getCard(int card_id);
 
     }
     public class SettingService : ISettingService
@@ -74,5 +75,10 @@ namespace SwipeIO_Web_API.Services
             return isDelete;
         }
 
+        public Card getCard(int card_id)
+        {
+            Card card = setting.Card.FromSql("call get_card({0});",card_id).First();
+            return card;
+        }
     }
 }
