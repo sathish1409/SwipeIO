@@ -98,6 +98,15 @@ export class ReportComponent implements OnInit {
   isNotGreater(n){
     return parseInt(n)<this.threshold? 1:0;
   }
+  getClass(n){
+    if(parseInt(n)<8){
+      return 'text-danger font-weight-bold';
+    }else if(parseInt(n)<this.threshold){
+      return 'text-warning font-weight-bold'
+    }else{
+      return 'text-success font-weight-bold'
+    }
+  }
 
 
   private loadAllEmployees() {

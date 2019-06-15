@@ -9,6 +9,8 @@ import { MatButtonModule, MatRippleModule, MatFormFieldModule, MatInputModule, M
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
+import { EmployeeDashboardComponent } from '../../employee-dashboard/employee-dashboard.component';
+import{EmployeeRefinedlogComponent} from '../../employee-refinedlog/employee-refinedlog.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -27,8 +29,13 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     MatCheckboxModule,
     MatDialogModule,
   ],
+  entryComponents: [
+    EmployeeRefinedlogComponent
+  ],
   declarations: [
-    EmployeeReportComponent
+    EmployeeReportComponent,
+    EmployeeDashboardComponent,
+    EmployeeRefinedlogComponent
   ]
 })
 export class EmployeeLayoutModule { }

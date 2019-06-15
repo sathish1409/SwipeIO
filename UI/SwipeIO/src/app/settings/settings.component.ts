@@ -19,13 +19,12 @@ export class SettingsComponent implements OnInit {
   Leaves:Leave[];
   deleteGate(gate: Gate) {
 
-    
     const dialogRef = this.dialog.open(ConfirmationBoxComponent,{
       data: {name:gate.gate_name}
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result)
-      this.settingService.delete(gate.gate_id).pipe(first()).subscribe(() => { 
+      this.settingService.deletegate(gate.gate_id).pipe(first()).subscribe(() => { 
         this.getGates();
       });
     }); 
@@ -39,7 +38,7 @@ export class SettingsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result)
-      this.settingService.delete(card.card_id).pipe(first()).subscribe(() => { 
+      this.settingService.deletecard(card.card_id).pipe(first()).subscribe(() => { 
         this.getCards();
       });
     }); 
@@ -51,7 +50,7 @@ export class SettingsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result)
-      this.settingService.delete(leave.leave_id).pipe(first()).subscribe(() => { 
+      this.settingService.deleteleave(leave.leave_id).pipe(first()).subscribe(() => { 
         this.getLeaves();
       });
     }); 

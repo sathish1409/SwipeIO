@@ -4,7 +4,7 @@
           <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-danger">
-                      <h4 class="card-title">Add Employee</h4>
+                      <h4 class="card-title">Edit Employee</h4>
                   </div>
                   <div class="card-body">
                       <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
@@ -43,7 +43,7 @@
                                   <input matInput [(ngModel)]="selectedEmployee.pass_word" formControlName="pass_word" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.pass_word.errors }" placeholder="Password" type="password">
                                   <div *ngIf="submitted && f.pass_word.errors" class="invalid-feedback">
                                     <div *ngIf="f.pass_word.errors.required">Password is required</div>
-                                    <div *ngIf="f.pass_word.errors.minlength">Password must be at least 6 characters</div>
+                                    <div *ngIf="f.pass_word.errors.minlength">Password must be at least 8 characters</div>
                                   </div>
                                 </mat-form-field>
                               </div>

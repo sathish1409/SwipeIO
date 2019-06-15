@@ -25,7 +25,7 @@ namespace SwipeIO_Web_API.Controllers
             _logService = logService;
         }
 
-       // [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("upload")]
         public IActionResult Upload([FromBody]Log[] LogArray)
         {
@@ -37,6 +37,9 @@ namespace SwipeIO_Web_API.Controllers
 
             return Ok(isDone);
         }
+
+
+
 
         // GET: api/Log
         [HttpGet]

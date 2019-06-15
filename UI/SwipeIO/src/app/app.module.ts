@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import { NgxUiLoaderModule, NgxUiLoaderConfig, POSITION, SPINNER, PB_DIRECTION } from  'ngx-ui-loader';
+import { NgxUiLoaderModule, NgxUiLoaderConfig, NgxUiLoaderHttpModule,POSITION, SPINNER, PB_DIRECTION, NgxUiLoaderRouterModule } from  'ngx-ui-loader';
 import{EmployeeLayoutComponent} from './layouts/employee-layout/employee-layout.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -24,7 +24,7 @@ import { AlertService} from './_services/alert.service';
 import { AuthenticationService} from './_services/authentication.service';
 import {  EmployeeService } from './_services/Employee.service';
 import {  LogService } from './_services/Log.service';
-import{ReportService} from './_services/Report.service'
+import{ ReportService} from './_services/Report.service'
 import{SettingService} from './_services/Setting.service'
 import {MatTabsModule} from '@angular/material/tabs';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
@@ -35,7 +35,6 @@ import { NgDatepickerModule } from 'ng2-datepicker';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashboard.component';
 
@@ -45,7 +44,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsPosition: "bottom-right",
   bgsSize: 60,
   bgsType: "ball-spin-clockwise",
-  blur: 14,
+  blur: 15,
   fgsColor: "#9d37b4",
   fgsPosition: "center-center",
   fgsSize: 120,
@@ -56,10 +55,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   logoUrl: "",
   masterLoaderId: "master",
   overlayBorderRadius: "0",
-  overlayColor: "rgba(255,255,255,0.8)",
-  pbColor: "#6700d5",
+  overlayColor: "rgba(255,255,255,0.9)",
+  pbColor: "#9d37b4",
   pbDirection: "ltr",
-  pbThickness: 3,
+  pbThickness: 7,
   hasProgressBar: true,
   text: "",
   textColor: "#FFFFFF",
@@ -89,6 +88,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatIconModule,
     MatToolbarModule,
     MatDialogModule,
+    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
+    NgxUiLoaderRouterModule.forRoot({ showForeground: true })
   ],
   declarations: [
     AppComponent,
@@ -96,10 +97,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AdminLayoutComponent,
     EmployeeLayoutComponent,
     LoginComponent,
-    ConfirmationComponent,
     ForgotPasswordComponent,
-    EmployeeDashboardComponent,
-
   ],
   entryComponents: [
     ForgotPasswordComponent,

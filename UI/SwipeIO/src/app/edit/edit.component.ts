@@ -59,18 +59,14 @@ export class EditComponent implements OnInit {
               emp_name:  ['', Validators.required],
               emp_id:  ['', Validators.required],
               email: [['', Validators.required, Validators.email]],
-              pass_word: [['', Validators.required,Validators.minLength(6)]],
+              pass_word: [['', Validators.required,Validators.minLength(8)]],
               card_id: ['',Validators.required],  
               is_admin: [''],
               is_contract: ['',Validators.required],
               incharges:['']
           });
-       // this.initialize();
         
       this.ngxService.stop();
-  
-
-  //this.editForm.get('incharges').setValue(this.selectedEmployee.emp_name);
   
   }
  isCurrent(Employee){
@@ -81,8 +77,6 @@ export class EditComponent implements OnInit {
   get f() { return this.editForm.controls; }
   onSubmit() {
     this.submitted = true;
-    console.log("Called");
-    // stop here if form is invalid
     if (this.editForm.invalid) {
       console.log(this.editForm);
         return;
@@ -94,7 +88,7 @@ export class EditComponent implements OnInit {
       emp_name:this.selectedEmployee.emp_name,
       email:this.selectedEmployee.email,
       pass_word:this.selectedEmployee.pass_word,
-      is_admin:this.selectedEmployee.is_admin==null?false:true,
+      is_admin:this.selectedEmployee.is_admin==null||this.selectedEmployee.is_contract==false?false:true,
       is_contract:this.selectedEmployee.is_contract==null||this.selectedEmployee.is_contract==false?false:true,
       card_id:this.selectedEmployee.card_id,
       card_number:'',
@@ -110,6 +104,7 @@ export class EditComponent implements OnInit {
         .subscribe(
             data => {
                 this.alertService.success('Employee details updated successfully', true);
+                this.router.navigate(['/addorremove']);
             },
             error => {
                 this.alertService.error(error);

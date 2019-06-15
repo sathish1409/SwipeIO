@@ -137,7 +137,11 @@
           </div>
           
     </div>
-        
+    <div class="row">
+            <div class="col-md-12">
+            
+            <div class="alert alert-primary"><span > Considering A day from {{configSwipeIO.value}} AM to Next Day's {{configSwipeIO.value}} AM</span></div>
+    </div></div>
       <div *ngIf='data; else elseBlock' class="row">
           <div class="col-md-12">
               <div class="card">
@@ -147,6 +151,7 @@
                       <p class="card-category"></p>
                   </div>
                   <div  class="card-body">
+                      
                       <div class="table-responsive">
                           <table class="table table-hover">
                               <thead class=" text-primary">
@@ -168,7 +173,7 @@
                                   
                               </thead>
                               <tbody>
-                                  <tr *ngFor="let report_rec of report" mat-raised-button matTooltip="Click to View Detailed Logs"  [ngClass]="{'text-danger':report_rec.doubt_flag}" (click)="viewDates(selectedEmployee,report_rec.date)" >
+                                  <tr *ngFor="let report_rec of report" mat-raised-button matTooltip="Click to View Detailed Logs"  [ngClass]="{'text-danger font-weight-bold':report_rec.doubt_flag}" (click)="viewDates(selectedEmployee,report_rec.date)" >
                                       <td *ngIf="report_rec.date"><span>
                                         {{report_rec.date | date: 'd/M/yyyy'}}
                                       </span>
@@ -183,7 +188,7 @@
                                     <td *ngIf="report_rec.hours_inside_office">
                                           {{report_rec.hours_inside_office}}
                                       </td>
-                                      <td *ngIf="report_rec.hours_worked" [ngClass]="{'text-danger':isNotGreater(report_rec.hours_worked),'text-success':!isNotGreater(report_rec.hours_worked)}">
+                                      <td *ngIf="report_rec.hours_worked" [ngClass]="getClass(report_rec.hours_worked)">
                                           {{report_rec.hours_worked}}
                                       </td>
                                   </tr>                                
@@ -195,10 +200,6 @@
           </div>
         
       </div>
-      <div class="row">
-        <div class="col-md-12">
-        
-        <div class="alert alert-primary"><span > Considering A day from {{configSwipeIO.value}} AM to Next Day's {{configSwipeIO.value}} AM</span></div>
-</div></div>
+      
   </div>
 </div>

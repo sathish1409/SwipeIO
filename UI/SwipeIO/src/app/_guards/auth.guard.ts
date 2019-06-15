@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
             if(!(JSON.parse(localStorage.getItem('currentEmployee')).is_admin)) {
                 console.log("He is not an admin");
                 // logged in so return true
-                this.router.navigate(['/employee_report/']);
+                this.router.navigate(['/employee_dashboard/']);
                // return false;
             }
             return true;

@@ -1,6 +1,12 @@
 <div class="main-content">
-        <div class="container-fluid">
-            <h2  mat-dialog-title>{{selectedEmployee.emp_name}}'s Report</h2>
+        <div class="container-fluid"><button mat-button [mat-dialog-close]="true" mat-raised-button type="button" matTooltip="Close" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon pull-right">
+                <i class="material-icons">close</i>
+            </button>
+            <h2  mat-dialog-title>
+                    
+                {{selectedEmployee.emp_name}}'s Report 
+               
+            </h2>
             <mat-dialog-content class="mat-typography">
                 <div class="row">
                     <div class="col-md-12">
@@ -148,7 +154,7 @@
                                       
                                   </thead>
                                   <tbody>
-                                      <tr *ngFor="let report_rec of report" mat-raised-button matTooltip="Click to View Detailed Logs"  [ngClass]="{'text-danger':report_rec.doubt_flag}" (click)="viewDates(selectedEmployee,report_rec.date)" >
+                                      <tr *ngFor="let report_rec of report" mat-raised-button matTooltip="Click to View Detailed Logs"  [ngClass]="{'text-danger font-weight-bold':report_rec.doubt_flag}" (click)="viewDates(selectedEmployee,report_rec.date)" >
                                           <td *ngIf="report_rec.date"><span>
                                             {{report_rec.date | date: 'd/M/yyyy'}}
                                           </span>
@@ -163,7 +169,7 @@
                                         <td *ngIf="report_rec.hours_inside_office">
                                               {{report_rec.hours_inside_office}}
                                           </td>
-                                          <td *ngIf="report_rec.hours_worked" [ngClass]="{'text-danger':isNotGreater(report_rec.hours_worked),'text-success':!isNotGreater(report_rec.hours_worked)}">
+                                          <td *ngIf="report_rec.hours_worked" [ngClass]="getClass(report_rec.hours_worked)">
                                               {{report_rec.hours_worked}}
                                           </td>
                                       </tr>                                
@@ -177,7 +183,7 @@
           </div>
                      </mat-dialog-content>
                      <mat-dialog-actions align="end">
-                         <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+                         <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Okay</button>
                      </mat-dialog-actions>
               
             

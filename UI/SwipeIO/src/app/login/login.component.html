@@ -1,8 +1,15 @@
-
-<div class="main-panel">
-  <div class="row">
-      <div class="col-xs-3 col-md-3 col-lg-3"></div>
-<div class="card col-xs-6 col-md-6 col-lg-6">
+<nav class="navbar navbar-expand-lg bg-primary navbar-absolute" color-on-scroll="500">
+  <div class="container">
+    <div class="navbar-wrapper">
+      <a class="navbar-brand d-none d-sm-none d-md-block" href="#/">SwipeIO</a>
+      <a class="navbar-brand d-block d-sm-block d-md-none" href="#/">SwipeIO</a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<div class="row">
+  <div class="login col-lg-6 col-md-6 col-sm-6 ml-auto mr-auto">
+<div class="card">
   <div class="card-header card-header-primary">
     <h4 class="card-title">Log In</h4>
     <p class="card-category"></p>
@@ -33,10 +40,11 @@
         <button type="submit" class="btn btn-primary pull-right">Log In</button>
         <div class="clearfix"></div>
     </form>
-    <button mat-button (click)="forgot()" class="pull-left">Forgot Password ?</button>
+    <button mat-button (click)="forgot()" class="text-primary pull-left">Forgot Password ?</button>
   </div>
 </div>
-<div class="col-xs-3 col-md-3 col-lg-3"></div>
+</div>
+</div>
 </div>
 <footer class="footer">
     <div class="container-fluid">
@@ -47,6 +55,3 @@
         </div>
     </div>
 </footer>
-
-
-</div>

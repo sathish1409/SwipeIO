@@ -12,6 +12,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { RefinedLogComponent } from 'app/refined-log/refined-log.component';
 import { SettingService } from 'app/_services/Setting.service';
 import { Gate } from 'app/_models/Setting';
+import { EmployeeRefinedlogComponent } from 'app/employee-refinedlog/employee-refinedlog.component';
 @Component({
   selector: 'app-employee-report',
   templateUrl: './employee-report.component.html',
@@ -40,7 +41,7 @@ export class EmployeeReportComponent implements OnInit {
 
   viewDates(employee,date) {
    // var date1=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
-    const dialogRef = this.dialog.open(RefinedLogComponent,{
+    const dialogRef = this.dialog.open(EmployeeRefinedlogComponent,{
       data: {employee:employee,date:date,gate_id:this.selectedGate.gate_id}
     });
 
@@ -98,7 +99,15 @@ export class EmployeeReportComponent implements OnInit {
   isNotGreater(n){
     return parseInt(n)<this.threshold? 1:0;
   }
-
+  getClass(n){
+    if(parseInt(n)<8){
+      return 'text-danger font-weight-bold';
+    }else if(parseInt(n)<this.threshold){
+      return 'text-warning font-weight-bold'
+    }else{
+      return 'text-success font-weight-bold'
+    }
+  }
 
   private loadAllEmployees() {
     

@@ -8,10 +8,7 @@
 </div>
 <div class="sidebar-wrapper">
   <div *ngIf="isMobileMenu()">
-    
-    <ul class="nav navbar-nav nav-mobile-menu">
-       
-        
+    <ul class="nav navbar-nav nav-mobile-menu">        
         <li class="nav-item">
             <a class="nav-link" href="#pablo" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="material-icons">person</i>
@@ -20,7 +17,7 @@
                 </p>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" [routerLink]="['/login']">Log Out</a>
+                <a class="dropdown-item" (click)="Logout()">Log Out</a>
             </div>
         </li>
     </ul>
@@ -43,5 +40,4 @@
                     </li>
                 </ul>
     </ng-template>
-   
 </div>

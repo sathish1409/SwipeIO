@@ -167,7 +167,7 @@
                                     
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let report_rec of report" mat-raised-button matTooltip="Click to View Detailed Logs"  [ngClass]="{'text-danger':report_rec.doubt_flag}" (click)="viewDates(selectedEmployee,report_rec.date)" >
+                                    <tr *ngFor="let report_rec of report" mat-raised-button matTooltip="Click to View Detailed Logs"  [ngClass]="{'text-danger font-weight-bold':report_rec.doubt_flag}" (click)="viewDates(selectedEmployee,report_rec.date)" >
                                         <td *ngIf="report_rec.date"><span>
                                           {{report_rec.date | date: 'd/M/yyyy'}}
                                         </span>
@@ -182,7 +182,7 @@
                                       <td *ngIf="report_rec.hours_inside_office">
                                             {{report_rec.hours_inside_office}}
                                         </td>
-                                        <td *ngIf="report_rec.hours_worked" [ngClass]="{'text-danger':isNotGreater(report_rec.hours_worked),'text-success':!isNotGreater(report_rec.hours_worked)}">
+                                        <td *ngIf="report_rec.hours_worked" [ngClass]="getClass(report_rec.hours_worked)">
                                             {{report_rec.hours_worked}}
                                         </td>
                                     </tr>                                

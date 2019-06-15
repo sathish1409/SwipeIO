@@ -299,8 +299,17 @@ create procedure delete_gate	(
 		update Gate set is_delete=1 where gate_id=gate_id1;
 	end //
 delimiter ;
+
+delimiter //
+create procedure restore_gate	(
+									in gate_id1 int
+								)
+	begin
+		update Gate set is_delete=0 where gate_id=gate_id1;
+	end //
+delimiter ;
 #----------------- <Calls> -----------------#
-#call delete_gate(1);
+#call restore_gate(2);
 #----------------- </Calls> -----------------#
 
 
@@ -797,9 +806,9 @@ delete from Main_swipe where log_id=120;
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get Dates between the given range <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 #drop procedure get_dates;
 delimiter //
-create procedure get_dates(in emp_id1 int,in from_date varchar(20),in to_date varchar(20))
+create procedure get_dates(in emp_id1 int,in from_date varchar(20),in to_date varchar(20),in gate_id1 int)
 begin
-    select * from Main_swipe where emp_id=emp_id1 and gate_id=1 and date_log between from_date and to_date group by date_log;
+    select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log between from_date and to_date group by date_log;
 end //
 delimiter ;
 
@@ -853,4 +862,3 @@ end //
 delimiter ;
 
 call get_last_date();
-delete * from employee where 

@@ -84,7 +84,6 @@ export class AddComponent implements OnInit{
         console.log(this.param);
         
       this.loading = true;
-      this.ngxService.start();
         this.EmployeeService.register(this.param)
           .pipe(first())
           .subscribe(
@@ -95,7 +94,7 @@ export class AddComponent implements OnInit{
               error => {
                   this.alertService.error(error);
                   this.loading = false;
-                  this.ngxService.stop();
+                  
               });
   }
 }
