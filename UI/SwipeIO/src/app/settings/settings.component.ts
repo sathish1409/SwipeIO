@@ -5,6 +5,8 @@ import { SettingService } from 'app/_services/Setting.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ConfirmationBoxComponent } from 'app/confirmation-box/confirmation-box.component';
 import { MatDialog } from '@angular/material';
+import { AddGateComponent } from 'app/add-gate/add-gate.component';
+import { AddCardComponent } from 'app/add-card/add-card.component';
 
 @Component({
   selector: 'app-settings',
@@ -17,6 +19,19 @@ export class SettingsComponent implements OnInit {
   Gates:Gate[];
   Cards:Card[];
   Leaves:Leave[];
+  addGate(){
+    const dialogRef = this.dialog.open(AddGateComponent,{});
+    dialogRef.afterClosed().subscribe(result => {
+      this.getGates();
+    }); 
+  }
+  addCard(){
+    const dialogRef = this.dialog.open(AddCardComponent,{});
+    dialogRef.afterClosed().subscribe(result => {
+      this.getCards();
+    }); 
+  }
+
   deleteGate(gate: Gate) {
 
     const dialogRef = this.dialog.open(ConfirmationBoxComponent,{
@@ -30,7 +45,6 @@ export class SettingsComponent implements OnInit {
     }); 
     
   }
-
 
   deleteCards(card: Card) {
     const dialogRef = this.dialog.open(ConfirmationBoxComponent,{

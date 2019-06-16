@@ -24,7 +24,7 @@ import { AlertService} from './_services/alert.service';
 import { AuthenticationService} from './_services/authentication.service';
 import {  EmployeeService } from './_services/Employee.service';
 import {  LogService } from './_services/Log.service';
-import{ ReportService} from './_services/Report.service'
+import{ ReportService} from './_services/Report.service';
 import{SettingService} from './_services/Setting.service'
 import {MatTabsModule} from '@angular/material/tabs';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
@@ -37,6 +37,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashboard.component';
+
+
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "#00ACC1",
@@ -98,6 +100,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     EmployeeLayoutComponent,
     LoginComponent,
     ForgotPasswordComponent,
+
   ],
   entryComponents: [
     ForgotPasswordComponent,

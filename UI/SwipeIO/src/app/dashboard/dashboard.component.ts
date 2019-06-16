@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
   threshold=9;
   Employees:Employee[];
   reportArray:Report[];
-  days=3;
+  days=5;
   AvgTime:Time;
 
   constructor(

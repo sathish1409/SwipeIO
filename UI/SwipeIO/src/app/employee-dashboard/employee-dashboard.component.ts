@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ReportParams, Report } from 'app/_models/Report';
+import { ReportParams, Report, RefinedLog } from 'app/_models/Report';
 import { Employee } from 'app/_models/Employee';
 import { Time } from '@angular/common';
 import { EmployeeService } from 'app/_services/Employee.service';
@@ -34,7 +34,8 @@ export class EmployeeDashboardComponent implements OnInit {
   threshold=9;
   Employees:Employee[];
   reportArray:Report[];
-  days=3;
+  days=5;
+  refinedLog:RefinedLog;
   AvgTime:Time;
 
   constructor(private EmployeeService: EmployeeService,private ngxService: NgxUiLoaderService, private reportService:ReportService,public dialog: MatDialog, private formBuilder: FormBuilder, ) { 
@@ -64,9 +65,15 @@ export class EmployeeDashboardComponent implements OnInit {
       return 'text-success font-weight-bold'
     }
   }
+  canShow(n){
+    return (n>0)?true:false;
+  }
   ngOnInit() {
     this.ngxService.start();
     this.loadAllEmployees();
+    this.reportService.getLastRefinedLog().pipe(first()).subscribe(report_in => { 
+      this.refinedLog = report_in[0]; 
+  });
     this.filterForm = this.formBuilder.group({
       from:  ['', Validators.required],
       to:  ['', Validators.required],

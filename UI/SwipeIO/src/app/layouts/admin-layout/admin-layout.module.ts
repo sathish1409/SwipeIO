@@ -22,7 +22,8 @@ import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dia
 import {ReportModelComponent} from '../../report-model/report-model.component';
 import{RefinedLogComponent} from '../../refined-log/refined-log.component'
 import {ConfirmationBoxComponent} from '../../confirmation-box/confirmation-box.component';
-
+import {AddGateComponent} from '../../add-gate/add-gate.component';
+import {AddCardComponent} from '../../add-card/add-card.component';
 import {
   MatButtonModule,
   MatInputModule,
@@ -70,12 +71,16 @@ import {
     ImportComponent,
     ReportModelComponent,
     RefinedLogComponent,
-    ConfirmationBoxComponent
+    ConfirmationBoxComponent,
+    AddGateComponent,
+    AddCardComponent
   ],
   entryComponents: [
     ReportModelComponent,
     RefinedLogComponent,
-    ConfirmationBoxComponent
+    ConfirmationBoxComponent,
+    AddGateComponent,
+    AddCardComponent
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},

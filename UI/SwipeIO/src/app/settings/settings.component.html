@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title ">Gates
-                                <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right disabled">
+                                <button mat-raised-button type="button" (click)="addGate()"  class="btn btn-success btn-md pull-right">
                                         <i class="material-icons">add</i> Add Gate
                                 </button>
                         </h4>
@@ -95,7 +95,7 @@
                     <div class="card">
                         <div class="card-header card-header-danger">
                             <h4 class="card-title ">Cards
-                                    <button mat-raised-button type="button"  class="btn btn-success btn-md pull-right disabled">
+                                    <button mat-raised-button type="button" (click)="addCard()" class="btn btn-success btn-md pull-right">
                                             <i class="material-icons">add</i> Add Card
                                     </button>
                             </h4>

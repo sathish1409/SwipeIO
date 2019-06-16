@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="container-fluid">
       <div *ngIf="Employees" class="row">
-          <div class="col-lg-4 col-md-6 col-sm-6">
+          <div class="col-lg-4 col-md-4 col-sm-12">
               <div class="card card-stats">
                   <div class="card-header card-header-warning card-header-icon">
                       <div class="card-icon">
@@ -18,7 +18,7 @@
                   </div>
               </div>
           </div>
-          <div class="col-lg-8 col-md-6 col-sm-12">
+          <div class="col-lg-8 col-md-8 col-sm-12">
               <div class="card">
                   <div class="card-header card-header-danger">
                           <h4 class="card-title">Filter</h4>
@@ -60,6 +60,66 @@
               </div>
           </div>
       </div>
+      <div class="row">
+            <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-info">
+                            <h4 class="card-title">Note</h4>
+                        </div>
+                        <div class="card-body">
+                                <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class=" text-primary">
+                                                <th>
+                                                    Colors in table
+                                                </th>
+            
+                                                <th>
+                                                    Meaning
+                                                </th>
+                                                
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span class="text-danger font-weight-bold ">Red</span>
+                                                    </td>
+                                                    <td>
+                                                        Less than 9 hours
+                                                    </td>
+                                                </tr> 
+                                                <tr>
+                                                    <td>
+                                                            <span class="text-danger font-weight-bold ">Entire Row Red</span>
+                                                    </td>
+                                                    <td>
+                                                            Error in the given data
+                                                    </td>
+                                                </tr> 
+                                                <tr>
+                                                    <td>
+                                                            <span class="text-warning font-weight-bold">Yellow</span>
+                                                    </td>
+                                                    <td>
+                                                            Less than 8 hours
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>
+                                                                <span class="text-success font-weight-bold">Green</span>
+                                                        </td>
+                                                        <td>
+                                                                More than 9 hours 
+                                                        </td>
+                                                    </tr>                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                        </div>  
+                    </div>
+                </div>
+      </div>
+      
         <div class="row">
             <div *ngFor="let employee of Employees" class="col-md-3">
                 <div class="card">
