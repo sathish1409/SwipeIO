@@ -66,11 +66,17 @@ namespace SwipeIO_Web_API.Services
         }
         public int Add(Employee emp) {
             int isDone = 0;
-            //call insert_employee('000000C1','Sathish','sathish@gmail.com','123456',1,0,now(),1);
-            Employee[] insertedEmployee = Emp.Employee.FromSql("call insert_employee({0},{1},{2},{3},{4},{5},{6});", emp.emp_number,emp.emp_name,emp.email,emp.pass_word,emp.is_admin,emp.is_contract,emp.card_number).ToArray();
-            for (var i = 0; i < emp.incharges.Length; i++)
+            Employee[] isExist = Emp.Employee.FromSql("call is_employee({0});", emp.email).ToArray();
+            if (isExist.Length == 0) {
+                Employee[] insertedEmployee = Emp.Employee.FromSql("call insert_employee({0},{1},{2},{3},{4},{5},{6});", emp.emp_number, emp.emp_name, emp.email, emp.pass_word, emp.is_admin, emp.is_contract, emp.card_number).ToArray();
+                for (var i = 0; i < emp.incharges.Length; i++)
+                {
+                    isDone = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});", insertedEmployee.First().emp_id, emp.incharges[i]);
+                }
+            }
+            else
             {
-                isDone = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});", insertedEmployee.First().emp_id, emp.incharges[i]);
+                isDone = 99;
             }
             return isDone ;
         }
@@ -122,11 +128,20 @@ namespace SwipeIO_Web_API.Services
         public int Update(int id,Employee emp, string card_number)
         {
             //call update_employee(5,'Mani','mani@gmail.com',123456,1,1,12);
-            int isUpdate = Emp.Database.ExecuteSqlCommand("call update_employee({0},{1},{2},{3},{4},{5},{6});", id,emp.emp_name,emp.email,emp.pass_word,emp.is_admin,emp.is_contract,card_number);
-            Emp.Database.ExecuteSqlCommand("call clear_incharge_log({0});", id);
-            for (var i = 0; i < emp.incharges.Length; i++)
+            int isUpdate = 0;
+            Employee[] isExist = Emp.Employee.FromSql("call is_employee({0});", emp.email).ToArray();
+            if (isExist.Length == 0)
             {
-                isUpdate = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});",id, emp.incharges[i]);
+                isUpdate = Emp.Database.ExecuteSqlCommand("call update_employee({0},{1},{2},{3},{4},{5},{6});", id, emp.emp_name, emp.email, emp.pass_word, emp.is_admin, emp.is_contract, card_number);
+                Emp.Database.ExecuteSqlCommand("call clear_incharge_log({0});", id);
+                for (var i = 0; i < emp.incharges.Length; i++)
+                {
+                    isUpdate = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});", id, emp.incharges[i]);
+                }
+            }
+            else
+            {
+                isUpdate = 99;
             }
             return isUpdate;
         }

@@ -49,6 +49,8 @@ namespace SwipeIO_Web_API.Controllers
 
             if (employee == 0)
                 return BadRequest(new { message = "Error" });
+            if (employee == 99)
+                return BadRequest(new { message = "Email Already Exist" });
 
             return Ok();
         }
@@ -97,6 +99,8 @@ namespace SwipeIO_Web_API.Controllers
             int isUpdate = _employeeService.Update(id,employeeParam,card.card_number);
             if (isUpdate == 0)
                 return BadRequest(new { message = "Error" });
+            if (isUpdate == 99)
+                return BadRequest(new { message = "Email Already Exist" });
             return Ok();
         }
 

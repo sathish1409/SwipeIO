@@ -42,7 +42,7 @@ namespace SwipeIO_Web_API.Controllers
         }
 
         
-        //[Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("addCard")]
         public IActionResult AddCard([FromBody]Card card)
         {
@@ -53,7 +53,7 @@ namespace SwipeIO_Web_API.Controllers
 
             return Ok();
         }
-        //[Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("addGate")]
         public IActionResult AddGate([FromBody]Gate gate)
         {
@@ -64,7 +64,7 @@ namespace SwipeIO_Web_API.Controllers
 
             return Ok();
         }
-        //[Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("addLeave")]
         public IActionResult AddLeave([FromBody]Leave leave)
         {
