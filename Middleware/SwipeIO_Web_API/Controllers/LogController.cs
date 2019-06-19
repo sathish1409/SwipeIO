@@ -11,7 +11,7 @@ using SwipeIO_Web_API.Services;
 
 namespace SwipeIO_Web_API.Controllers
 {
-   // [Authorize]
+   [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     

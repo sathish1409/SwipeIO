@@ -8,8 +8,8 @@ drop table if exists Temp_card_log;
 drop table if exists Gate;
 drop table if exists Leave_description;
 drop table if exists Leave_log;
-drop table incharge_log;
-drop table swipeio_config;
+drop table if exists incharge_log;
+drop table if exists swipeio_config;
 
 
 ############################################################################################################
@@ -106,7 +106,6 @@ create table swipeio_config	(
 ############################################################################################################
 
 #drop procedure get_config;
-
 delimiter //
 create procedure get_config	(
 									in description1 varchar(50)
@@ -116,7 +115,7 @@ create procedure get_config	(
 	end //
 delimiter ;
 
-#call get_config('day_consideration');
+call get_config('day_consideration');
 
 ############################################################################################################
 ######################################## Cards Stored Procedures ###########################################
@@ -411,7 +410,7 @@ create procedure delete_employee	(
 										in emp_id1 int
 									)
 	begin
-    call clear_incharge_log(emp_id1);
+		call clear_incharge_log(emp_id1);
 		update Employee set is_delete=1 where emp_id=emp_id1;
 	end //
 delimiter ;
@@ -433,11 +432,11 @@ create procedure get_employees()
 delimiter ;
 
 #----------------- <Calls> -----------------#
-#call get_employees;
+##call get_employees;
 #----------------- </Calls> -----------------#
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Check for email existance <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-drop procedure get_employee;
+drop procedure is_employee;
 delimiter //
 create procedure is_employee(in email1 varchar(50))
 	begin
@@ -623,7 +622,7 @@ create procedure get_reporting_employees(in incharge_id1 int)
 		select * from Incharge_log where incharge_id=incharge_id1;
 	end //
 delimiter ;
-#call get_reporting_employees(7);
+call get_reporting_employees(7);
 
 
 delimiter //
@@ -716,15 +715,15 @@ delimiter ;
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get swipe log for a given date and emp id <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 #drop procedure get_swipe_log;
-delimiter //
-create procedure get_swipe_log	(
-									in emp_id1 int,
-                                    in date1 varchar(30)
-								)
-begin
-    select * from Main_swipe where emp_id=emp_id1 and gate_id=1 and date_log=date1 and time_log > '07:00:00';
-end //
-delimiter ;
+#delimiter //
+#create procedure get_swipe_log	(
+#									in emp_id1 int,
+#                                    in date1 varchar(30)
+#								)
+#begin
+#    select * from Main_swipe where emp_id=emp_id1 and gate_id=1 and date_log=date1 and time_log > '07:00:00';
+#end //
+#delimiter ;
 
 #----------------- <Calls> -----------------#
 #call get_swipe_log(2,"2019/05/15");
@@ -741,12 +740,12 @@ end //
 delimiter ;
 
 #----------------- <Calls> -----------------#
-#call get_dates(1,"2019/04/15","2019/05/30");
+#call get_dates(1,"2019/04/15","2019/05/30",1);
 #----------------- </Calls> -----------------#
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get swipe log for a given date and emp id <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure get_swipe_log_ref;
+drop procedure get_swipe_log_ref;
 delimiter //
 create procedure get_swipe_log_ref	(
 									in emp_id1 int,
@@ -756,8 +755,8 @@ create procedure get_swipe_log_ref	(
 								)
 begin
 	select DISTINCTROW value into @day_cons from swipeio_config where description='day_consideration';
-   ( select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log=today1 and time_log>@day_cons)union
-    (select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log=tomorrow1 and time_log<@day_cons);
+   ( select * from Main_swipe where emp_id=emp_id1 and remarks="Successful" and gate_id=gate_id1 and date_log=today1 and time_log>@day_cons)union
+    (select * from Main_swipe where emp_id=emp_id1 and remarks="Successful" and gate_id=gate_id1 and date_log=tomorrow1 and time_log<@day_cons);
 end //
 delimiter ;
 

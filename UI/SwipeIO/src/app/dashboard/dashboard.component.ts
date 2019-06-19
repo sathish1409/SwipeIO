@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { Employee } from 'app/_models/Employee';
 import { first } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LastReportParams, Report, ReportArray, ReportParams } from 'app/_models/Report';
+import { LastReportParams, Report, ReportArray, ReportParams, RefinedLog } from 'app/_models/Report';
 import { ReportService } from 'app/_services/Report.service';
 import { Time } from '@angular/common';
 import { RefinedLogComponent } from 'app/refined-log/refined-log.component';
@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
   reportArray:Report[];
   days=5;
   AvgTime:Time;
-
+  refinedLog:RefinedLog;
   constructor(
       private EmployeeService: EmployeeService,
       private ngxService: NgxUiLoaderService, 
@@ -79,6 +79,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.ngxService.start();
     this.loadAllEmployees();
+    this.reportService.getLastRefinedLog().pipe(first()).subscribe(report_in => { 
+      this.refinedLog = report_in[0]; 
+  });
     this.filterForm = this.formBuilder.group({
       from:  ['', Validators.required],
       to:  ['', Validators.required],

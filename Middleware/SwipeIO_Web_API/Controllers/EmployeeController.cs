@@ -13,7 +13,7 @@ using SwipeIO_Web_API.Services;
 
 namespace SwipeIO_Web_API.Controllers
 {
-   // [Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
@@ -41,7 +41,7 @@ namespace SwipeIO_Web_API.Controllers
             return Ok(employee);
         }
 
-        //[Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("add")]
         public IActionResult Add([FromBody]Employee employeeParam)
         {

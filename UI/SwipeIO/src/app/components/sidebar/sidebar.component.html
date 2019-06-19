@@ -24,7 +24,7 @@
   </div>
     <ul *ngIf="currentEmployee.is_admin; else elseBlock" class="nav">
         <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-            <a class="nav-link" [routerLink]="[menuItem.path]">
+            <a class="nav-link font-weight-bold" [routerLink]="[menuItem.path]">
                 <i class="material-icons">{{menuItem.icon}}</i>
                 <p>{{menuItem.title}}</p>
             </a>
@@ -33,7 +33,7 @@
     <ng-template #elseBlock>
             <ul class="nav">
                     <li routerLinkActive="active" *ngFor="let menuItem of menuItems_employee" class="{{menuItem.class}} nav-item">
-                        <a class="nav-link" [routerLink]="[menuItem.path]">
+                        <a class="nav-link font-weight-bold" [routerLink]="[menuItem.path]">
                             <i class="material-icons">{{menuItem.icon}}</i>
                             <p>{{menuItem.title}}</p>
                         </a>

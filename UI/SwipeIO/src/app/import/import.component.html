@@ -61,8 +61,8 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                      <div class="stats">
-                          <span>Swipe Log have updated with data of {{refinedLog.date_log| date: 'd/M/yyyy'}} </span>
+                      <div *ngIf="refinedLog" class="stats font-weight-bold">
+                          <span>Swipe Log have updated with data of {{refinedLog.date_log| date: 'd/M/yyyy'}} - {{refinedLog.time_log}} </span>
                       </div>
                   </div>
                 </div>

@@ -2,6 +2,36 @@
   <div class="container-fluid">
         <ng-template #elseBlock>
                 <div  class="row">
+                    
+                            
+                              
+                                       
+                                   <div class="row">
+                                        <div class="col-md-12">
+                                                <div class="card elem">
+                                                    <div class="card-header card-header-info">
+                                                        <h4 class="card-title">Note</h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                  
+                                                           <div  class="stats">
+                                                       <ul>
+                                                            <li><p><span class="text-danger font-weight-bold">06:07:55</span> - Worked Less than 8 hours </p></li>
+                                                            <li><p><span class="text-warning font-weight-bold">08:09:42</span> - Worked Less than 9 hours </p></li>
+                                                            <li><p><span class="text-success font-weight-bold">10:25:66</span> - Worked More than 9 hours </p></li>
+                                                           <li><p class="text-danger"> Entire row red - Error in Log.</p> </li>
+                                                           <li><p class="text-info">The records updated till {{refinedLog.date_log| date: 'd/M/yyyy'}}.</p></li>
+                                                       
+                                                       </ul>
+                                                       </div>             
+                                                                                
+                                               </div> 
+                                                    <div class="card-footer">
+                                                    </div> 
+                                                </div>
+                                            </div>
+                              </div>           
+                
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-danger">
@@ -16,71 +46,8 @@
                     </div>
                 </div>
             </ng-template>
-        <div class="row">
-                <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header card-header-info">
-                                <h4 class="card-title">Note</h4>
-                            </div>
-                            <div class="card-body">
-                                    <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <thead class=" text-primary">
-                                                    <th>
-                                                        Colors in table
-                                                    </th>
-                
-                                                    <th>
-                                                        Meaning
-                                                    </th>
-                                                    
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <span class="text-danger font-weight-bold ">Red</span>
-                                                        </td>
-                                                        <td>
-                                                            Less than 9 hours
-                                                        </td>
-                                                    </tr> 
-                                                    <tr>
-                                                        <td>
-                                                                <span class="text-danger font-weight-bold ">Entire Row Red</span>
-                                                        </td>
-                                                        <td>
-                                                                Error in the given data
-                                                        </td>
-                                                    </tr> 
-                                                    <tr>
-                                                        <td>
-                                                                <span class="text-warning font-weight-bold">Yellow</span>
-                                                        </td>
-                                                        <td>
-                                                                Less than 8 hours
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                            <td>
-                                                                    <span class="text-success font-weight-bold">Green</span>
-                                                            </td>
-                                                            <td>
-                                                                    More than 9 hours 
-                                                            </td>
-                                                        </tr>                               
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <p></p>
-                            </div>  
-                            <div class="card-footer">
-                                    <div class="stats">
-                                        <span>The records till {{refinedLog.date_log| date: 'd/M/yyyy'}} only updated. </span>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-          </div>
+            
+
           
       <div *ngIf="canShow(Employees.length); else elseBlock">
       <div *ngIf="Employees" class="row">
@@ -147,6 +114,30 @@
           
       </div>
         <div class="row">
+                
+            <div class="col-md-3">
+                <div class="card elem">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">Note</h4>
+                    </div>
+                    <div class="card-body">
+                    
+                            <div  class="stats">
+                        <ul>
+                            <li><p><span class="text-danger font-weight-bold">06:07:55</span> - Worked Less than 8 hours </p></li>
+                            <li><p><span class="text-warning font-weight-bold">08:09:42</span> - Worked Less than 9 hours </p></li>
+                            <li><p><span class="text-success font-weight-bold">10:25:66</span> - Worked More than 9 hours </p></li>
+                            <li><p class="text-danger"> When the entire row is Red, It means there is an error in the given data.</p> </li>
+                            <li><p class="text-info">The records updated till {{refinedLog.date_log| date: 'd/M/yyyy'}}.</p></li>
+                        
+                        </ul>
+                        </div>             
+                                                
+                </div> 
+                    <div class="card-footer">
+                    </div> 
+                </div>
+            </div>
             <div *ngFor="let employee of Employees" class="col-md-3">
                 <div class="card">
                     <div class="card-header card-header-warning">

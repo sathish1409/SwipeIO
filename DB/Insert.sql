@@ -75,7 +75,7 @@ call insert_leave_description('Casual');
 call insert_leave_description('Privilege');
 
 #Insert Employees
-call insert_employee('000000C4','Manimozhiyal','mani@gmail.com','123456',0,0,'08876880');
+call insert_employee('000000C4','Manimozhiyal','mani@gmail.com','123456',1,1,'08876880');
 
 
 
