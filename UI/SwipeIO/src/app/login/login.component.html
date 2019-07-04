@@ -1,62 +1,94 @@
-<nav class="navbar navbar-expand-lg bg-primary navbar-absolute" color-on-scroll="500">
-  <div class="container">
-    <div class="navbar-wrapper">
-    
-      <a class="navbar-brand d-none d-sm-none d-md-block" href="#/"><span class="logo-img">
-        <img  class="logoimg" src="/assets/img/cg-logo.png"/>
-      </span> SwipeIO</a>
-      <a class="navbar-brand d-block d-sm-block d-md-none" href="#/"><span class="logo-img">
-        <img  class="logoimg" src="/assets/img/cg-logo.png"/>
-      </span> SwipeIO</a>
-    </div>
-  </div>
+<nav
+	class="navbar navbar-expand-lg bg-primary navbar-absolute"
+	color-on-scroll="500"
+>
+	<div class="container">
+		<div class="navbar-wrapper">
+			<a class="navbar-brand d-none d-sm-none d-md-block" href="#/"
+				><span class="logo-img">
+					<img class="logoimg" src="/assets/img/cg-logo.png" />
+				</span>
+				SwipeIO</a
+			>
+			<a class="navbar-brand d-block d-sm-block d-md-none" href="#/"
+				><span class="logo-img">
+					<img class="logoimg" src="/assets/img/cg-logo.png" />
+				</span>
+				SwipeIO</a
+			>
+		</div>
+	</div>
 </nav>
 <div class="container">
-<div class="row">
-  <div class="login col-lg-6 col-md-6 col-sm-6 ml-auto mr-auto">
-<div class="card">
-  <div class="card-header card-header-primary">
-    <h4 class="card-title">Log In</h4>
-    <p class="card-category"></p>
-  </div>
-  <div class="card-body">
-    <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="row">                
-          <div class="col-md-12">
-            <div class="form-group">
-              <label class="bmd-label-floating">Email address</label>
-              <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                <div *ngIf="f.email.errors.required">Email is required</div>
-            </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-              <div class="form-group">
-                <label class="bmd-label-floating">Password</label>
-                <input type="password"  formControlName="password"  class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                  <div *ngIf="f.password.errors.required">Password is required</div>
-              </div>
-              </div>
-            </div>
-          </div>
-         
-        <button type="submit" class="btn btn-primary pull-right">Log In</button>
-        <div class="clearfix"></div>
-    </form>
-    <button mat-button (click)="forgot()" class="text-primary pull-left">Forgot Password ?</button>
-  </div>
-</div>
-</div>
-</div>
+	<div class="row">
+		<div class="login col-lg-6 col-md-6 col-sm-6 ml-auto mr-auto">
+			<div class="card">
+				<div class="card-header card-header-primary">
+					<h4 class="card-title">Log In</h4>
+					<p class="card-category"></p>
+				</div>
+				<div class="card-body">
+					<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="bmd-label-floating">Email address</label>
+									<input
+										type="email"
+										formControlName="email"
+										class="form-control"
+										[ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+									/>
+									<div
+										*ngIf="submitted && f.email.errors"
+										class="invalid-feedback"
+									>
+										<div *ngIf="f.email.errors.required">Email is required</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="bmd-label-floating">Password</label>
+									<input
+										type="password"
+										formControlName="password"
+										class="form-control"
+										[ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+									/>
+									<div
+										*ngIf="submitted && f.password.errors"
+										class="invalid-feedback"
+									>
+										<div *ngIf="f.password.errors.required">
+											Password is required
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<button type="submit" class="btn btn-primary pull-right">
+							Log In
+						</button>
+						<div class="clearfix"></div>
+					</form>
+					<button mat-button (click)="forgot()" class="text-primary pull-left">
+						Forgot Password ?
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <footer class="footer">
-    <div class="container">
-        <div class="copyright pull-right">
-            &copy;
-            {{test | date: 'yyyy'}}
-            <a href="https://www.congruentglobal.com" target="_blank">Congruent Global Inc.</a>
-        </div>
-    </div>
+	<div class="container">
+		<div class="copyright pull-right">
+			&copy;
+			{{ test | date: "yyyy" }}
+			<a href="https://www.congruentglobal.com" target="_blank"
+				>Congruent Global Inc.</a
+			>
+		</div>
+	</div>
 </footer>
