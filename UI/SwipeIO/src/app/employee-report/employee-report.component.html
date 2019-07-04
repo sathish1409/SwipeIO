@@ -1,91 +1,87 @@
 <div class="main-content">
     <div class="container-fluid">
-        
-          
-   <div class="row">
-              <div class="col-md-12">
-                  <div class="card">
-                      <div class="card-header card-header-danger">
-                          <h4 class="card-title ">Filter</h4>
-                          <p class="card-category"></p>
-                      </div>
-                      <div class="card-body">
-                              
-                          <form [formGroup]="filterForm" (submit)="onSubmit()">
-                              <div class="row">
-                                  <div class="col-md-2">
-                                      <mat-form-field>
-                                          <input  formControlName="from" matInput [matDatepicker]="from" placeholder="From"
-                                          (focus)="from.open()"  [ngClass]="{ 'is-invalid': submitted && f.from.errors }">
-                                          <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
-                                          <mat-datepicker #from></mat-datepicker>
-                                          <div *ngIf="submitted && f.from.errors" class="invalid-feedback">
-                                              <div *ngIf="f.from.errors.required">Please Select From Date</div>
-                                          </div>
-                                      </mat-form-field>
-                                  </div>
-                                  <div class="col-md-2">
-                                      <mat-form-field>
-                                          <input  formControlName="to" matInput [matDatepicker]="to" placeholder="To"
-                                          (focus)="to.open()"  [ngClass]="{ 'is-invalid': submitted && f.to.errors }">
-                                          <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
-                                          <mat-datepicker #to></mat-datepicker>
-                                          <div *ngIf="submitted && f.to.errors" class="invalid-feedback">
-                                              <div *ngIf="f.to.errors.required">Please Select To Date</div>
-                                          </div>
-                                      </mat-form-field>
-                                  </div>
-                                  
-                                  <div class="col-md-2">
-                                      <mat-form-field>
-                                          <mat-label>Select Employee</mat-label>
-                                          <mat-select [(ngModel)]="selectedEmployee" (ngModelChange)="onSubmit()" formControlName="selectedEmployee1">
-                                                <mat-option [value]="currentEmployee">{{currentEmployee.emp_name}}</mat-option>
-                                            <mat-option *ngFor="let Employee of Employees" [value]="Employee">{{Employee.emp_name}}</mat-option>
-                                          </mat-select>
-                                        </mat-form-field>
-                                  </div>
-                                  <div class="col-md-2">
-                                          <mat-form-field>
-                                              <mat-label>Select Gate</mat-label>
-                                              <mat-select [(ngModel)]="selectedGate" (ngModelChange)="onSubmit()" formControlName="gate">
-                                                <mat-option *ngFor="let gate of Gates" [value]="gate">
-                                                  {{gate.gate_name}}
-                                                </mat-option>
-                                              </mat-select>
-                                            </mat-form-field>
-                                      </div>
-                                  <div class="col-md-2">
-                                      <button class="btn btn-primary" type="submit">
-                                          Get Report
-                                      </button>
-                                  </div>
-                              </div>
-                             
-                          </form>
-                          
-                      </div>
-                  </div>      
-              
-              </div>    
-          </div>
-          <ng-template #elseBlock>
-              <div  class="row">
-                  <div class="col-md-12">
-                      <div class="card">
-                          <div class="card-header card-header-danger">
-                              <h4 class="card-title ">No Data Available</h4>
-        
-                              <p class="card-category"></p>
-                          </div>
-                          <div  class="card-body"></div>
-                      </div>
-                  </div>
-              </div>
-          </ng-template>
-  
-              
-            <div *ngIf='report'  class="row">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Filter</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="filterForm" (submit)="onSubmit()">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <mat-form-field>
+                                        <input formControlName="from" matInput [matDatepicker]="from" placeholder="From"
+                                            (focus)="from.open()"
+                                            [ngClass]="{ 'is-invalid': submitted && f.from.errors }">
+                                        <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+                                        <mat-datepicker #from></mat-datepicker>
+                                        <div *ngIf="submitted && f.from.errors" class="invalid-feedback">
+                                            <div *ngIf="f.from.errors.required">Please Select From Date</div>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field>
+                                        <input formControlName="to" matInput [matDatepicker]="to" placeholder="To"
+                                            (focus)="to.open()" [ngClass]="{ 'is-invalid': submitted && f.to.errors }">
+                                        <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+                                        <mat-datepicker #to></mat-datepicker>
+                                        <div *ngIf="submitted && f.to.errors" class="invalid-feedback">
+                                            <div *ngIf="f.to.errors.required">Please Select To Date</div>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field>
+                                        <mat-label>Select Employee</mat-label>
+                                        <mat-select [(ngModel)]="selectedEmployee" (ngModelChange)="onSubmit()"
+                                            formControlName="selectedEmployee1">
+                                            <mat-option [value]="currentEmployee">{{currentEmployee.emp_name}}
+                                            </mat-option>
+                                            <mat-option *ngFor="let Employee of Employees" [value]="Employee">
+                                                {{Employee.emp_name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field>
+                                        <mat-label>Select Gate</mat-label>
+                                        <mat-select [(ngModel)]="selectedGate" (ngModelChange)="onSubmit()"
+                                            formControlName="gate">
+                                            <mat-option *ngFor="let gate of Gates" [value]="gate">
+                                                {{gate.gate_name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary" type="submit">
+                                        Get Report
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #elseBlock>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title ">No Data Available</h4>
+
+                            <p class="card-category"></p>
+                        </div>
+                        <div class="card-body"></div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <div *ngIf='report' class="row">
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="card card-stats">
                     <div class="card-header card-header-danger card-header-icon">
@@ -122,7 +118,7 @@
                 <div class="card card-stats">
                     <div class="card-header card-header-warning card-header-icon">
                         <div class="card-icon">
-                          <i class="material-icons">warning</i>
+                            <i class="material-icons">warning</i>
                         </div>
                         <p class="card-category">Default</p>
                         <h3 class="card-title">{{defaultDays}} Days</h3>
@@ -134,18 +130,16 @@
                     </div>
                 </div>
             </div>
-            
-      </div>
-          
+        </div>
+
         <div *ngIf='data; else elseBlock' class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title ">Datewise Log</h4>
-  
                         <p class="card-category"></p>
                     </div>
-                    <div  class="card-body">
+                    <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead class=" text-primary">
@@ -153,52 +147,53 @@
                                         Date
                                     </th>
                                     <th>
-                                      In Time
-                                  </th>
-                                  <th>
-                                     Out Time
-                                  </th>
-                                  <th>
+                                        In Time
+                                    </th>
+                                    <th>
+                                        Out Time
+                                    </th>
+                                    <th>
                                         Total Hours
                                     </th>
                                     <th>
                                         Hours Worked
                                     </th>
-                                    
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let report_rec of report" mat-raised-button matTooltip="Click to View Detailed Logs"  [ngClass]="{'text-danger font-weight-bold':report_rec.doubt_flag}" (click)="viewDates(selectedEmployee,report_rec.date)" >
+                                    <tr *ngFor="let report_rec of report" mat-raised-button
+                                        matTooltip="Click to View Detailed Logs"
+                                        [ngClass]="{'text-danger font-weight-bold':report_rec.doubt_flag}"
+                                        (click)="viewDates(selectedEmployee,report_rec.date)">
                                         <td *ngIf="report_rec.date"><span>
-                                          {{report_rec.date | date: 'd/M/yyyy'}}
-                                        </span>
-                                            
+                                                {{report_rec.date | date: 'd/M/yyyy'}}
+                                            </span>
                                         </td>
                                         <td *ngIf="report_rec.in_time">
-                                          {{report_rec.in_time}}
-                                      </td>
-                                      <td *ngIf="report_rec.out_time">
-                                              {{report_rec.out_time}}
-                                      </td>
-                                      <td *ngIf="report_rec.hours_inside_office">
+                                            {{report_rec.in_time}}
+                                        </td>
+                                        <td *ngIf="report_rec.out_time">
+                                            {{report_rec.out_time}}
+                                        </td>
+                                        <td *ngIf="report_rec.hours_inside_office">
                                             {{report_rec.hours_inside_office}}
                                         </td>
-                                        <td *ngIf="report_rec.hours_worked" [ngClass]="getClass(report_rec.hours_worked)">
+                                        <td *ngIf="report_rec.hours_worked"
+                                            [ngClass]="getClass(report_rec.hours_worked)">
                                             {{report_rec.hours_worked}}
                                         </td>
-                                    </tr>                                
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-          
         </div>
         <div class="row">
-          <div class="col-md-12">
-          
-          <div class="alert alert-primary"><span > Considering A day from {{configSwipeIO.value}} AM to Next Day's {{configSwipeIO.value}} AM</span></div>
-  </div></div>
+            <div class="col-md-12">
+                <div class="alert alert-primary"><span> Considering A day from {{configSwipeIO.value}} AM to Next Day's
+                        {{configSwipeIO.value}} AM</span></div>
+            </div>
+        </div>
     </div>
-  </div>
-  
+</div>

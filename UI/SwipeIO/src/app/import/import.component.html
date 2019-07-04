@@ -1,73 +1,96 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Import</h4>
-                        <div class="input-group">
-                            <button *ngIf='data' (click)="Upload()" mat-raised-button type="button" matTooltip="Refresh the data" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
-                              <i class="material-icons">refresh</i>
-                            </button>
-                            <div class="upload-btn-wrapper">
-                                <button class="btn btn-info">Choose .xlsx file</button>
-                              <input class="btn" type="file" (change)="incomingfile($event)" accept=".xlsx">   
-                            </div>                         
-                            <button *ngIf='data' type="button" (click)="onSubmit()" class="btn btn-info btn-md" >Upload</button>
-                        </div>
-                    </div>
-                    <div  *ngIf='data' class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class=" text-primary">
-                                   <th>Date</th>
-                                   <th>Time</th>
-                                   <th>Card ID</th>
-                                   <th>Employee ID</th>
-                                   <th>IN / OUT</th>
-                                   <th>Gate</th>
-                                   <th>Department</th>
-                                   <th>Remarks</th>
-                                </thead>
-                                <tbody>
-                                   <tr *ngFor="let datum of data">
-                                     <td>
-                                       {{datum.Date}}
-                                     </td>
-                                     <td>
-                                        {{datum.Time}}
-                                      </td>
-                                      <td>
-                                          {{datum.Cardid}}
-                                        </td>
-                                        <td>
-                                            {{datum.Empid}}
-                                          </td>
-                                        <td>
-                                           {{datum.InOut}}
-                                         </td>
-                                         <td>
-                                            {{datum.Gate}}
-                                          </td>
-                                          <td>
-                                             {{datum.Department}}
-                                           </td>
-                                           <td>
-                                            {{datum.Remark}}
-                                          </td>
-                                   </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                      <div *ngIf="refinedLog" class="stats font-weight-bold">
-                          <span>Swipe Log have updated with data of {{refinedLog.date_log| date: 'd/M/yyyy'}} - {{refinedLog.time_log}} </span>
-                      </div>
-                  </div>
-                </div>
-            </div>        
-        </div>
-      
-    </div>
-  </div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header card-header-danger">
+						<h4 class="card-title ">Import</h4>
+						<div class="input-group">
+							<button
+								*ngIf="data"
+								(click)="Upload()"
+								mat-raised-button
+								type="button"
+								matTooltip="Refresh the data"
+								[matTooltipPosition]="'above'"
+								class="btn btn-info btn-link btn-md btn-just-icon"
+							>
+								<i class="material-icons">refresh</i>
+							</button>
+							<div class="upload-btn-wrapper">
+								<button class="btn btn-info">Choose .xlsx file</button>
+								<input
+									class="btn"
+									type="file"
+									(change)="incomingfile($event)"
+									accept=".xlsx"
+								/>
+							</div>
+							<button
+								*ngIf="data"
+								type="button"
+								(click)="onSubmit()"
+								class="btn btn-info btn-md"
+							>
+								Upload
+							</button>
+						</div>
+					</div>
+					<div *ngIf="data" class="card-body">
+						<div class="table-responsive">
+							<table class="table">
+								<thead class=" text-primary">
+									<th>Date</th>
+									<th>Time</th>
+									<th>Card ID</th>
+									<th>Employee ID</th>
+									<th>IN / OUT</th>
+									<th>Gate</th>
+									<th>Department</th>
+									<th>Remarks</th>
+								</thead>
+								<tbody>
+									<tr *ngFor="let datum of data">
+										<td>
+											{{ datum.Date }}
+										</td>
+										<td>
+											{{ datum.Time }}
+										</td>
+										<td>
+											{{ datum.Cardid }}
+										</td>
+										<td>
+											{{ datum.Empid }}
+										</td>
+										<td>
+											{{ datum.InOut }}
+										</td>
+										<td>
+											{{ datum.Gate }}
+										</td>
+										<td>
+											{{ datum.Department }}
+										</td>
+										<td>
+											{{ datum.Remark }}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="card-footer">
+						<div *ngIf="refinedLog" class="stats font-weight-bold">
+							<span
+								>Swipe Log have updated with data of
+								{{ refinedLog.date_log | date: "d/M/yyyy" }} -
+								{{ refinedLog.time_log }}
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

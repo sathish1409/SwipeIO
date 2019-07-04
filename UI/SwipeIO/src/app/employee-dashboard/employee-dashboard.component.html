@@ -1,181 +1,191 @@
 <div class="main-content">
-  <div class="container-fluid">
+    <div class="container-fluid">
         <ng-template #elseBlock>
-                <div  class="row">
-                    
-                            
-                              
-                                       
-                                   <div class="row">
-                                        <div class="col-md-12">
-                                                <div class="card elem">
-                                                    <div class="card-header card-header-info">
-                                                        <h4 class="card-title">Note</h4>
-                                                    </div>
-                                                    <div class="card-body">
-                                                  
-                                                           <div  class="stats">
-                                                       <ul>
-                                                            <li><p><span class="text-danger font-weight-bold">06:07:55</span> - Worked Less than 8 hours </p></li>
-                                                            <li><p><span class="text-warning font-weight-bold">08:09:42</span> - Worked Less than 9 hours </p></li>
-                                                            <li><p><span class="text-success font-weight-bold">10:25:66</span> - Worked More than 9 hours </p></li>
-                                                           <li><p class="text-danger"> Entire row red - Error in Log.</p> </li>
-                                                           <li><p class="text-info">The records updated till {{refinedLog.date_log| date: 'd/M/yyyy'}}.</p></li>
-                                                       
-                                                       </ul>
-                                                       </div>             
-                                                                                
-                                               </div> 
-                                                    <div class="card-footer">
-                                                    </div> 
-                                                </div>
-                                            </div>
-                              </div>           
-                
+            <div class="row">
+                <div class="row">
                     <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header card-header-danger">
-                                <h4 class="card-title ">Hi {{currentEmployee.emp_name}}</h4>
-          
-                                <p class="card-category"></p>
+                        <div class="card elem">
+                            <div class="card-header card-header-info">
+                                <h4 class="card-title">Note</h4>
                             </div>
-                            <div  class="card-body">
-                                    <a routerLink='/employee_report'>Click Here to view your report</a>
+                            <div class="card-body">
+                                <div class="stats">
+                                    <ul>
+                                        <li>
+                                            <p><span class="text-danger font-weight-bold">06:07:55</span> - Worked Less
+                                                than 8 hours </p>
+                                        </li>
+                                        <li>
+                                            <p><span class="text-warning font-weight-bold">08:09:42</span> - Worked Less
+                                                than 9 hours </p>
+                                        </li>
+                                        <li>
+                                            <p><span class="text-success font-weight-bold">10:25:66</span> - Worked More
+                                                than 9 hours </p>
+                                        </li>
+                                        <li>
+                                            <p class="text-danger"> Entire row red - Error in Log.</p>
+                                        </li>
+                                        <li>
+                                            <p class="text-info">The records updated till
+                                                {{refinedLog.date_log| date: 'd/M/yyyy'}}.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-footer">
                             </div>
                         </div>
                     </div>
                 </div>
-            </ng-template>
-            
-
-          
-      <div *ngIf="canShow(Employees.length); else elseBlock">
-      <div *ngIf="Employees" class="row">
-          <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                  <div class="card-header card-header-warning card-header-icon">
-                      <div class="card-icon">
-                          <i class="material-icons">group</i>
-                      </div>
-                      <p class="card-category">Number of Reporting Employees</p>
-                      <h3 class="card-title">{{this.Employees.length}}</h3>
-                  </div>
-                  <div class="card-footer">
-                    <i class="material-icons text-warning"></i>
-                    <a routerLink='/employee_report'>View Detailed Report</a>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-8 col-md-6 col-sm-12">
-              <div class="card">
-                  <div class="card-header card-header-danger">
-                          <h4 class="card-title">Filter</h4>
-                      </div>
-                      <div class="card-body">
-                      <form [formGroup]="filterForm" (submit)="onSubmit()">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <mat-form-field>
-                                    <input  formControlName="from" matInput [matDatepicker]="from" placeholder="From"
-                                    (focus)="from.open()"  [ngClass]="{ 'is-invalid': submitted && f.from.errors }">
-                                    <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
-                                    <mat-datepicker #from></mat-datepicker>
-                                    <div *ngIf="submitted && f.from.errors" class="invalid-feedback">
-                                        <div *ngIf="f.from.errors.required">Please Select From Date</div>
-                                    </div>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-4">
-                                <mat-form-field>
-                                    <input  formControlName="to" matInput [matDatepicker]="to" placeholder="To"
-                                    (focus)="to.open()"  [ngClass]="{ 'is-invalid': submitted && f.to.errors }">
-                                    <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
-                                    <mat-datepicker #to></mat-datepicker>
-                                    <div *ngIf="submitted && f.to.errors" class="invalid-feedback">
-                                        <div *ngIf="f.to.errors.required">Please Select To Date</div>
-                                    </div>
-                                </mat-form-field>
-                            </div>
-                            
-                            <div class="col-md-4">
-                                <button class="btn btn-primary" type="submit">
-                                    Get Reports
-                                </button>
-                            </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title ">Hi {{currentEmployee.emp_name}}</h4>
+                            <p class="card-category"></p>
                         </div>
-                       
-                    </form>
-                  </div>
-                  
-                  
-              </div>
-          </div>
-          
-          
-      </div>
-        <div class="row">
-                
-            <div class="col-md-3">
-                <div class="card elem">
-                    <div class="card-header card-header-info">
-                        <h4 class="card-title">Note</h4>
-                    </div>
-                    <div class="card-body">
-                    
-                            <div  class="stats">
-                        <ul>
-                            <li><p><span class="text-danger font-weight-bold">06:07:55</span> - Worked Less than 8 hours </p></li>
-                            <li><p><span class="text-warning font-weight-bold">08:09:42</span> - Worked Less than 9 hours </p></li>
-                            <li><p><span class="text-success font-weight-bold">10:25:66</span> - Worked More than 9 hours </p></li>
-                            <li><p class="text-danger"> When the entire row is Red, It means there is an error in the given data.</p> </li>
-                            <li><p class="text-info">The records updated till {{refinedLog.date_log| date: 'd/M/yyyy'}}.</p></li>
-                        
-                        </ul>
-                        </div>             
-                                                
-                </div> 
-                    <div class="card-footer">
-                    </div> 
-                </div>
-            </div>
-            <div *ngFor="let employee of Employees" class="col-md-3">
-                <div class="card">
-                    <div class="card-header card-header-warning">
-                        <h4 class="card-title ">{{employee.emp_name}} <span class="pull-right">{{employee.emp_number}}</span></h4>
-
-                        <p class="card-category"></p>
-                    </div>
-                    <div  class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead class=" text-primary">
-                                    <th>
-                                        Date
-                                    </th>
-
-                                    <th>
-                                        Hours Worked
-                                    </th>
-                                    
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let report_rec of employee.report" mat-raised-button matTooltip="Click to View Detailed Logs"  [ngClass]="{'text-danger font-weight-bold':report_rec.doubt_flag}" (click)="viewDates(employee,report_rec.date)" >
-                                        <td>
-                                            {{report_rec.date | date: 'd/M/yyyy'}}
-                                        </td>
-                                        <td  [ngClass]="getClass(report_rec.hours_worked)">
-                                            {{report_rec.hours_worked}}
-                                        </td>
-                                    </tr>                                
-                                </tbody>
-                            </table>
+                        <div class="card-body">
+                            <a routerLink='/employee_report'>Click Here to view your report</a>
                         </div>
                     </div>
                 </div>
             </div>
-          
+        </ng-template>
+
+        <div *ngIf="canShow(Employees.length); else elseBlock">
+            <div *ngIf="Employees" class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-warning card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">group</i>
+                            </div>
+                            <p class="card-category">Number of Reporting Employees</p>
+                            <h3 class="card-title">{{this.Employees.length}}</h3>
+                        </div>
+                        <div class="card-footer">
+                            <i class="material-icons text-warning"></i>
+                            <a routerLink='/employee_report'>View Detailed Report</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title">Filter</h4>
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="filterForm" (submit)="onSubmit()">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <input formControlName="from" matInput [matDatepicker]="from"
+                                                placeholder="From" (focus)="from.open()"
+                                                [ngClass]="{ 'is-invalid': submitted && f.from.errors }">
+                                            <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+                                            <mat-datepicker #from></mat-datepicker>
+                                            <div *ngIf="submitted && f.from.errors" class="invalid-feedback">
+                                                <div *ngIf="f.from.errors.required">Please Select From Date</div>
+                                            </div>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <input formControlName="to" matInput [matDatepicker]="to" placeholder="To"
+                                                (focus)="to.open()"
+                                                [ngClass]="{ 'is-invalid': submitted && f.to.errors }">
+                                            <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+                                            <mat-datepicker #to></mat-datepicker>
+                                            <div *ngIf="submitted && f.to.errors" class="invalid-feedback">
+                                                <div *ngIf="f.to.errors.required">Please Select To Date</div>
+                                            </div>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-primary" type="submit">
+                                            Get Reports
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card elem">
+                        <div class="card-header card-header-info">
+                            <h4 class="card-title">Note</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats">
+                                <ul>
+                                    <li>
+                                        <p><span class="text-danger font-weight-bold">06:07:55</span> - Worked Less than
+                                            8 hours </p>
+                                    </li>
+                                    <li>
+                                        <p><span class="text-warning font-weight-bold">08:09:42</span> - Worked Less
+                                            than 9 hours </p>
+                                    </li>
+                                    <li>
+                                        <p><span class="text-success font-weight-bold">10:25:66</span> - Worked More
+                                            than 9 hours </p>
+                                    </li>
+                                    <li>
+                                        <p class="text-danger"> When the entire row is Red, It means there is an error
+                                            in the given data.</p>
+                                    </li>
+                                    <li>
+                                        <p class="text-info">The records updated till
+                                            {{refinedLog.date_log| date: 'd/M/yyyy'}}.</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+                <div *ngFor="let employee of Employees" class="col-md-3">
+                    <div class="card">
+                        <div class="card-header card-header-warning">
+                            <h4 class="card-title ">{{employee.emp_name}} <span
+                                    class="pull-right">{{employee.emp_number}}</span></h4>
+                            <p class="card-category"></p>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            Hours Worked
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let report_rec of employee.report" mat-raised-button
+                                            matTooltip="Click to View Detailed Logs"
+                                            [ngClass]="{'text-danger font-weight-bold':report_rec.doubt_flag}"
+                                            (click)="viewDates(employee,report_rec.date)">
+                                            <td>
+                                                {{report_rec.date | date: 'd/M/yyyy'}}
+                                            </td>
+                                            <td [ngClass]="getClass(report_rec.hours_worked)">
+                                                {{report_rec.hours_worked}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-  </div>
-  
-  </div>
+    </div>
 </div>
