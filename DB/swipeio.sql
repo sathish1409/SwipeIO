@@ -12,100 +12,104 @@ drop table if exists incharge_log;
 drop table if exists swipeio_config;
 
 
-############################################################################################################
-########################################## Creation of tables ##############################################
-############################################################################################################
-
-create table Cards	(
-						card_id int primary key not null auto_increment,
-                        card_number varchar(8) unique,
-                        updated_on datetime,
-                        created_on datetime,
-                        is_delete bit default 0
-					);
+CREATE TABLE Cards (
+    card_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    card_number VARCHAR(8) UNIQUE,
+    updated_on DATETIME,
+    created_on DATETIME,
+    is_delete BIT DEFAULT 0
+);
                     
-create table Employee	(
-							emp_id int primary key NOT NULL auto_increment,
-                            emp_number varchar(10) unique not null,
-                            emp_name varchar(25),
-                            email varchar(50) not null,
-                            card_id int,
-                            is_admin bit,
-                            is_contract bit,
-                            pass_word varchar(20),
-                            created_on datetime,
-                            updated_on datetime,
-                            is_delete bit default 0,
-                            foreign key (card_id) references cards(card_id)
-						);
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    emp_number VARCHAR(10) UNIQUE NOT NULL,
+    emp_name VARCHAR(25),
+    email VARCHAR(50) NOT NULL,
+    card_id INT,
+    is_admin BIT,
+    is_contract BIT,
+    pass_word VARCHAR(20),
+    created_on DATETIME,
+    updated_on DATETIME,
+    is_delete BIT DEFAULT 0,
+    FOREIGN KEY (card_id)
+        REFERENCES cards (card_id)
+);
                         
-create table Gate	(
-						gate_id int primary key not null auto_increment,
-                        gate_name varchar(20),
-                        updated_on datetime,
-                        created_on datetime,
-                        is_delete bit default 0
-					);
+CREATE TABLE Gate (
+    gate_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    gate_name VARCHAR(20),
+    updated_on DATETIME,
+    created_on DATETIME,
+    is_delete BIT DEFAULT 0
+);
                     
-create table Main_swipe	(
-                            date_log date,
-                            time_log time,
-                            inorout bit,
-                            emp_id int,
-                            gate_id int,
-                            card_id int,
-                            remarks varchar(50),
-                            primary key(date_log,time_log,emp_id),
-                            foreign key (emp_id) references Employee(emp_id),
-                            foreign key (gate_id) references Gate(gate_id),
-                            foreign key (card_id) references Cards(card_id)
-						);
+CREATE TABLE Main_swipe (
+    date_log DATE,
+    time_log TIME,
+    inorout BIT,
+    emp_id INT,
+    gate_id INT,
+    card_id INT,
+    remarks VARCHAR(50),
+    PRIMARY KEY (date_log , time_log , emp_id),
+    FOREIGN KEY (emp_id)
+        REFERENCES Employee (emp_id),
+    FOREIGN KEY (gate_id)
+        REFERENCES Gate (gate_id),
+    FOREIGN KEY (card_id)
+        REFERENCES Cards (card_id)
+);
                         
-create table Temp_card_log	(
-								temp_card_log_id int primary key auto_increment not null,
-                                date_of_usage date,
-                                emp_id int,
-                                card_id int,
-                                foreign key (emp_id) references Employee(emp_id),
-                                foreign key (card_id) references cards(card_id)
-							);
+CREATE TABLE Temp_card_log (
+    temp_card_log_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    date_of_usage DATE,
+    emp_id INT,
+    card_id INT,
+    FOREIGN KEY (emp_id)
+        REFERENCES Employee (emp_id),
+    FOREIGN KEY (card_id)
+        REFERENCES cards (card_id)
+);
                             
-create table Leave_description	(
-									leave_id int primary key not null auto_increment,
-									leave_name varchar(25),
-                                    updated_on datetime,
-                                    created_on datetime,
-									is_delete bit default 0
-								);
+CREATE TABLE Leave_description (
+    leave_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    leave_name VARCHAR(25),
+    updated_on DATETIME,
+    created_on DATETIME,
+    is_delete BIT DEFAULT 0
+);
                                 
-create table Leave_log	(	
-							leave_log_id int primary key not null auto_increment,
-                            from_date date,
-                            to_date date,
-                            emp_id int,
-                            leave_id int,
-                            foreign key (emp_id) references Employee(emp_id),
-                            foreign key (leave_id) references Leave_description(leave_id)
-						);
+CREATE TABLE Leave_log (
+    leave_log_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    from_date DATE,
+    to_date DATE,
+    emp_id INT,
+    leave_id INT,
+    FOREIGN KEY (emp_id)
+        REFERENCES Employee (emp_id),
+    FOREIGN KEY (leave_id)
+        REFERENCES Leave_description (leave_id)
+);
                         
-create table Incharge_log	(
-								incharge_log_id int primary key not null auto_increment,
-                                emp_id int,
-                                incharge_id int,
-                                is_delete bit default 0
-							);
+CREATE TABLE Incharge_log (
+    incharge_log_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    emp_id INT,
+    incharge_id INT,
+    is_delete BIT DEFAULT 0
+);
                             
-create table swipeio_config	(
-								config_id int primary key not null auto_increment,
-                                description varchar(50),
-                                value varchar(20)
-							);
+CREATE TABLE swipeio_config (
+    config_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    description VARCHAR(50),
+    value VARCHAR(20)
+);
                  
 ############################################################################################################
 ########################################       Configurations        #######################################
 ############################################################################################################
 
-#drop procedure get_config;
+##drop procedure get_config;
 delimiter //
 create procedure get_config	(
 									in description1 varchar(50)
@@ -123,7 +127,7 @@ call get_config('day_consideration');
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a Card <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-drop procedure insert_card;
+##drop procedure insert_card;
 delimiter //
 create procedure insert_card	(
 									in card_number1 varchar(8)
@@ -137,7 +141,7 @@ delimiter ;
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete a Card <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 
-#drop procedure delete_cards;
+##drop procedure delete_cards;
 delimiter //
 create procedure delete_cards	(
 									in card_id1 int
@@ -154,7 +158,7 @@ delimiter ;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get all Cards <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure get_cards
+##drop procedure get_cards
 delimiter //
 create procedure get_cards()
 	begin
@@ -167,7 +171,7 @@ delimiter ;
 
 
 
-#drop procedure get_cards
+##drop procedure get_cards
 delimiter //
 create procedure get_card(in card_id1 int)
 	begin
@@ -181,7 +185,7 @@ delimiter ;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update a Card <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure update_card;
+##drop procedure update_card;
 delimiter //
 create procedure update_card(in card_id1 int,in card_number1 varchar(8))
 	begin
@@ -205,7 +209,7 @@ delimiter ;
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a gate <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 
-drop procedure insert_gate;
+#drop procedure insert_gate;
 delimiter //
 create procedure insert_gate	(
 									in gate_name1 varchar(20)
@@ -223,7 +227,7 @@ delimiter ;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete a gate <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure delete_gate;
+##drop procedure delete_gate;
 delimiter //
 create procedure delete_gate	(
 									in gate_id1 int
@@ -248,7 +252,7 @@ delimiter ;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get All Gates <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure get_gates;
+##drop procedure get_gates;
 delimiter //
 create procedure get_gates	()
 	begin
@@ -260,7 +264,7 @@ delimiter ;
 #----------------- </Calls> -----------------#
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update a Gate<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure update_gate;
+##drop procedure update_gate;
 delimiter //
 create procedure update_gate	(	
 									in gate_id1 int,
@@ -283,7 +287,7 @@ delimiter ;
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a Leave Descripton <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 
-#drop procedure insert_leave_description;
+##drop procedure insert_leave_description;
 delimiter //
 create procedure insert_leave_description	(
 												in leave_name1 varchar(25)
@@ -301,7 +305,7 @@ delimiter ;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete a Leave Descripton <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure delete_leave_description;
+##drop procedure delete_leave_description;
 delimiter //
 create procedure delete_leave_description	(
 												in leave_id1 int
@@ -316,7 +320,7 @@ delimiter ;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get All Leave Descriptons <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure get_leave_descriptions	;
+##drop procedure get_leave_descriptions	;
 delimiter //
 create procedure get_leave_descriptions	()
 	begin
@@ -329,7 +333,7 @@ delimiter ;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update a Leave Descripton <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure update_leave_description;
+##drop procedure update_leave_description;
 delimiter //
 create procedure update_leave_description	(
 												in leave_id1 int,
@@ -354,7 +358,7 @@ delimiter ;
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Insert an Employee  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 
 
-#drop procedure insert_employee;
+##drop procedure insert_employee;
 delimiter //
 create procedure insert_employee(	
 									in emp_number1 varchar(10),
@@ -404,7 +408,7 @@ delimiter ;
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Delete an Employee  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 
 
-#drop procedure delete_employee;
+##drop procedure delete_employee;
 delimiter //
 create procedure delete_employee	(
 										in emp_id1 int
@@ -423,7 +427,7 @@ delimiter ;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get All Employees <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-drop procedure get_employees;
+#drop procedure get_employees;
 delimiter //
 create procedure get_employees()
 	begin
@@ -432,11 +436,11 @@ create procedure get_employees()
 delimiter ;
 
 #----------------- <Calls> -----------------#
-##call get_employees;
+call get_employees;
 #----------------- </Calls> -----------------#
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Check for email existance <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-drop procedure is_employee;
+#drop procedure is_employee;
 delimiter //
 create procedure is_employee(in email1 varchar(50))
 	begin
@@ -449,7 +453,7 @@ delimiter ;
 #----------------- </Calls> -----------------#
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get All Employees <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-drop procedure get_employee;
+#drop procedure get_employee;
 delimiter //
 create procedure get_employee(in emp_id1 int)
 	begin
@@ -462,7 +466,7 @@ delimiter ;
 #----------------- </Calls> -----------------#
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Update an Employee <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-drop procedure update_employee;
+#drop procedure update_employee;
 delimiter //
 create procedure update_employee	(	
 										in emp_id1 int,
@@ -496,7 +500,7 @@ delimiter ;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Validate an Employee <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-drop procedure Validate;
+#drop procedure Validate;
 delimiter //
 	create procedure Validate(in email1 varchar(50),in pass_word1 varchar(10))
 	begin
@@ -517,7 +521,7 @@ delimiter ;
 ############################################################################################################
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a leave log <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure insert_leave_log;
+##drop procedure insert_leave_log;
 delimiter //
 create procedure insert_leave_log	(
 										in from_date1 date,
@@ -552,7 +556,7 @@ delimiter ;
 ############################################################################################################
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a temp card log <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure insert_temp_card_log;
+##drop procedure insert_temp_card_log;
 delimiter //
 create procedure insert_temp_card_log	(
 											in date_of_usage1 date,
@@ -583,7 +587,7 @@ delimiter ;
 ############################################################################################################
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Insert a incharge maps <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure insert_incharge_log;
+##drop procedure insert_incharge_log;
 delimiter //
 create procedure insert_incharge_log(in emp_id1 int,in incharge_id1 int)
 	begin
@@ -599,7 +603,7 @@ delimiter ;
 
 ###################################
 
-#drop procedure insert_incharge_log;
+##drop procedure insert_incharge_log;
 delimiter //
 create procedure clear_incharge_log(in emp_id1 int)
 	begin
@@ -615,7 +619,7 @@ delimiter ;
 #----------------- </Calls> -----------------#
 
 
-#drop procedure get_reporting_employees;
+##drop procedure get_reporting_employees;
 delimiter //
 create procedure get_reporting_employees(in incharge_id1 int)
 	begin
@@ -651,7 +655,7 @@ create procedure import_to_swipe	(
                                         in emp_number1 varchar(10),
                                         in gate_name1 varchar(20),
                                         in inorout1 varchar(5),
-                                        in remark1 varchar(30)
+                                        in remark1 varchar(50)
 									)
 	begin
 		set @is_exist_employee=0;
@@ -714,7 +718,7 @@ delimiter ;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get swipe log for a given date and emp id <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure get_swipe_log;
+##drop procedure get_swipe_log;
 #delimiter //
 #create procedure get_swipe_log	(
 #									in emp_id1 int,
@@ -731,7 +735,7 @@ delimiter ;
 #delete from Main_swipe where log_id=120;
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get Dates between the given range <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure get_dates;
+##drop procedure get_dates;
 delimiter //
 create procedure get_dates(in emp_id1 int,in from_date varchar(20),in to_date varchar(20),in gate_id1 int)
 begin
@@ -745,7 +749,7 @@ delimiter ;
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get swipe log for a given date and emp id <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-drop procedure get_swipe_log_ref;
+#drop procedure get_swipe_log_ref;
 delimiter //
 create procedure get_swipe_log_ref	(
 									in emp_id1 int,
@@ -777,7 +781,7 @@ delimiter ;
 #call get_last_dates_of_employee(1,7);
 #select * from Main_swipe;
 #select count(*) from  Main_swipe;
-#drop procedure get_last_dates_of_employee;
+##drop procedure get_last_dates_of_employee;
 
 
 
