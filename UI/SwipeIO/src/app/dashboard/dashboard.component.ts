@@ -128,7 +128,9 @@ export class DashboardComponent implements OnInit {
 				.getReport(this.Params1)
 				.pipe(first())
 				.subscribe(report_in => {
-					employee.report = report_in;
+					if (report_in.length > 0) {
+						employee.report = report_in;
+					}
 					console.log("called", employee.report);
 				});
 		});
@@ -149,11 +151,11 @@ export class DashboardComponent implements OnInit {
 						.getLastReport(this.Params)
 						.pipe(first())
 						.subscribe(report_in => {
-							console.log(report_in);
-							employee.report = report_in;
+							if (report_in.length > 0) {
+								employee.report = report_in;
+							}
 						});
 				});
-				console.log(this.Employees);
 			});
 	}
 }

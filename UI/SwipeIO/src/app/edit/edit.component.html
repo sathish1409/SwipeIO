@@ -7,7 +7,7 @@
             <h4 class="card-title">Edit Employee</h4>
           </div>
           <div class="card-body">
-            <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="editForm" *ngIf="selectedEmployee" (ngSubmit)="onSubmit()">
               <div class="row">
                 <div class="col-md-6">
                   <mat-form-field class="example-full-width">

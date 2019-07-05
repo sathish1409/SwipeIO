@@ -78,8 +78,16 @@ export class AddComponent implements OnInit {
 			emp_name: this.addForm.value.emp_name,
 			email: this.addForm.value.email,
 			pass_word: this.addForm.value.pass_word,
-			is_admin: this.addForm.value.is_admin == null ? false : true,
-			is_contract: this.addForm.value.is_contract == null ? false : true,
+			is_admin:
+				this.addForm.value.is_admin == null ||
+				this.addForm.value.is_admin == false
+					? false
+					: true,
+			is_contract:
+				this.addForm.value.is_contract == null ||
+				this.addForm.value.is_contract == false
+					? false
+					: true,
 			card_id: this.addForm.value.card_id.card_id,
 			card_number: this.addForm.value.card_id.card_number,
 			incharges: this.addForm.value.incharges,

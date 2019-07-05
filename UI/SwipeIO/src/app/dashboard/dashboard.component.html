@@ -1,5 +1,5 @@
 <div class="main-content">
-    <div class="container-fluid">
+    <div class="container-fluid"  >
         <div *ngIf="Employees" class="row">
             <div class="col-lg-4 col-md-4 col-sm-12">
                 <div class="card card-stats">
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" *ngIf="Employees">
             <div class="col-md-3">
                 <div class="card elem">
                     <div class="card-header card-header-info">
@@ -107,7 +107,7 @@
                         <p class="card-category"></p>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive" *ngIf="employee.report">
                             <table class="table table-hover">
                                 <thead class=" text-primary">
                                     <th>

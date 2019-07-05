@@ -8,36 +8,30 @@
                         <p class="card-category"></p>
                     </div>
                     <div class="card-body">
-                        <form [formGroup]="filterForm" (submit)="onSubmit()">
+                        <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
                             <div class="row">
                                 <div class="col-md-2">
                                     <mat-form-field>
                                         <input formControlName="from" matInput [matDatepicker]="from" placeholder="From"
                                             (focus)="from.open()"
-                                            [ngClass]="{ 'is-invalid': submitted && f.from.errors }">
+                                            [ngClass]="{ 'is-invalid': submitted && f.from.invalid }">
                                         <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
                                         <mat-datepicker #from></mat-datepicker>
-                                        <div *ngIf="submitted && f.from.errors" class="invalid-feedback">
-                                            <div *ngIf="f.from.errors.required">Please Select From Date</div>
-                                        </div>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-2">
                                     <mat-form-field>
                                         <input formControlName="to" matInput [matDatepicker]="to" placeholder="To"
-                                            (focus)="to.open()" [ngClass]="{ 'is-invalid': submitted && f.to.errors }">
+                                            (focus)="to.open()" [ngClass]="{ 'is-invalid': submitted && f.to.invalid }">
                                         <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
                                         <mat-datepicker #to></mat-datepicker>
-                                        <div *ngIf="submitted && f.to.errors" class="invalid-feedback">
-                                            <div *ngIf="f.to.errors.required">Please Select To Date</div>
-                                        </div>
                                     </mat-form-field>
                                 </div>
 
                                 <div class="col-md-2">
-                                    <mat-form-field>
+                                    <mat-form-field >
                                         <mat-label>Select Employee</mat-label>
-                                        <mat-select [(ngModel)]="selectedEmployee" (ngModelChange)="onSubmit()"
+                                        <mat-select [(ngModel)]="selectedEmployee" 
                                             formControlName="selectedEmployee1">
                                             <mat-option *ngFor="let Employee of Employees" [value]="Employee">
                                                 {{Employee.emp_name}}
@@ -46,9 +40,9 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-2">
-                                    <mat-form-field>
+                                    <mat-form-field >
                                         <mat-label>Select Gate</mat-label>
-                                        <mat-select [(ngModel)]="selectedGate" (ngModelChange)="onSubmit()"
+                                        <mat-select [(ngModel)]="selectedGate" 
                                             formControlName="gate">
                                             <mat-option *ngFor="let gate of Gates" [value]="gate">
                                                 {{gate.gate_name}}
@@ -140,7 +134,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="alert alert-primary"><span> Considering A day from {{configSwipeIO.value}} AM to Next Day's
+                <div *ngIf="configSwipeIO" class="alert alert-primary"><span> Considering A day from {{configSwipeIO.value}} AM to Next Day's
                         {{configSwipeIO.value}} AM</span></div>
             </div>
         </div>

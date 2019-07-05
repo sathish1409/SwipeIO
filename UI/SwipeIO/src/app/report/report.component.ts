@@ -84,41 +84,42 @@ export class ReportComponent implements OnInit {
 		// stop here if form is invalid
 		if (this.filterForm.invalid) {
 			return;
-		}
-		this.ngxService.start();
-		this.loading = true;
-		this.Params = {
-			emp_id: this.selectedEmployee.emp_id,
-			from:
-				this.filterForm.value.from.getFullYear() +
-				"/" +
-				(this.filterForm.value.from.getMonth() + 1) +
-				"/" +
-				this.filterForm.value.from.getDate(),
-			to:
-				this.filterForm.value.to.getFullYear() +
-				"/" +
-				(this.filterForm.value.to.getMonth() + 1) +
-				"/" +
-				this.filterForm.value.to.getDate(),
-			gate_id: this.selectedGate.gate_id
-		};
-		console.log(this.Params);
-		this.reportService
-			.getReport(this.Params)
-			.pipe(first())
-			.subscribe(report_in => {
-				this.report = report_in;
-				this.data = report_in.length > 0 ? true : false;
-				this.present = this.report.length;
-				this.report.forEach(row => {
-					if (this.isNotGreater(row.hours_worked)) {
-						this.defaultDays += 1;
-					}
+		} else {
+			this.ngxService.start();
+			this.loading = true;
+			this.Params = {
+				emp_id: this.selectedEmployee.emp_id,
+				from:
+					this.filterForm.value.from.getFullYear() +
+					"/" +
+					(this.filterForm.value.from.getMonth() + 1) +
+					"/" +
+					this.filterForm.value.from.getDate(),
+				to:
+					this.filterForm.value.to.getFullYear() +
+					"/" +
+					(this.filterForm.value.to.getMonth() + 1) +
+					"/" +
+					this.filterForm.value.to.getDate(),
+				gate_id: this.selectedGate.gate_id
+			};
+			console.log(this.Params);
+			this.reportService
+				.getReport(this.Params)
+				.pipe(first())
+				.subscribe(report_in => {
+					this.report = report_in;
+					this.data = report_in.length > 0 ? true : false;
+					this.present = this.report.length;
+					this.report.forEach(row => {
+						if (this.isNotGreater(row.hours_worked)) {
+							this.defaultDays += 1;
+						}
+					});
 				});
-			});
-		console.log(this.report);
-		this.ngxService.stop();
+			console.log(this.report);
+			this.ngxService.stop();
+		}
 	}
 	isNotGreater(n) {
 		return parseInt(n) < this.threshold ? 1 : 0;
@@ -149,6 +150,13 @@ export class ReportComponent implements OnInit {
 
 	ngOnInit() {
 		this.ngxService.start();
+		this.filterForm = this.formBuilder.group({
+			from: ["", Validators.required],
+			to: ["", Validators.required],
+			selectedEmployee1: [""],
+			gate: [""]
+		});
+
 		this.loadAllEmployees();
 		this.settingService
 			.getGates()
@@ -164,12 +172,6 @@ export class ReportComponent implements OnInit {
 			.subscribe(report_in => {
 				this.configSwipeIO = report_in;
 			});
-		this.filterForm = this.formBuilder.group({
-			from: ["", Validators.required],
-			to: ["", Validators.required],
-			selectedEmployee1: [""],
-			gate: [""]
-		});
 
 		this.ngxService.stop();
 	}
