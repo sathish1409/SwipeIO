@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\rubika\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\rubika\\.nuget\\packages",
+      "C:\\Users\\sathish.j\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\sathish.j\\.nuget\\packages",
       "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
     ]
   }

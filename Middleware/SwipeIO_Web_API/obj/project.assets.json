@@ -13038,30 +13038,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\rubika\\.nuget\\packages\\": {},
+    "C:\\Users\\sathish.j\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rubika\\SwipeIO\\Middleware\\SwipeIO_Web_API\\SwipeIO_Web_API.csproj",
+      "projectUniqueName": "C:\\Users\\sathish.j\\SwipeIO\\Middleware\\SwipeIO_Web_API\\SwipeIO_Web_API.csproj",
       "projectName": "SwipeIO_Web_API",
-      "projectPath": "C:\\Users\\rubika\\SwipeIO\\Middleware\\SwipeIO_Web_API\\SwipeIO_Web_API.csproj",
-      "packagesPath": "C:\\Users\\rubika\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rubika\\SwipeIO\\Middleware\\SwipeIO_Web_API\\obj\\",
+      "projectPath": "C:\\Users\\sathish.j\\SwipeIO\\Middleware\\SwipeIO_Web_API\\SwipeIO_Web_API.csproj",
+      "packagesPath": "C:\\Users\\sathish.j\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sathish.j\\SwipeIO\\Middleware\\SwipeIO_Web_API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\rubika\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\sathish.j\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
