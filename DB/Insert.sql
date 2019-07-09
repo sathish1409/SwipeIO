@@ -1,5 +1,6 @@
 #Insert Day Consideration Config
 insert into swipeio_config(description,value) values('day_consideration','07:00:00');
+insert into swipeio_config(description,value) values('auto_import_path','C:\\Users\\sathish.j\\SwipeIO\\SwipeLogs');
 
 #Insert Cards
 call insert_card('11111111');
