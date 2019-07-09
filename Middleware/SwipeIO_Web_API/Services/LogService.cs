@@ -42,7 +42,6 @@ namespace SwipeIO_Web_API.Services {
         //     Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         //     string url = @Emp.Config.FromSql("call get_config('auto_import_path')").FirstOrDefault().value;
         //     //string url = @"C:\Users\sathish.j\SwipeIO\SwipeLogs";
-        //     //call get_config('auto_import_path');
 
         //     DirectoryInfo IN = new DirectoryInfo(url + @"\IN\");
         //     var files = IN.GetFiles();
@@ -56,6 +55,7 @@ namespace SwipeIO_Web_API.Services {
         //             var file = files[i].Open(FileMode.Open, FileAccess.Read);
         //             var reader = ExcelReaderFactory.CreateReader(file, new ExcelReaderConfiguration() { FallbackEncoding = Encoding.GetEncoding(1252) });
         //             //Skips to Row 5
+        //             reader.Read();
         //             reader.Read();
         //             reader.Read();
         //             reader.Read();
