@@ -2,7 +2,7 @@
 
 A Web Application to track the employees working hours. This Web Application is built using,
 
-> Front End - Angular CLI 7.0.1
+> Front End - Angular CLI 7.0.2
 > Middleware - .Net Core 2.2
 > Databes - MySQL
 
