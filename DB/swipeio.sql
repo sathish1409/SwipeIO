@@ -102,7 +102,7 @@ CREATE TABLE Incharge_log (
 CREATE TABLE swipeio_config (
     config_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     description VARCHAR(50),
-    value VARCHAR(20)
+    value VARCHAR(100)
 );
                  
 ############################################################################################################
@@ -119,7 +119,8 @@ create procedure get_config	(
 	end //
 delimiter ;
 
-call get_config('day_consideration');
+call get_config('auto_import_path');
+
 
 ############################################################################################################
 ######################################## Cards Stored Procedures ###########################################
