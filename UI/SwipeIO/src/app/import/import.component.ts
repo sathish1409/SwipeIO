@@ -60,21 +60,7 @@ export class ImportComponent implements OnInit {
 			);
 			console.log(logs[0]);
 			if (logs[0]) {
-				if (
-					JSON.stringify([
-						"Date",
-						"Time",
-						"Cardid",
-						"Empid",
-						"Department",
-						"Type",
-						"CID",
-						"Gate",
-						"InOut",
-						"Remark",
-						"Location"
-					]) == JSON.stringify(Object.keys(logs[0]))
-				) {
+				if (Object.keys(logs[0]).length == 11) {
 					this.data = logs;
 				} else {
 					this.alertService.error("File is not valid", true);
