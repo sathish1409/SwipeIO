@@ -5,27 +5,35 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ExcelDataReader;
 using Microsoft.EntityFrameworkCore;
 
 namespace SwipeIO_Web_API.Services {
     public interface ILogService {
         int Upload (Log[] log);
-        // void AutoImport();
+        string AutoImport();
         IEnumerable<Log> GetAll ();
         Log GetById (int id);
     }
 
     public class LogService : ILogService {
         MyDbContext Emp = new MyDbContext ();
-        //dd/MM/yyyy
         public int Upload (Log[] log) {
             var isDone = 0;
-            for (var i = 0; i < log.Length; i++) {
-                string date = DateTime.Parse (log[i].Date).Year.ToString () + "/" + DateTime.Parse (log[i].Date).Month.ToString () + "/" + DateTime.Parse (log[i].Date).Day.ToString ();
-                isDone = Emp.Database.ExecuteSqlCommand ("call import_to_swipe({0},{1},{2},{3},{4},{5},{6});", date, log[i].Time, log[i].Cardid, log[i].Empid, log[i].Gate, log[i].InOut, log[i].Remark);
+            try
+            {
+                for (var i = 0; i < log.Length; i++)
+                {
+                    string date = DateTime.Parse(log[i].Date).Year.ToString() + "/" + DateTime.Parse(log[i].Date).Month.ToString() + "/" + DateTime.Parse(log[i].Date).Day.ToString();
+                    isDone += Emp.Database.ExecuteSqlCommand("call import_to_swipe({0},{1},{2},{3},{4},{5},{6});", date, log[i].Time, log[i].Cardid, log[i].Empid, log[i].Gate, log[i].InOut, log[i].Remark);
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
             }
 
-            return isDone != 0 ? log.Length : 0;
+            return isDone != 0 ? isDone : 0;
         }
 
         public IEnumerable<Log> GetAll () {
@@ -37,56 +45,76 @@ namespace SwipeIO_Web_API.Services {
             throw new NotImplementedException ();
         }
 
-        // public void AutoImport()
-        // {
-        //     Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-        //     string url = @Emp.Config.FromSql("call get_config('auto_import_path')").FirstOrDefault().value;
-        //     //string url = @"C:\Users\sathish.j\SwipeIO\SwipeLogs";
-
-        //     DirectoryInfo IN = new DirectoryInfo(url + @"\IN\");
-        //     var files = IN.GetFiles();
-        //     //string names= " ";
-        //     // Result result=new Result();
-        //     string output = " ";
-        //     if (files.Length != 0)
-        //     {
-        //         for (var i = 0; i < files.Length; i++)
-        //         {
-        //             var file = files[i].Open(FileMode.Open, FileAccess.Read);
-        //             var reader = ExcelReaderFactory.CreateReader(file, new ExcelReaderConfiguration() { FallbackEncoding = Encoding.GetEncoding(1252) });
-        //             //Skips to Row 5
-        //             reader.Read();
-        //             reader.Read();
-        //             reader.Read();
-        //             reader.Read();
-        //             reader.Read();
-        //             do
-        //             {
-        //                 while (reader.Read())
-        //                 {
-        //                     //peek ahead? Bail before we start anything so we don't get an empty object
-        //                     var status = reader.GetString(0);
-        //                     if (string.IsNullOrEmpty(status)) break;
-
-        //                     output += reader.GetString(0) + "\t";
-        //                     output += reader.GetString(1) + "\t";
-        //                     output += reader.GetDouble(2) + "\t";
-        //                     output += reader.GetString(4) + "\t";
-        //                     output += "\n";
-
-        //                     //string date = DateTime.Parse(log[i].Date).Year.ToString() + "/" + DateTime.Parse(log[i].Date).Month.ToString() + "/" + DateTime.Parse(log[i].Date).Day.ToString();
-        //                     //isDone = Emp.Database.ExecuteSqlCommand("call import_to_swipe({0},{1},{2},{3},{4},{5},{6});", date, log[i].Time, log[i].Cardid, log[i].Empid, log[i].Gate, log[i].InOut, log[i].Remark);
-        //                 }
-        //             } while (reader.NextResult());
-        //             file.Close();
-        //             files[i].MoveTo(url + @"\PROCESSED\" + files[i].Name);
-        //         }
-        //     }
-        //     else
-        //     {
-        //         output = "No file Exist in " + IN.FullName;
-        //     }
-        //     throw new NotImplementedException();
-        // }
+        public string AutoImport()
+        {
+            string output = "Output";
+            try
+            {
+                Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                string url = @Emp.Config.FromSql("call get_config('auto_import_path')").FirstOrDefault().value;
+                DirectoryInfo IN = new DirectoryInfo(url + @"\IN\");
+                var files = IN.GetFiles();
+                
+                if (files.Length != 0)
+                {
+                    Emp.Database.ExecuteSqlCommand("call insert_auto_import_log({0})",files.Length+" Files Found");
+                    for (var i = 0; i < files.Length; i++)
+                    {
+                        var file = files[i].Open(FileMode.Open, FileAccess.Read);
+                        var reader = ExcelReaderFactory.CreateReader(file, new ExcelReaderConfiguration() { FallbackEncoding = Encoding.GetEncoding(1252) });
+                        //Skips to Row 5
+              
+                        reader.Read();
+                        reader.Read();
+                        reader.Read();
+                        reader.Read();
+                        reader.Read();
+                        int totalRows=reader.RowCount;
+                        if (reader.GetString(0)=="Date")
+                        {
+                            for(int j=0;j < totalRows-5; j++){
+                                reader.Read();
+                                var status = reader.GetString(0);
+                                output +=totalRows+ status + "<-Status"+j;
+                                if (string.IsNullOrEmpty(status)) break;
+                                var Date = reader.GetString(0);
+                                var Time = reader.GetString(1);
+                                var Cardid = reader.GetString(2);
+                                var Empid = reader.GetString(3);
+                                var EmpName = reader.GetString(4);
+                                var Department = reader.GetString(5);
+                                var Type = reader.GetString(6);
+                                var CID = reader.GetString(7);
+                                var Gate = reader.GetString(8);
+                                var InOut = reader.GetString(9);
+                                var Remark = reader.GetString(10);
+                                output += Date + Time + Cardid + Empid + EmpName + Department + Type + CID + Gate + InOut + Remark;
+                                string date = DateTime.Parse(Date).Year.ToString() + "/" + DateTime.Parse(Date).Month.ToString() + "/" + DateTime.Parse(Date).Day.ToString();
+                                Emp.Database.ExecuteSqlCommand("call import_to_swipe({0},{1},{2},{3},{4},{5},{6});", date, Time, Cardid, Empid, Gate, InOut, Remark);
+                            }
+                            Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('File Imported')");
+                            file.Close();
+                            output += "Running";
+                            files[i].MoveTo(url + @"\PROCESSED\" + files[i].Name);
+                        }
+                        else
+                        {
+                            Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('Invalid File Found and Moved')");
+                            file.Close();
+                            files[i].MoveTo(url + @"\INVALID\" + files[i].Name);
+                        }
+                    }
+                }
+                else
+                {
+                    Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('No FIle Exist')");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return output;
+        }
     }
 }

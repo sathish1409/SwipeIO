@@ -11,7 +11,7 @@ using SwipeIO_Web_API.Services;
 
 namespace SwipeIO_Web_API.Controllers
 {
-   [Authorize]
+   //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     
@@ -43,9 +43,9 @@ namespace SwipeIO_Web_API.Controllers
 
         // GET: api/Log
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new string[] { "value1", "value2" };
+            return _logService.AutoImport();
         }
 
         // GET: api/Log/5
