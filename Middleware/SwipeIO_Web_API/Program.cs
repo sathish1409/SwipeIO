@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Hangfire;
 using Hangfire.MySql.Core;
+using Hangfire.Storage;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,13 @@ namespace SwipeIO_Web_API {
                 new MySqlStorage ("server=localhost;uid=root;pwd=123456;database=HangfireTest;Allow User Variables=True"));
 
             BackgroundJob.Enqueue (() => Console.WriteLine ("Starting API and Auto Import...\n"));
-
+            using (var connection = JobStorage.Current.GetConnection())
+            {
+                foreach (var recurringJob in StorageConnectionExtensions.GetRecurringJobs(connection))
+                {
+                    RecurringJob.RemoveIfExists(recurringJob.Id);
+                }
+            }
             using (var server = new BackgroundJobServer ()) {
                 RecurringJob.AddOrUpdate ("autoimport", () => autoImport (), getCronString ());
                 BuildWebHost (args).Run ();
