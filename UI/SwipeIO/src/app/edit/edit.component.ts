@@ -58,8 +58,8 @@ export class EditComponent implements OnInit {
             this.editForm = this.formBuilder.group({
               emp_name:  ['', Validators.required],
               emp_id:  ['', Validators.required],
-              email: [['', Validators.required, Validators.email]],
-              pass_word: [['', Validators.required,Validators.minLength(8)]],
+              email: ['', [Validators.required, Validators.email]],
+              pass_word: ['', [Validators.required,Validators.minLength(8)]],
               card_id: ['',Validators.required],  
               is_admin: [''],
               is_contract: ['',Validators.required],
@@ -81,6 +81,8 @@ export class EditComponent implements OnInit {
       console.log(this.editForm);
         return;
     }
+    
+    console.log(this.f);
    
     this.param={
       emp_id:0,
@@ -111,7 +113,7 @@ export class EditComponent implements OnInit {
                 this.loading = false;
             });
             
-            this.ngxService.stop();
+        this.ngxService.stop();
     } 
 
   
