@@ -129,7 +129,7 @@ delimiter ;
 
 #call insert_auto_import_log('File Imported');
 
-#select * from auto_import_logs;
+select * from auto_import_logs order by auto_import_log_id desc;
                  
 ############################################################################################################
 ########################################       Configurations        #######################################
@@ -145,7 +145,7 @@ create procedure get_config	(
 	end //
 delimiter ;
 
-call get_config('auto_import_path');
+call get_config('auto_import_cron');
 
 
 ############################################################################################################
@@ -819,4 +819,4 @@ begin
 end //
 delimiter ;
 
-#call get_last_date();
+call get_last_date();
