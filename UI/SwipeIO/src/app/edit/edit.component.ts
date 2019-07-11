@@ -88,7 +88,7 @@ export class EditComponent implements OnInit {
       emp_name:this.selectedEmployee.emp_name,
       email:this.selectedEmployee.email,
       pass_word:this.selectedEmployee.pass_word,
-      is_admin:this.selectedEmployee.is_admin==null||this.selectedEmployee.is_contract==false?false:true,
+      is_admin:this.selectedEmployee.is_admin==null||this.selectedEmployee.is_admin==false?false:true,
       is_contract:this.selectedEmployee.is_contract==null||this.selectedEmployee.is_contract==false?false:true,
       card_id:this.selectedEmployee.card_id,
       card_number:'',
