@@ -53,7 +53,9 @@ namespace SwipeIO_Web_API.Services
 
         public void AutoImport()
         {
-            string output = "Output";
+            Console.WriteLine("Auto Import Called");
+            Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('Auto Import Call')");
+
             try
             {
                 Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -64,11 +66,11 @@ namespace SwipeIO_Web_API.Services
 
                 if (files.Length != 0)
                 {
-                    Emp.Database.ExecuteSqlCommand("call insert_auto_import_log({ 0 })", files.Length + "Files Found ");
                     for (var i = 0; i < files.Length; i++)
                     {
-                        var supportedTypes = new[] { "xls ", "xlsx " };
+                        var supportedTypes = new[] { "xls", "xlsx" };
                         var fileExt = Path.GetExtension(files[i].FullName).Substring(1);
+                        Console.WriteLine(fileExt);
                         if (!supportedTypes.Contains(fileExt))
                         {
                             Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('Invalid File Found and Moved')");
@@ -85,12 +87,8 @@ namespace SwipeIO_Web_API.Services
                         reader.Read();
                         reader.Read();
 
-
-
                         int totalRows = reader.RowCount - 5;
                         string dateString = reader.GetString(0);
-
-
                         if (dateString == "Date")
                         {
                             do
@@ -112,47 +110,48 @@ namespace SwipeIO_Web_API.Services
                                     var InOut = reader.GetString(9);
                                     var Remark = reader.GetString(10);
 
-                                    DateTime d = DateTime.ParseExact(Date, "dd / MM / yyyy ", null);
-                                    string date = d.Year.ToString() + " / " + d.Month.ToString() + " / " + d.Day.ToString();
-                                    output += date + Time + Cardid + Empid + EmpName + Department + Type + CID + Gate + InOut + Remark + "\n";
-                                    totalRows -= 1;
-                                    Emp.Database.ExecuteSqlCommand("call import_to_swipe({ 0 }, { 1 }, { 2 }, { 3 }, { 4 }, { 5 }, { 6 });", date, Time, Cardid, Empid, Gate, InOut, Remark);
+                                    DateTime d = DateTime.ParseExact(Date, "dd/MM/yyyy", null);
+                                    string date = d.Year.ToString() + "/" + d.Month.ToString() + "/" + d.Day.ToString();
+                                    Console.WriteLine(date);
+                                    Emp.Database.ExecuteSqlCommand("call import_to_swipe({0},{1},{2},{3},{4},{5},{6});", date, Time, Cardid, Empid, Gate, InOut, Remark);
                                 }
-                            } while (totalRows == 0);
+                            } while (reader.NextResult());
                             Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('File Imported')");
-
+                            Console.WriteLine("File Imported");
                             file.Close();
-                            output += "Running ";
-                            files[i].MoveTo(url + @"\PROCESSED\ " + files[i].Name);
+                            files[i].MoveTo(url + @"\PROCESSED\" + files[i].Name);
                         }
                         else
                         {
                             Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('Invalid File Found and Moved')");
-
                             file.Close();
-                            files[i].MoveTo(url + @"\INVALID\ " + files[i].Name);
+                            files[i].MoveTo(url + @"\INVALID\" + files[i].Name);
                         }
                     }
                 }
                 else
                 {
+                    Console.WriteLine("No FIle Found");
                     Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('No File Exist')");
                 }
             }
             catch (Exception e)
             {
-                Emp.Database.ExecuteSqlCommand("call insert_auto_import_log({ 0 })", e.GetType().ToString().Substring(0, 25));
+                Console.WriteLine(e);
+                Emp.Database.ExecuteSqlCommand("call insert_auto_import_log({0})", e.GetType().ToString().Substring(0, 25));
             }
         }
         public string getCronString()
         {
             try
             {
-                return Emp.Config.FromSql("call get_config('auto_import_cron')").FirstOrDefault().value;
+                string cronString=Emp.Config.FromSql("call get_config('auto_import_cron')").FirstOrDefault().value;
+                Console.WriteLine(cronString);
+                return cronString;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e); return null;
+                Console.WriteLine(e);return null;
             }
 
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +39,8 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
-                var employeeArr = Emp.Employee.FromSql("call  Validate(@p0,@p1);", email, pass_word);
+                var employeeArr = Emp.Employee.FromSql("call  Validate(@p0,@p1);", email, GetHash(pass_word));
+
                 // return null if user not found
                 if (employeeArr.Count() < 1)
                     return null;
@@ -80,7 +82,7 @@ namespace SwipeIO_Web_API.Services
                 Employee[] isExist = Emp.Employee.FromSql("call is_employee({0});", emp.email).ToArray();
                 if (isExist.Length == 0)
                 {
-                    Employee[] insertedEmployee = Emp.Employee.FromSql("call insert_employee({0},{1},{2},{3},{4},{5},{6});", emp.emp_number, emp.emp_name, emp.email, emp.pass_word, emp.is_admin, emp.is_contract, emp.card_number).ToArray();
+                    Employee[] insertedEmployee = Emp.Employee.FromSql("call insert_employee({0},{1},{2},{3},{4},{5},{6});", emp.emp_number, emp.emp_name, emp.email,GetHash(emp.pass_word), emp.is_admin, emp.is_contract, emp.card_number).ToArray();
                     if (emp.incharges != null)
                         for (var i = 0; i < emp.incharges.Length; i++)
                         {
@@ -107,6 +109,9 @@ namespace SwipeIO_Web_API.Services
             try
             {
                 Employee[] _employees = Emp.Employee.FromSql("call get_employees();").ToArray();
+                foreach(Employee employee in _employees){
+                    employee.pass_word = "";
+                }
                 return _employees;
             }
             catch (Exception e)
@@ -129,6 +134,7 @@ namespace SwipeIO_Web_API.Services
                     incharges[i] = incharge_log[i].incharge_id;
                 }
                 _employee.incharges = incharges;
+                _employee.pass_word = "";
                 return _employee;
             }
             catch (Exception e)
@@ -163,6 +169,10 @@ namespace SwipeIO_Web_API.Services
                 {
                     _employees[i] = Emp.Employee.FromSql("call get_employee({0});", incharge_log[i].emp_id).First();
                 }
+                foreach (Employee employee in _employees)
+                {
+                    employee.pass_word = "";
+                }
                 return _employees;
             }
             catch (Exception e)
@@ -182,6 +192,10 @@ namespace SwipeIO_Web_API.Services
                 {
                     _employees[i] = Emp.Employee.FromSql("call get_employee({0});", incharge_log[i].emp_id).ToArray().First();
                 }
+                foreach (Employee employee in _employees)
+                {
+                    employee.pass_word = "";
+                }
                 return _employees;
             }
             catch (Exception e)
@@ -195,23 +209,39 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
-                //call update_employee(5,'Mani','mani@gmail.com',123456,1,1,12);
-                int isUpdate = 0;
-
-                isUpdate = Emp.Database.ExecuteSqlCommand("call update_employee({0},{1},{2},{3},{4},{5},{6});", id, emp.emp_name, emp.email, emp.pass_word, emp.is_admin, emp.is_contract, card_number);
-                Emp.Database.ExecuteSqlCommand("call clear_incharge_log({0});", id);
-                for (var i = 0; i < emp.incharges.Length; i++)
+                int emp_id = Emp.Employee.FromSql("call is_employee({0});", emp.email).ToArray().FirstOrDefault().emp_id;
+                if (emp_id == id)
                 {
-                    isUpdate = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});", id, emp.incharges[i]);
+                    int isUpdate = 0;
+                    isUpdate = Emp.Database.ExecuteSqlCommand("call update_employee({0},{1},{2},{3},{4},{5},{6});", id, emp.emp_name, emp.email, GetHash(emp.pass_word), emp.is_admin, emp.is_contract, card_number);
+                    Emp.Database.ExecuteSqlCommand("call clear_incharge_log({0});", id);
+                    for (var i = 0; i < emp.incharges.Length; i++)
+                    {
+                        isUpdate = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});", id, emp.incharges[i]);
+                    }
+                    return isUpdate;
                 }
-                return isUpdate;
+                else
+                {
+                    return 99;
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 return 0;
             }
-
+        }
+        public string GetHash(string str)
+        {
+            MD5 md5Hash = MD5.Create();
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(str));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
         }
     }
 }

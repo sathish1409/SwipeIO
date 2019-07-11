@@ -29,7 +29,7 @@ CREATE TABLE Employee (
     card_id INT,
     is_admin BIT,
     is_contract BIT,
-    pass_word VARCHAR(20),
+    pass_word VARCHAR(40),
     created_on DATETIME,
     updated_on DATETIME,
     is_delete BIT DEFAULT 0,
@@ -116,7 +116,7 @@ CREATE TABLE auto_import_logs (
 ########################################       Auto Import Log      ########################################
 ############################################################################################################
 
-drop procedure insert_auto_import_log;
+#drop procedure insert_auto_import_log;
 delimiter //
 create procedure insert_auto_import_log	(
 									in auto_import_log1 VARCHAR(30)
@@ -145,7 +145,9 @@ create procedure get_config	(
 	end //
 delimiter ;
 
-call get_config('auto_import_cron');
+#call get_config('auto_import_cron');
+
+#update swipeio_config set value="*/2 * * * *" where config_id=3;
 
 
 ############################################################################################################
@@ -385,13 +387,13 @@ delimiter ;
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Insert an Employee  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 
 
-##drop procedure insert_employee;
+#drop procedure insert_employee;
 delimiter //
 create procedure insert_employee(	
 									in emp_number1 varchar(10),
 									in emp_name1 varchar(25),
                                     in email1 varchar(50),
-                                    in pass_word1 varchar(20),
+                                    in pass_word1 varchar(40),
                                     in is_admin1 bit,
                                     in is_contract1 bit,
                                     in card_id1 varchar(20)
@@ -499,7 +501,7 @@ create procedure update_employee	(
 										in emp_id1 int,
 										in emp_name1 varchar(25),
 										in email1 varchar(50),
-										in pass_word1 varchar(20),
+										in pass_word1 varchar(40),
 										in is_admin1 bit,
 										in is_contract1 bit,
 										in card_id1 varchar(10)
@@ -529,7 +531,7 @@ delimiter ;
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Validate an Employee <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 #drop procedure Validate;
 delimiter //
-	create procedure Validate(in email1 varchar(50),in pass_word1 varchar(10))
+	create procedure Validate(in email1 varchar(50),in pass_word1 varchar(40))
 	begin
 		select * from Employee where email=email1 and pass_word=pass_word1 and is_delete=0;
 	end//
