@@ -58,8 +58,8 @@ export class EditComponent implements OnInit {
             this.editForm = this.formBuilder.group({
               emp_name:  ['', Validators.required],
               emp_id:  ['', Validators.required],
-              email: [['', Validators.required, Validators.email]],
-              pass_word: [['', Validators.required,Validators.minLength(8)]],
+              email: ['', [Validators.required, Validators.email]],
+              pass_word: ['', [Validators.required,Validators.minLength(8)]],
               card_id: ['',Validators.required],  
               is_admin: [''],
               is_contract: ['',Validators.required],
@@ -81,6 +81,8 @@ export class EditComponent implements OnInit {
       console.log(this.editForm);
         return;
     }
+    
+    console.log(this.f);
    
     this.param={
       emp_id:0,
@@ -88,7 +90,7 @@ export class EditComponent implements OnInit {
       emp_name:this.selectedEmployee.emp_name,
       email:this.selectedEmployee.email,
       pass_word:this.selectedEmployee.pass_word,
-      is_admin:this.selectedEmployee.is_admin==null||this.selectedEmployee.is_contract==false?false:true,
+      is_admin:this.selectedEmployee.is_admin==null||this.selectedEmployee.is_admin==false?false:true,
       is_contract:this.selectedEmployee.is_contract==null||this.selectedEmployee.is_contract==false?false:true,
       card_id:this.selectedEmployee.card_id,
       card_number:'',
@@ -111,7 +113,7 @@ export class EditComponent implements OnInit {
                 this.loading = false;
             });
             
-            this.ngxService.stop();
+        this.ngxService.stop();
     } 
 
   

@@ -131,6 +131,9 @@ export class DashboardComponent implements OnInit {
 					if (report_in.length > 0) {
 						employee.report = report_in;
 					}
+					else {
+						employee.report = null;
+					}
 					console.log("called", employee.report);
 				});
 		});
@@ -153,7 +156,9 @@ export class DashboardComponent implements OnInit {
 						.subscribe(report_in => {
 							if (report_in.length > 0) {
 								employee.report = report_in;
-							}
+							}else {
+								employee.report = null;
+							} 
 						});
 				});
 			});

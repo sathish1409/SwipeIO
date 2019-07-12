@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -36,111 +37,211 @@ namespace SwipeIO_Web_API.Services
 
         public Employee Authenticate(string email, string pass_word)
         {
-            var employeeArr = Emp.Employee.FromSql("call  Validate(@p0,@p1);", email, pass_word);
-            // return null if user not found
-            if (employeeArr.Count() < 1)
-                return null;
-            var employee = employeeArr.First();
-            var role = employee.is_admin ? Role.Admin : Role.Employee;
-
-            // authentication successful so generate jwt token
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            try
             {
-                Subject = new ClaimsIdentity(new Claim[] {
-                new Claim (ClaimTypes.Name, employee.emp_id.ToString ()),
-                new Claim (ClaimTypes.Role, role)
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            employee.Token = tokenHandler.WriteToken(token);
+                var employeeArr = Emp.Employee.FromSql("call  Validate(@p0,@p1);", email, GetHash(pass_word));
 
-            // remove password before returning
-            employee.pass_word = null;
+                // return null if user not found
+                if (employeeArr.Count() < 1)
+                    return null;
+                var employee = employeeArr.First();
+                var role = employee.is_admin ? Role.Admin : Role.Employee;
 
-            return employee;
+                // authentication successful so generate jwt token
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[] {
+                    new Claim (ClaimTypes.Name, employee.emp_id.ToString ()),
+                    new Claim (ClaimTypes.Role, role)
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                employee.Token = tokenHandler.WriteToken(token);
+
+                // remove password before returning
+                employee.pass_word = null;
+
+                return employee;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+
         }
         public int Add(Employee emp)
         {
-            int isDone = 0;
-            Employee[] isExist = Emp.Employee.FromSql("call is_employee({0});", emp.email).ToArray();
-            if (isExist.Length == 0)
+            try
             {
-                Employee[] insertedEmployee = Emp.Employee.FromSql("call insert_employee({0},{1},{2},{3},{4},{5},{6});", emp.emp_number, emp.emp_name, emp.email, emp.pass_word, emp.is_admin, emp.is_contract, emp.card_number).ToArray();
-                if (emp.incharges != null)
-                    for (var i = 0; i < emp.incharges.Length; i++)
-                    {
-                        isDone = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});", insertedEmployee.First().emp_id, emp.incharges[i]);
-                    }
-                isDone = 1;
+                int isDone = 0;
+                Employee[] isExist = Emp.Employee.FromSql("call is_employee({0});", emp.email).ToArray();
+                if (isExist.Length == 0)
+                {
+                    Employee[] insertedEmployee = Emp.Employee.FromSql("call insert_employee({0},{1},{2},{3},{4},{5},{6});", emp.emp_number, emp.emp_name, emp.email,GetHash(emp.pass_word), emp.is_admin, emp.is_contract, emp.card_number).ToArray();
+                    if (emp.incharges != null)
+                        for (var i = 0; i < emp.incharges.Length; i++)
+                        {
+                            isDone = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});", insertedEmployee.First().emp_id, emp.incharges[i]);
+                        }
+                    isDone = 1;
+                }
+                else
+                {
+                    isDone = 99;
+                }
+                return isDone;
             }
-            else
+            catch (Exception e)
             {
-                isDone = 99;
+                Console.WriteLine(e);
+                return 0;
             }
-            return isDone;
+
         }
         public IEnumerable<Employee> GetAll()
         {
             // return users without passwords 
-            Employee[] _employees = Emp.Employee.FromSql("call get_employees();").ToArray();
-            return _employees;
+            try
+            {
+                Employee[] _employees = Emp.Employee.FromSql("call get_employees();").ToArray();
+                foreach(Employee employee in _employees){
+                    employee.pass_word = "";
+                }
+                return _employees;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+
         }
 
         public Employee GetById(int id)
         {
-
-            Employee _employee = Emp.Employee.FromSql("call get_employee({0});", id).ToArray().First();
-            Incharge_log[] incharge_log = Emp.Incharge_log.FromSql("call get_incharges({0});", id).ToArray();
-            int[] incharges = new int[incharge_log.Length];
-            for (var i = 0; i < incharge_log.Length; i++)
+            try
             {
-                incharges[i] = incharge_log[i].incharge_id;
+                Employee _employee = Emp.Employee.FromSql("call get_employee({0});", id).ToArray().First();
+                Incharge_log[] incharge_log = Emp.Incharge_log.FromSql("call get_incharges({0});", id).ToArray();
+                int[] incharges = new int[incharge_log.Length];
+                for (var i = 0; i < incharge_log.Length; i++)
+                {
+                    incharges[i] = incharge_log[i].incharge_id;
+                }
+                _employee.incharges = incharges;
+                _employee.pass_word = "";
+                return _employee;
             }
-            _employee.incharges = incharges;
-            return _employee;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+
         }
         public int Delete(int id)
         {
-            int isDelete = Emp.Database.ExecuteSqlCommand("call delete_employee({0});", id);
-            return isDelete;
+            try
+            {
+                int isDelete = Emp.Database.ExecuteSqlCommand("call delete_employee({0});", id);
+                return isDelete;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return 0;
+            }
+
         }
 
         public IEnumerable<Employee> GetReportingEmployees(int id)
         {
-            Incharge_log[] incharge_log = Emp.Incharge_log.FromSql("call get_reporting_employees({0});", id).ToArray();
-            Employee[] _employees = new Employee[incharge_log.Length];
-            for (var i = 0; i < incharge_log.Length; i++)
+            try
             {
-                _employees[i] = Emp.Employee.FromSql("call get_employee({0});", incharge_log[i].emp_id).First();
+                Incharge_log[] incharge_log = Emp.Incharge_log.FromSql("call get_reporting_employees({0});", id).ToArray();
+                Employee[] _employees = new Employee[incharge_log.Length];
+                for (var i = 0; i < incharge_log.Length; i++)
+                {
+                    _employees[i] = Emp.Employee.FromSql("call get_employee({0});", incharge_log[i].emp_id).First();
+                }
+                foreach (Employee employee in _employees)
+                {
+                    employee.pass_word = "";
+                }
+                return _employees;
             }
-            return _employees;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+
         }
         public IEnumerable<Employee> GetIncharges(int id)
         {
-            Incharge_log[] incharge_log = Emp.Incharge_log.FromSql("call get_incharges({0});", id).ToArray();
-            Employee[] _employees = new Employee[incharge_log.Length];
-            for (var i = 0; i < incharge_log.Length; i++)
+            try
             {
-                _employees[i] = Emp.Employee.FromSql("call get_employee({0});", incharge_log[i].emp_id).ToArray().First();
+                Incharge_log[] incharge_log = Emp.Incharge_log.FromSql("call get_incharges({0});", id).ToArray();
+                Employee[] _employees = new Employee[incharge_log.Length];
+                for (var i = 0; i < incharge_log.Length; i++)
+                {
+                    _employees[i] = Emp.Employee.FromSql("call get_employee({0});", incharge_log[i].emp_id).ToArray().First();
+                }
+                foreach (Employee employee in _employees)
+                {
+                    employee.pass_word = "";
+                }
+                return _employees;
             }
-            return _employees;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+
         }
         public int Update(int id, Employee emp, string card_number)
         {
-            //call update_employee(5,'Mani','mani@gmail.com',123456,1,1,12);
-            int isUpdate = 0;
-
-            isUpdate = Emp.Database.ExecuteSqlCommand("call update_employee({0},{1},{2},{3},{4},{5},{6});", id, emp.emp_name, emp.email, emp.pass_word, emp.is_admin, emp.is_contract, card_number);
-            Emp.Database.ExecuteSqlCommand("call clear_incharge_log({0});", id);
-            for (var i = 0; i < emp.incharges.Length; i++)
+            try
             {
-                isUpdate = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});", id, emp.incharges[i]);
+                int emp_id = Emp.Employee.FromSql("call is_employee({0});", emp.email).ToArray().FirstOrDefault().emp_id;
+                if (emp_id == id)
+                {
+                    int isUpdate = 0;
+                    isUpdate = Emp.Database.ExecuteSqlCommand("call update_employee({0},{1},{2},{3},{4},{5},{6});", id, emp.emp_name, emp.email, GetHash(emp.pass_word), emp.is_admin, emp.is_contract, card_number);
+                    Emp.Database.ExecuteSqlCommand("call clear_incharge_log({0});", id);
+                    for (var i = 0; i < emp.incharges.Length; i++)
+                    {
+                        isUpdate = Emp.Database.ExecuteSqlCommand("call insert_incharge_log({0},{1});", id, emp.incharges[i]);
+                    }
+                    return isUpdate;
+                }
+                else
+                {
+                    return 99;
+                }
             }
-            return isUpdate;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return 0;
+            }
+        }
+        public string GetHash(string str)
+        {
+            MD5 md5Hash = MD5.Create();
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(str));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
         }
     }
 }

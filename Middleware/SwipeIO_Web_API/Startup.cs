@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Hangfire;
+using Hangfire.MySql.Core;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SwipeIO_Web_API.Helpers;
 using SwipeIO_Web_API.Services;
+using System;
 using System.Globalization;
 using System.Text;
 using System.Threading;
@@ -76,7 +79,9 @@ namespace SwipeIO_Web_API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-           
+            GlobalConfiguration.Configuration.UseStorage(
+               new MySqlStorage("server=localhost;uid=root;pwd=123456;database=HangfireTest;Allow User Variables=True"));
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -91,6 +96,20 @@ namespace SwipeIO_Web_API
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+            
+            RecurringJob.AddOrUpdate("autoimport", () => autoImport(), getCronString());
+            var server = new BackgroundJobServer();
+        }
+        public static void autoImport()
+        {
+            Console.WriteLine("Import Called\n");
+            LogService l = new LogService();
+            l.AutoImport();
+        }
+        public static string getCronString()
+        {
+            LogService l = new LogService();
+            return l.getCronString();
         }
     }
 }

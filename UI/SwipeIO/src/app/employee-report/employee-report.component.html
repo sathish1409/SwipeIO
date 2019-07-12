@@ -33,7 +33,7 @@
                                         </div>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-2">
+                                <div *ngIf="selectedEmployee" class="col-md-2">
                                     <mat-form-field>
                                         <mat-label>Select Employee</mat-label>
                                         <mat-select [(ngModel)]="selectedEmployee" (ngModelChange)="onSubmit()"
@@ -45,7 +45,7 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-2">
+                                <div *ngIf="selectedGate" class="col-md-2">
                                     <mat-form-field>
                                         <mat-label>Select Gate</mat-label>
                                         <mat-select [(ngModel)]="selectedGate" (ngModelChange)="onSubmit()"
@@ -70,17 +70,16 @@
         <ng-template #elseBlock>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header card-header-danger">
-                            <h4 class="card-title ">No Data Available</h4>
-
-                            <p class="card-category"></p>
-                        </div>
-                        <div class="card-body"></div>
-                    </div>
+                    <div class="alert alert-danger"><span class="text-center"> No Data Available</span></div>
                 </div>
             </div>
         </ng-template>
+        <div class="row">
+                <div class="col-md-12">
+                    <div *ngIf="configSwipeIO" class="alert alert-primary"><span> Considering A day from {{configSwipeIO.value}} AM to Next Day's
+                            {{configSwipeIO.value}} AM</span></div>
+                </div>
+            </div>
         <div *ngIf='report' class="row">
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -131,7 +130,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div *ngIf='data; else elseBlock' class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -189,11 +188,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-primary"><span> Considering A day from {{configSwipeIO.value}} AM to Next Day's
-                        {{configSwipeIO.value}} AM</span></div>
-            </div>
-        </div>
+        
     </div>
 </div>

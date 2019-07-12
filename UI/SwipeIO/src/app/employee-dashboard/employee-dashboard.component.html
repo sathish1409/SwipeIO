@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card elem">
+                        <div class="card">
                             <div class="card-header card-header-info">
                                 <h4 class="card-title">Note</h4>
                             </div>
@@ -27,7 +27,7 @@
                                             <p class="text-danger"> Entire row red - Error in Log.</p>
                                         </li>
                                         <li>
-                                            <p class="text-info">The records updated till
+                                            <p *ngIf="refinedLog" class="text-info">The records updated till
                                                 {{refinedLog.date_log| date: 'd/M/yyyy'}}.</p>
                                         </li>
                                     </ul>
@@ -52,8 +52,8 @@
             </div>
         </ng-template>
 
-        <div *ngIf="canShow(Employees.length); else elseBlock">
-            <div *ngIf="Employees" class="row">
+        <div *ngIf="Employees" >
+            <div  *ngIf="canShow(Employees.length); else elseBlock" class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="card card-stats">
                         <div class="card-header card-header-warning card-header-icon">
@@ -138,7 +138,7 @@
                                             in the given data.</p>
                                     </li>
                                     <li>
-                                        <p class="text-info">The records updated till
+                                        <p *ngIf="refinedLog" class="text-info">The records updated till
                                             {{refinedLog.date_log| date: 'd/M/yyyy'}}.</p>
                                     </li>
                                 </ul>

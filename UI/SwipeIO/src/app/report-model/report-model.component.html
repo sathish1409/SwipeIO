@@ -15,7 +15,7 @@
 		<mat-dialog-content class="mat-typography">
 			<div class="row">
 				<div class="col-md-12">
-					<div class="alert alert-primary">
+					<div *ngIf="configSwipeIO" class="alert alert-primary">
 						<span>
 							Considering A day from {{ configSwipeIO.value }} AM to Next Day's
 							{{ configSwipeIO.value }} AM</span
@@ -104,8 +104,10 @@
 									</div>
 								</div>
 								<ng-template #elseBlock
-									><div class="alert alert-danger">
-										<span>No Data Availabe</span>
+									><div class="row">
+										<div class="col-md-12">
+											<div class="alert alert-danger"><span class="text-center"> No Data Available</span></div>
+										</div>
 									</div></ng-template
 								>
 							</form>

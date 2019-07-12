@@ -1,6 +1,7 @@
 #Insert Day Consideration Config
 insert into swipeio_config(description,value) values('day_consideration','07:00:00');
 insert into swipeio_config(description,value) values('auto_import_path','C:\\Users\\sathish.j\\SwipeIO\\SwipeLogs');
+insert into swipeio_config(description,value) values('auto_import_cron','*/2 * * * *');
 
 #Insert Cards
 call insert_card('11111111');
@@ -76,7 +77,4 @@ call insert_leave_description('Casual');
 call insert_leave_description('Privilege');
 
 #Insert Employees
-call insert_employee('000000C4','Sathish','sathish@gmail.com','123456',1,1,'08876880');
-
-
-
+call insert_employee('000000C4','Sathish','sathish@gmail.com','25d55ad283aa400af464c76d713c07ad',1,1,'08876880');

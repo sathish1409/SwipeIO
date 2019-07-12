@@ -22,12 +22,7 @@ export const ROUTES: RouteInfo[] = [
 		class: ""
 	},
 	{ path: "/import", title: "Import", icon: "publish", class: "" }
-	/*  { path: '/Employee-profile', title: 'Employee Profile',  icon:'person', class: '' },
-    { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
-    { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },
-    { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
-    { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
-    { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },*/
+	
 ];
 export const ROUTES_Employee: RouteInfo[] = [
 	{
@@ -37,12 +32,6 @@ export const ROUTES_Employee: RouteInfo[] = [
 		class: ""
 	},
 	{ path: "/employee_report", title: "Report", icon: "person", class: "" }
-	/*  { path: '/Employee-profile', title: 'Employee Profile',  icon:'person', class: '' },
-  { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
-  { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },
-  { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
-  { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
-  { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },*/
 ];
 
 @Component({
@@ -54,6 +43,8 @@ export class SidebarComponent implements OnInit {
 	menuItems: any[];
 	menuItems_employee: any[];
 	currentEmployee: Employee;
+	reportingEmployeesLength: Number;
+	canShow = false;
 	constructor(
 		private EmployeeService: EmployeeService,
 		private authenticationService: AuthenticationService,
@@ -68,6 +59,14 @@ export class SidebarComponent implements OnInit {
 	ngOnInit() {
 		this.menuItems = ROUTES.filter(menuItem => menuItem);
 		this.menuItems_employee = ROUTES_Employee.filter(menuItem => menuItem);
+		if (!this.currentEmployee.is_admin) { 
+			this.EmployeeService.getReportingEmployee(this.currentEmployee).subscribe(Employees => {
+				this.reportingEmployeesLength = Employees.length;
+			});
+		}
+		if (this.reportingEmployeesLength > 0) {
+			this.canShow = true;
+		}
 	}
 	isMobileMenu() {
 		if ($(window).width() > 991) {
