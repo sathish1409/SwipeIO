@@ -209,8 +209,8 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
-                int emp_id = Emp.Employee.FromSql("call is_employee({0});", emp.email).ToArray().FirstOrDefault().emp_id;
-                if (emp_id == id)
+                Employee[] employeeWithSameEmail = Emp.Employee.FromSql("call is_employee({0});", emp.email).ToArray();
+                if (employeeWithSameEmail.Length == 0 || employeeWithSameEmail[0].emp_id==id)
                 {
                     int isUpdate = 0;
                     isUpdate = Emp.Database.ExecuteSqlCommand("call update_employee({0},{1},{2},{3},{4},{5},{6});", id, emp.emp_name, emp.email, GetHash(emp.pass_word), emp.is_admin, emp.is_contract, card_number);
