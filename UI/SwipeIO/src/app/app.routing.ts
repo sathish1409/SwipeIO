@@ -7,6 +7,7 @@ import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.compon
 import { AuthGuard } from "./_guards/auth.guard";
 import { EmployeeReportComponent } from "./employee-report/employee-report.component";
 import { EmployeeLayoutComponent } from "./layouts/employee-layout/employee-layout.component";
+import { AboutComponent } from "./about/about.component";
 //import { UserreportComponent } from './userreport/userreport.component';
 const routes: Routes = [
 	{
@@ -17,6 +18,10 @@ const routes: Routes = [
 	{
 		path: "login",
 		component: LoginComponent
+	},
+	{
+		path: "about",
+		component: AboutComponent
 	},
 	{
 		path: "",

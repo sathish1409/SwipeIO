@@ -31,7 +31,7 @@
         </li>
     </ul>
     <ng-template #elseBlock>
-            <ul *ngIf="canShow" class="nav">
+            <ul *ngIf="canShow; else nonManager" class="nav">
                     <li routerLinkActive="active" *ngFor="let menuItem of menuItems_employee" class="{{menuItem.class}} nav-item">
                         <a class="nav-link font-weight-bold" [routerLink]="[menuItem.path]">
                             <i class="material-icons">{{menuItem.icon}}</i>
@@ -40,4 +40,14 @@
                     </li>
                 </ul>
     </ng-template>
+    <ng-template #nonManager>
+        <ul class="nav">
+                <li routerLinkActive="active" class="nav-item">
+                    <a class="nav-link font-weight-bold" routerLink="/employee_report">
+                        <i class="material-icons">person</i>
+                        <p>Report</p>
+                    </a>
+                </li>
+            </ul>
+</ng-template>
 </div>

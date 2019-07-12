@@ -15,7 +15,7 @@
 		<mat-dialog-content class="mat-typography">
 			<div class="row">
 				<div class="col-md-12">
-					<div class="alert alert-primary">
+					<div *ngIf="configSwipeIO" class="alert alert-primary">
 						<span>
 							Considering A day from {{ configSwipeIO.value }} AM to Next Day's
 							{{ configSwipeIO.value }} AM</span

@@ -51,6 +51,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { EmployeeDashboardComponent } from "./employee-dashboard/employee-dashboard.component";
+import { AboutComponent } from './about/about.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	bgsColor: "#00ACC1",
@@ -111,7 +112,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 		AdminLayoutComponent,
 		EmployeeLayoutComponent,
 		LoginComponent,
-		ForgotPasswordComponent
+		ForgotPasswordComponent,
+		AboutComponent
 	],
 	entryComponents: [ForgotPasswordComponent],
 	providers: [
