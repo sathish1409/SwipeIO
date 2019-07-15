@@ -40,3 +40,17 @@ C:\Users\sathish.j\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\Sw
 C:\Users\sathish.j\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.RazorTargetAssemblyInfo.cache
 C:\Users\sathish.j\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.dll
 C:\Users\sathish.j\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.pdb
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.deps.json
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.runtimeconfig.json
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.runtimeconfig.dev.json
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.dll
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.pdb
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.csprojAssemblyReference.cache
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.csproj.CoreCompileInputs.cache
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.RazorAssemblyInfo.cache
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.RazorAssemblyInfo.cs
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.AssemblyInfoInputs.cache
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.AssemblyInfo.cs
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.RazorTargetAssemblyInfo.cache
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.dll
+C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.pdb

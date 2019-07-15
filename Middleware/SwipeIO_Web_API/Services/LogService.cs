@@ -59,8 +59,11 @@ namespace SwipeIO_Web_API.Services
             try
             {
                 Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-                string url = @Emp.Config.FromSql("call get_config('auto_import_path')").FirstOrDefault().value;
-                DirectoryInfo IN = new DirectoryInfo(url + @"\IN\");
+                string inUrl = @Emp.Config.FromSql("call get_config('auto_import_in')").FirstOrDefault().value;
+                string processedUrl = @Emp.Config.FromSql("call get_config('auto_import_processed')").FirstOrDefault().value;
+                string invalidUrl = @Emp.Config.FromSql("call get_config('auto_import_invalid')").FirstOrDefault().value;
+                Console.WriteLine(inUrl+processedUrl+invalidUrl);
+                DirectoryInfo IN = new DirectoryInfo(inUrl);
                 var files = IN.GetFiles();
 
 
@@ -74,7 +77,7 @@ namespace SwipeIO_Web_API.Services
                         if (!supportedTypes.Contains(fileExt))
                         {
                             Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('Invalid File Found and Moved')");
-                            files[i].MoveTo(url + @"\INVALID\ " + files[i].Name);
+                            files[i].MoveTo(invalidUrl+files[i].Name);
                             continue;
                         }
                         var file = files[i].Open(FileMode.Open, FileAccess.Read);
@@ -119,13 +122,13 @@ namespace SwipeIO_Web_API.Services
                             Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('File Imported')");
                             Console.WriteLine("File Imported");
                             file.Close();
-                            files[i].MoveTo(url + @"\PROCESSED\" + files[i].Name);
+                            files[i].MoveTo(processedUrl + files[i].Name);
                         }
                         else
                         {
                             Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('Invalid File Found and Moved')");
                             file.Close();
-                            files[i].MoveTo(url + @"\INVALID\" + files[i].Name);
+                            files[i].MoveTo(invalidUrl + files[i].Name);
                         }
                     }
                 }
