@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +9,11 @@ namespace SwipeIO_Web_API
 
     public class MyDbContext : DbContext
     {
+        public IConfiguration _config;
+        public MyDbContext(IConfiguration config)
+        {
+            _config = config;
+        }
         public DbSet<Employee> Employee { get; set; }
         public DbSet<RefinedLog> RefinedLog { get; set; }
         public DbSet<Card> Card { get; set; }
@@ -25,7 +31,7 @@ namespace SwipeIO_Web_API
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("server = localhost; port = 3306; database = swipeio; uid = root; password =123456 ");
+            optionsBuilder.UseMySql(_config.GetConnectionString("SwipeIOConnectionString"));
         }
     }
 

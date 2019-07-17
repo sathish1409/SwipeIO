@@ -5,27 +5,23 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace SwipeIO_Web_API.Services
 {
 
-    public interface IReportService
+    public class ReportService
     {
-        IEnumerable<Report> GetReport(ReportParameters reportParameters);
-        Report[] ReportLogic(RefinedLog[] dates, int emp_id, int gate_id);
-        RefinedLog[] GetRefinedLog(int emp_id, string date, int gate_id);
-        IEnumerable<Report> GetLastReports(int emp_id, int days, int gate_id);
-        RefinedLog[] GetLastRefinedLog();
-        Config GetConfig(ConfigParam desc);
-    }
-    public class ReportService : IReportService
-    {
-        MyDbContext Emp = new MyDbContext();
-
+        public IConfiguration _config;
+        public ReportService(IConfiguration mdb)
+        {
+            _config = mdb;
+        }
         public IEnumerable<Report> GetLastReports(int emp_id, int days, int gate_id)
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 RefinedLog[] dates = Emp.RefinedLog.FromSql("call get_last_dates_of_employee({0},{1});", emp_id, days).ToArray();
                 Report[] report = ReportLogic(dates, emp_id, gate_id);
                 return report;
@@ -42,6 +38,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 RefinedLog[] dates = Emp.RefinedLog.FromSql("call get_dates({0},{1},{2},{3});", reportParameters.emp_id, reportParameters.from, reportParameters.to, reportParameters.gate_id).ToArray();
                 Report[] report = ReportLogic(dates, reportParameters.emp_id, reportParameters.gate_id);
                 return report;
@@ -57,6 +54,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 int len = dates.Length;
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB"); //dd/MM/yyyy
                 Report[] report = new Report[len];
@@ -181,6 +179,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 var today = DateTime.Parse(date.ToString());
                 DateTime tomo = today.AddDays(1);
                 RefinedLog[] data = Emp.RefinedLog.FromSql("call get_swipe_log_ref({0},{1},{2},{3});", emp_id, today, tomo, gate_id).ToArray();
@@ -196,6 +195,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 RefinedLog[] data = Emp.RefinedLog.FromSql("call get_last_date();").ToArray();
                 return data;
             }
@@ -210,6 +210,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 Config data = Emp.Config.FromSql("call get_config({0});", desc.description).FirstOrDefault();
                 return data;
             }

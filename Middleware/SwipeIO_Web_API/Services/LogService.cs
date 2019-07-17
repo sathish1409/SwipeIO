@@ -7,25 +7,25 @@ using System.Text;
 using System.Threading.Tasks;
 using ExcelDataReader;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace SwipeIO_Web_API.Services
 {
-    public interface ILogService
-    {
-        int Upload(Log[] log);
-        void AutoImport();
-        IEnumerable<Log> GetAll();
-        Log GetById(int id);
-    }
 
-    public class LogService : ILogService
+    public class LogService
     {
-        MyDbContext Emp = new MyDbContext();
+        public IConfiguration _config;
+        public LogService(IConfiguration mdb)
+        {
+            _config = mdb;
+        }
+
         public int Upload(Log[] log)
         {
             var isDone = 0;
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 for (var i = 0; i < log.Length; i++)
                 {
                     string date = DateTime.Parse(log[i].Date).Year.ToString() + "/" + DateTime.Parse(log[i].Date).Month.ToString() + "/" + DateTime.Parse(log[i].Date).Day.ToString();
@@ -53,12 +53,12 @@ namespace SwipeIO_Web_API.Services
 
         public void AutoImport()
         {
-            Console.WriteLine("Auto Import Called");
-            Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('Auto Import Call')");
-
             try
             {
-                Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                MyDbContext Emp = new MyDbContext(_config);
+                Console.WriteLine("Auto Import Called");
+                Emp.Database.ExecuteSqlCommand("call insert_auto_import_log('Auto Import Call')");
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 string inUrl = @Emp.Config.FromSql("call get_config('auto_import_in')").FirstOrDefault().value;
                 string processedUrl = @Emp.Config.FromSql("call get_config('auto_import_processed')").FirstOrDefault().value;
                 string invalidUrl = @Emp.Config.FromSql("call get_config('auto_import_invalid')").FirstOrDefault().value;
@@ -140,6 +140,7 @@ namespace SwipeIO_Web_API.Services
             }
             catch (Exception e)
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 Console.WriteLine(e);
                 Emp.Database.ExecuteSqlCommand("call insert_auto_import_log({0})", e.GetType().ToString().Substring(0, 25));
             }
@@ -148,6 +149,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 string cronString=Emp.Config.FromSql("call get_config('auto_import_cron')").FirstOrDefault().value;
                 Console.WriteLine(cronString);
                 return cronString;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SwipeIO_Web_API.Services;
 
 namespace SwipeIO_Web_API.Controllers {
@@ -15,16 +16,17 @@ namespace SwipeIO_Web_API.Controllers {
     [ApiController]
 
     public class LogController : ControllerBase {
+        public IConfiguration _config;
+         
 
-        private ILogService _logService;
-
-        public LogController (ILogService logService) {
-            _logService = logService;
+        public LogController (IConfiguration config) {
+            _config = config;
         }
 
         [Authorize (Roles = Role.Admin)]
         [HttpPost ("upload")]
         public IActionResult Upload ([FromBody] Log[] LogArray) {
+            LogService _logService = new LogService(_config);
             Thread.CurrentThread.CurrentCulture = new CultureInfo ("en-GB");
             var isDone = _logService.Upload (LogArray);
 

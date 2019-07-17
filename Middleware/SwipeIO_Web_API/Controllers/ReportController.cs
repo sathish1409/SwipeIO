@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using SwipeIO_Web_API.Helpers;
 using SwipeIO_Web_API.Services;
 
 namespace SwipeIO_Web_API.Controllers {
@@ -12,16 +15,21 @@ namespace SwipeIO_Web_API.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     public class ReportController : ControllerBase {
-        private IReportService _reportService;
-        private IEmployeeService _employeeService;
 
-        public ReportController (IReportService reportService, IEmployeeService employeeService) {
-            _reportService = reportService;
-            _employeeService = employeeService;
+        public IConfiguration _config;
+        public IOptions<AppSettings> _appSettings;
+
+
+
+        public ReportController (IOptions<AppSettings> appSettings, IConfiguration config) {
+            _config = config;
+            _appSettings = appSettings;
         }
 
         [HttpPost ("get_report")]
         public IActionResult GetReport ([FromBody] ReportParameters reportParameters) {
+            ReportService _reportService = new ReportService(_config);
+            EmployeeService _employeeService = new EmployeeService(_appSettings, _config);
             var data = _reportService.GetReport (reportParameters);
             var currentUserId = int.Parse (User.Identity.Name);
             Employee[] incharges = _employeeService.GetIncharges (currentUserId).ToArray ();
@@ -39,6 +47,8 @@ namespace SwipeIO_Web_API.Controllers {
 
         [HttpPost ("get_last_report")]
         public IActionResult GetLastReport ([FromBody] LastReportParameters lastReportParameters) {
+            ReportService _reportService = new ReportService(_config);
+            EmployeeService _employeeService = new EmployeeService(_appSettings, _config);
             var data = _reportService.GetLastReports (lastReportParameters.emp_id, lastReportParameters.days, lastReportParameters.gate_id);
             var currentUserId = int.Parse (User.Identity.Name);
             Employee[] incharges = _employeeService.GetIncharges (currentUserId).ToArray ();
@@ -56,6 +66,8 @@ namespace SwipeIO_Web_API.Controllers {
 
         [HttpPost ("get_refined_log")]
         public IActionResult GetRefinedLog ([FromBody] RefinedLogParameter refinedLogParameter) {
+            ReportService _reportService = new ReportService(_config);
+            EmployeeService _employeeService = new EmployeeService(_appSettings, _config);
             var data = _reportService.GetRefinedLog (refinedLogParameter.emp_id, refinedLogParameter.date, refinedLogParameter.gate_id);
             var currentUserId = int.Parse (User.Identity.Name);
             Employee[] incharges = _employeeService.GetIncharges (currentUserId).ToArray ();
@@ -71,6 +83,7 @@ namespace SwipeIO_Web_API.Controllers {
 
         [HttpGet ("last_log")]
         public IActionResult GetLastLog () {
+            ReportService _reportService = new ReportService(_config);
             var data = _reportService.GetLastRefinedLog ();
             if (data == null)
                 return BadRequest (new { message = "Error" });
@@ -79,6 +92,7 @@ namespace SwipeIO_Web_API.Controllers {
 
         [HttpPost ("config")]
         public IActionResult GetConfig (ConfigParam desc) {
+            ReportService _reportService = new ReportService(_config);
             var data = _reportService.GetConfig (desc);
             if (data == null)
                 return BadRequest (new { message = "Error" });

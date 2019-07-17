@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SwipeIO_Web_API.Services;
 
 namespace SwipeIO_Web_API.Controllers {
@@ -12,27 +13,31 @@ namespace SwipeIO_Web_API.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     public class SettingController : ControllerBase {
-        private ISettingService _settingService;
+        public IConfiguration _config;
+        
 
-        public SettingController (ISettingService settingService) {
-            _settingService = settingService;
+        public SettingController (IConfiguration config) {
+            _config = config;
         }
 
         // GET: api/Setting
         [HttpGet ("cards")]
         public IEnumerable<Card> GetCards () {
+            SettingService _settingService = new SettingService(_config);
             var data = _settingService.GetCards ();
             return data;
         }
 
         [HttpGet ("gates")]
         public IEnumerable<Gate> GetGates () {
+            SettingService _settingService = new SettingService(_config);
             var data = _settingService.GetGates ();
             return data;
         }
 
         [HttpGet ("leaves")]
         public IEnumerable<Leave> GetLeaves () {
+            SettingService _settingService = new SettingService(_config);
             var data = _settingService.GetLeaves ();
             return data;
         }
@@ -40,6 +45,7 @@ namespace SwipeIO_Web_API.Controllers {
         [Authorize (Roles = Role.Admin)]
         [HttpPost ("addCard")]
         public IActionResult AddCard ([FromBody] Card card) {
+            SettingService _settingService = new SettingService(_config);
             var done = _settingService.AddCard (card);
 
             if (done == 0)
@@ -51,6 +57,7 @@ namespace SwipeIO_Web_API.Controllers {
         [Authorize (Roles = Role.Admin)]
         [HttpPost ("addGate")]
         public IActionResult AddGate ([FromBody] Gate gate) {
+            SettingService _settingService = new SettingService(_config);
             var done = _settingService.AddGate (gate);
 
             if (done == 0)
@@ -62,6 +69,7 @@ namespace SwipeIO_Web_API.Controllers {
         [Authorize (Roles = Role.Admin)]
         [HttpPost ("addLeave")]
         public IActionResult AddLeave ([FromBody] Leave leave) {
+            SettingService _settingService = new SettingService(_config);
             var done = _settingService.AddLeave (leave);
 
             if (done == 0)
@@ -74,6 +82,7 @@ namespace SwipeIO_Web_API.Controllers {
         [Authorize (Roles = Role.Admin)]
         [HttpDelete ("gates/{id}")]
         public IActionResult Delete (int id) {
+            SettingService _settingService = new SettingService(_config);
             var isDelete = _settingService.DeleteGates (id);
 
             if (isDelete == 0) {
@@ -87,6 +96,7 @@ namespace SwipeIO_Web_API.Controllers {
         [HttpDelete ("cards/{id}")]
 
         public IActionResult DeleteCards (int id) {
+            SettingService _settingService = new SettingService(_config);
             var isDelete = _settingService.DeleteCards (id);
 
             if (isDelete == 0) {
@@ -100,6 +110,7 @@ namespace SwipeIO_Web_API.Controllers {
         [HttpDelete ("leaves/{id}")]
 
         public IActionResult DeleteLeaves (int id) {
+            SettingService _settingService = new SettingService(_config);
             var isDelete = _settingService.DeleteLeaves (id);
 
             if (isDelete == 0) {

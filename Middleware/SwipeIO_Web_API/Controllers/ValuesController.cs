@@ -11,23 +11,10 @@ namespace SwipeIO_Web_API.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase {
-        MyDbContext db = new MyDbContext ();
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get () {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo ("en-GB"); //dd/MM/yyyy
-            string startTime = "12/6/2019 7:00 AM";
-            string endTime = "30/6/2019 2:00 PM";
-            string day = DateTime.Parse (endTime).Day.ToString ();
-            string month = DateTime.Parse (endTime).Month.ToString ();
-            string year = DateTime.Parse (endTime).Year.ToString ();
-            DateTime today = DateTime.Parse (endTime);
-            DateTime tomo = today.AddDays (1);
-            TimeSpan day1 = new TimeSpan (23, 59, 59);
-            TimeSpan day2 = new TimeSpan (13, 59, 59);
-            TimeSpan duration = DateTime.Parse (endTime).Subtract (DateTime.Parse (startTime));
-            float i = Convert.ToSingle (duration.TotalHours) + 4;
-            return new string[] { "value1", "value2", i.ToString (), year + "/" + month + "/" + day, today.ToString (), tomo.ToString (), day1.Subtract (day2).ToString () };
+           return new string[] { "Running" };
         }
 
         // GET api/values/5

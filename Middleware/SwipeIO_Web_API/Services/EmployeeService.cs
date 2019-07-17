@@ -7,38 +7,30 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SwipeIO_Web_API.Helpers;
 
 namespace SwipeIO_Web_API.Services
 {
-    public interface IEmployeeService
+    public class EmployeeService
     {
-        Employee Authenticate(string email, string password);
-        IEnumerable<Employee> GetAll();
-        IEnumerable<Employee> GetReportingEmployees(int id);
-        int Add(Employee emp);
-        Employee GetById(int id);
-        int Delete(int id);
-        IEnumerable<Employee> GetIncharges(int id);
-        int Update(int id, Employee emp, string card_number);
-    }
 
-    public class EmployeeService : IEmployeeService
-    {
-        MyDbContext Emp = new MyDbContext();
+        public IConfiguration _config;
         private readonly AppSettings _appSettings;
 
-        public EmployeeService(IOptions<AppSettings> appSettings)
+       public EmployeeService(IOptions<AppSettings> appSettings, IConfiguration config)
         {
             _appSettings = appSettings.Value;
+            _config = config;
         }
-
+        
         public Employee Authenticate(string email, string pass_word)
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 var employeeArr = Emp.Employee.FromSql("call  Validate(@p0,@p1);", email, GetHash(pass_word));
 
                 // return null if user not found
@@ -78,6 +70,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 int isDone = 0;
                 Employee[] isExist = Emp.Employee.FromSql("call is_employee({0});", emp.email).ToArray();
                 if (isExist.Length == 0)
@@ -108,6 +101,7 @@ namespace SwipeIO_Web_API.Services
             // return users without passwords 
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 Employee[] _employees = Emp.Employee.FromSql("call get_employees();").ToArray();
                 foreach(Employee employee in _employees){
                     employee.pass_word = "";
@@ -126,6 +120,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 Employee _employee = Emp.Employee.FromSql("call get_employee({0});", id).ToArray().First();
                 Incharge_log[] incharge_log = Emp.Incharge_log.FromSql("call get_incharges({0});", id).ToArray();
                 int[] incharges = new int[incharge_log.Length];
@@ -148,6 +143,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 int isDelete = Emp.Database.ExecuteSqlCommand("call delete_employee({0});", id);
                 return isDelete;
             }
@@ -163,6 +159,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 Incharge_log[] incharge_log = Emp.Incharge_log.FromSql("call get_reporting_employees({0});", id).ToArray();
                 Employee[] _employees = new Employee[incharge_log.Length];
                 for (var i = 0; i < incharge_log.Length; i++)
@@ -186,6 +183,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 Incharge_log[] incharge_log = Emp.Incharge_log.FromSql("call get_incharges({0});", id).ToArray();
                 Employee[] _employees = new Employee[incharge_log.Length];
                 for (var i = 0; i < incharge_log.Length; i++)
@@ -209,6 +207,7 @@ namespace SwipeIO_Web_API.Services
         {
             try
             {
+                MyDbContext Emp = new MyDbContext(_config);
                 Employee[] employeeWithSameEmail = Emp.Employee.FromSql("call is_employee({0});", emp.email).ToArray();
                 if (employeeWithSameEmail.Length == 0 || employeeWithSameEmail[0].emp_id==id)
                 {
@@ -234,6 +233,7 @@ namespace SwipeIO_Web_API.Services
         }
         public string GetHash(string str)
         {
+            MyDbContext Emp = new MyDbContext(_config);
             MD5 md5Hash = MD5.Create();
             byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(str));
             StringBuilder sBuilder = new StringBuilder();
