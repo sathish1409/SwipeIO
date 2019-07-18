@@ -1,6 +1,20 @@
-##############################################################################################################################################|
+
+#   ▄▄▄▄▄▄▄▄▄▄▄  ▄         ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ 
+#  ▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
+#  ▐░█▀▀▀▀▀▀▀▀▀ ▐░▌       ▐░▌ ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀▀▀       ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌
+#  ▐░▌          ▐░▌       ▐░▌     ▐░▌     ▐░▌       ▐░▌▐░▌                    ▐░▌     ▐░▌       ▐░▌
+#  ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌   ▄   ▐░▌     ▐░▌     ▐░█▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄▄▄           ▐░▌     ▐░▌       ▐░▌
+#  ▐░░░░░░░░░░░▌▐░▌  ▐░▌  ▐░▌     ▐░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌          ▐░▌     ▐░▌       ▐░▌
+#   ▀▀▀▀▀▀▀▀▀█░▌▐░▌ ▐░▌░▌ ▐░▌     ▐░▌     ▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀           ▐░▌     ▐░▌       ▐░▌
+#            ▐░▌▐░▌▐░▌ ▐░▌▐░▌     ▐░▌     ▐░▌          ▐░▌                    ▐░▌     ▐░▌       ▐░▌
+#   ▄▄▄▄▄▄▄▄▄█░▌▐░▌░▌   ▐░▐░▌ ▄▄▄▄█░█▄▄▄▄ ▐░▌          ▐░█▄▄▄▄▄▄▄▄▄       ▄▄▄▄█░█▄▄▄▄ ▐░█▄▄▄▄▄▄▄█░▌
+#  ▐░░░░░░░░░░░▌▐░░▌     ▐░░▌▐░░░░░░░░░░░▌▐░▌          ▐░░░░░░░░░░░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
+#   ▀▀▀▀▀▀▀▀▀▀▀  ▀▀       ▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀            ▀▀▀▀▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ 
+#                                                                                                  
+
 drop database if exists swipeio;
 create database swipeio;
+create database hangfiretest;
 use swipeio;
 drop table if exists Employee;
 drop table  if exists Main_swipe;
@@ -145,7 +159,7 @@ create procedure get_config	(
 	end //
 delimiter ;
 
-#call get_config('auto_import_cron');
+call get_config('auto_import_cron');
 
 #update swipeio_config set value="*/2 * * * *" where config_id=3;
 
@@ -764,11 +778,11 @@ delimiter ;
 #delete from Main_swipe where log_id=120;
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get Dates between the given range <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-##drop procedure get_dates;
+#drop procedure get_dates;
 delimiter //
 create procedure get_dates(in emp_id1 int,in from_date varchar(20),in to_date varchar(20),in gate_id1 int)
 begin
-    select * from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log between from_date and to_date group by date_log;
+    select DISTINCT date_log from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log between from_date and to_date;
 end //
 delimiter ;
 
@@ -802,22 +816,21 @@ delimiter ;
 delimiter //
 create procedure get_last_dates_of_employee(in emp_id1 int, in limit1 int)
 begin
-    SELECT * FROM Main_swipe  where emp_id=emp_id1 and remarks="Successful"  group by date_log
-	ORDER BY date_log DESC
+    SELECT DISTINCT date_log FROM Main_swipe  where emp_id=emp_id1 and remarks="Successful"	ORDER BY date_log DESC
 	LIMIT limit1;
 end //
 delimiter ;
 #call get_last_dates_of_employee(1,7);
 #select * from Main_swipe;
 #select count(*) from  Main_swipe;
-##drop procedure get_last_dates_of_employee;
+#drop procedure get_last_dates_of_employee;
 
 
-
+#drop  procedure get_last_date;
 delimiter //
 create procedure get_last_date()
 begin
-    SELECT * FROM Main_swipe group by date_log	ORDER BY date_log DESC LIMIT 1;
+    SELECT * FROM Main_swipe ORDER BY date_log DESC LIMIT 1;
 end //
 delimiter ;
 
