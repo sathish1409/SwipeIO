@@ -6,7 +6,6 @@ insert into swipeio_config(description,value) values('auto_import_invalid','C:\\
 insert into swipeio_config(description,value) values('auto_import_cron','*/2 * * * *');
 
 #Insert Cards
-call insert_card('11111111');
 call insert_card('00103691');
 call insert_card('00105746');
 call insert_card('00110554');
