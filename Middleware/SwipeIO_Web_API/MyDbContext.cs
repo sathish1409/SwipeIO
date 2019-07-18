@@ -19,6 +19,7 @@ namespace SwipeIO_Web_API
         public DbSet<Card> Card { get; set; }
         public DbSet<Gate> Gate { get; set; }
         public DbSet<Leave> Leave { get; set; }
+        public DbSet<Dates> Dates { get; set; }
         public DbSet<Incharge_log> Incharge_log { get; set; }
         public DbSet<Config> Config { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
@@ -53,6 +54,11 @@ namespace SwipeIO_Web_API
         [NotMapped]
         public int[] incharges { get; set; }
 
+    }
+    public class Dates
+    {
+        [Key]
+        public DateTime date_log { get; set; }
     }
     public static class Role
     {

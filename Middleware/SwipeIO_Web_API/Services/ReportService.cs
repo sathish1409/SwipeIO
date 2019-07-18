@@ -22,7 +22,7 @@ namespace SwipeIO_Web_API.Services
             try
             {
                 MyDbContext Emp = new MyDbContext(_config);
-                RefinedLog[] dates = Emp.RefinedLog.FromSql("call get_last_dates_of_employee({0},{1});", emp_id, days).ToArray();
+                Dates[] dates = Emp.Dates.FromSql("call get_last_dates_of_employee({0},{1});", emp_id, days).ToArray();
                 Report[] report = ReportLogic(dates, emp_id, gate_id);
                 return report;
             }
@@ -39,7 +39,7 @@ namespace SwipeIO_Web_API.Services
             try
             {
                 MyDbContext Emp = new MyDbContext(_config);
-                RefinedLog[] dates = Emp.RefinedLog.FromSql("call get_dates({0},{1},{2},{3});", reportParameters.emp_id, reportParameters.from, reportParameters.to, reportParameters.gate_id).ToArray();
+                Dates[] dates = Emp.Dates.FromSql("call get_dates({0},{1},{2},{3});", reportParameters.emp_id, reportParameters.from, reportParameters.to, reportParameters.gate_id).ToArray();
                 Report[] report = ReportLogic(dates, reportParameters.emp_id, reportParameters.gate_id);
                 return report;
             }
@@ -50,7 +50,7 @@ namespace SwipeIO_Web_API.Services
             }
 
         }
-        public Report[] ReportLogic(RefinedLog[] dates, int emp_id, int gate_id)
+        public Report[] ReportLogic(Dates[] dates, int emp_id, int gate_id)
         {
             try
             {
