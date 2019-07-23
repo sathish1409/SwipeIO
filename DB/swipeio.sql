@@ -1,4 +1,3 @@
-
 #   ▄▄▄▄▄▄▄▄▄▄▄  ▄         ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ 
 #  ▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
 #  ▐░█▀▀▀▀▀▀▀▀▀ ▐░▌       ▐░▌ ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀▀▀       ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌
@@ -10,7 +9,7 @@
 #   ▄▄▄▄▄▄▄▄▄█░▌▐░▌░▌   ▐░▐░▌ ▄▄▄▄█░█▄▄▄▄ ▐░▌          ▐░█▄▄▄▄▄▄▄▄▄       ▄▄▄▄█░█▄▄▄▄ ▐░█▄▄▄▄▄▄▄█░▌
 #  ▐░░░░░░░░░░░▌▐░░▌     ▐░░▌▐░░░░░░░░░░░▌▐░▌          ▐░░░░░░░░░░░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
 #   ▀▀▀▀▀▀▀▀▀▀▀  ▀▀       ▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀            ▀▀▀▀▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ 
-#                                                                                                  
+
 
 drop database if exists swipeio;
 create database swipeio;
@@ -159,7 +158,7 @@ create procedure get_config	(
 	end //
 delimiter ;
 
-call get_config('auto_import_cron');
+#call get_config('auto_import_cron');
 
 #update swipeio_config set value="*/2 * * * *" where config_id=3;
 
@@ -299,7 +298,7 @@ delimiter ;
 delimiter //
 create procedure get_gates	()
 	begin
-		select * from gate where is_delete=0;
+		select * from Gate where is_delete=0;
 	end //
 delimiter ;
 #----------------- <Calls> -----------------#
@@ -479,7 +478,7 @@ create procedure get_employees()
 delimiter ;
 
 #----------------- <Calls> -----------------#
-call get_employees;
+#call get_employees;
 #----------------- </Calls> -----------------#
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Check for email existance <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
@@ -760,23 +759,6 @@ delimiter ;
 #truncate Main_swipe;
 
 
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get swipe log for a given date and emp id <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-##drop procedure get_swipe_log;
-#delimiter //
-#create procedure get_swipe_log	(
-#									in emp_id1 int,
-#                                    in date1 varchar(30)
-#								)
-#begin
-#    select * from Main_swipe where emp_id=emp_id1 and gate_id=1 and date_log=date1 and time_log > '07:00:00';
-#end //
-#delimiter ;
-
-#----------------- <Calls> -----------------#
-#call get_swipe_log(2,"2019/05/15");
-#----------------- </Calls> -----------------#
-#delete from Main_swipe where log_id=120;
-
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get Dates between the given range <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 #drop procedure get_dates;
 delimiter //
@@ -834,4 +816,4 @@ begin
 end //
 delimiter ;
 
-call get_last_date();
+#call get_last_date();

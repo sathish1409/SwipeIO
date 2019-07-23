@@ -31,7 +31,7 @@
                                 <div class="col-md-2">
                                     <mat-form-field >
                                         <mat-label>Select Employee</mat-label>
-                                        <mat-select [(ngModel)]="selectedEmployee" 
+                                        <mat-select [(ngModel)]="selectedEmployee" (ngModelChange)="onSubmit()"
                                             formControlName="selectedEmployee1">
                                             <mat-option *ngFor="let Employee of Employees" [value]="Employee">
                                                 {{Employee.emp_name}}
@@ -42,7 +42,7 @@
                                 <div class="col-md-2">
                                     <mat-form-field >
                                         <mat-label>Select Gate</mat-label>
-                                        <mat-select [(ngModel)]="selectedGate" 
+                                        <mat-select [(ngModel)]="selectedGate" (ngModelChange)="onSubmit()"
                                             formControlName="gate">
                                             <mat-option *ngFor="let gate of Gates" [value]="gate">
                                                 {{gate.gate_name}}
