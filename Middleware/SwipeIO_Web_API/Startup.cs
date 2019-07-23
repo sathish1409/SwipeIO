@@ -69,19 +69,43 @@ namespace SwipeIO_Web_API
         }
         public static LogService GetLogServiceInstance()
         {
-            LogService l = new LogService(Instance.Configuration);
-            return l;
+            try
+            {
+                LogService l = new LogService(Instance.Configuration);
+                return l;
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            
         }
         public static void AutoImport()
         {
-            Console.WriteLine("Import Called\n");
-            var l = GetLogServiceInstance();
-            l.AutoImport();
+            try
+            {
+                Console.WriteLine("Import Called\n");
+                var l = GetLogServiceInstance();
+                l.AutoImport();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
         }
         public string GetCronString()
         {
-            var l = GetLogServiceInstance();
-            return l.getCronString();
+            try
+            {
+                var l = GetLogServiceInstance();
+                return l.getCronString();
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
