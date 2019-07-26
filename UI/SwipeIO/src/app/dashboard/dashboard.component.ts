@@ -59,10 +59,6 @@ export class DashboardComponent implements OnInit {
 		const dialogRef = this.dialog.open(RefinedLogComponent, {
 			data: { employee: employee, date: date, gate_id: 1 }
 		});
-
-		dialogRef.afterClosed().subscribe(result => {
-			console.log(`Dialog result: ${result}`);
-		});
 	}
 
 	isNotGreater(n) {
@@ -84,7 +80,7 @@ export class DashboardComponent implements OnInit {
 		this.reportService
 			.getLastRefinedLog()
 			.pipe(first())
-			.subscribe(report_in => {
+			.subscribe((report_in) => {
 				this.refinedLog = report_in[0];
 			});
 		this.filterForm = this.formBuilder.group({
@@ -106,7 +102,7 @@ export class DashboardComponent implements OnInit {
 		}
 		this.ngxService.start();
 		this.loading = true;
-		this.Employees.forEach(employee => {
+		this.Employees.forEach((employee) => {
 			this.Params1 = {
 				emp_id: employee.emp_id,
 				from:
@@ -123,18 +119,15 @@ export class DashboardComponent implements OnInit {
 					this.filterForm.value.to.getDate(),
 				gate_id: this.gate_id
 			};
-			console.log(this.Params);
 			this.reportService
 				.getReport(this.Params1)
 				.pipe(first())
-				.subscribe(report_in => {
+				.subscribe((report_in) => {
 					if (report_in.length > 0) {
 						employee.report = report_in;
-					}
-					else {
+					} else {
 						employee.report = null;
 					}
-					console.log("called", employee.report);
 				});
 		});
 
@@ -144,21 +137,21 @@ export class DashboardComponent implements OnInit {
 	loadAllEmployees() {
 		this.EmployeeService.getAll()
 			.pipe(first())
-			.subscribe(Employees => {
+			.subscribe((Employees) => {
 				this.Employees = Employees;
-				this.Employees.forEach(employee => {
+				this.Employees.forEach((employee) => {
 					this.Params.emp_id = employee.emp_id;
 					this.Params.days = this.days;
 					this.Params.gate_id = this.gate_id;
 					this.reportService
 						.getLastReport(this.Params)
 						.pipe(first())
-						.subscribe(report_in => {
+						.subscribe((report_in) => {
 							if (report_in.length > 0) {
 								employee.report = report_in;
-							}else {
+							} else {
 								employee.report = null;
-							} 
+							}
 						});
 				});
 			});

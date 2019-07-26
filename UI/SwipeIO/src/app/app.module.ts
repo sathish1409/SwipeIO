@@ -3,7 +3,6 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { RouterModule } from "@angular/router";
-
 import {
 	NgxUiLoaderModule,
 	NgxUiLoaderConfig,
@@ -15,9 +14,6 @@ import {
 } from "ngx-ui-loader";
 import { EmployeeLayoutComponent } from "./layouts/employee-layout/employee-layout.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-
-// used to create fake backend
-import { fakeBackendProvider } from "./_helpers/fake-backend";
 import {
 	MatDatepickerModule,
 	MatInputModule,
@@ -27,9 +23,7 @@ import {
 } from "@angular/material";
 import { AppRoutingModule } from "./app.routing";
 import { ComponentsModule } from "./components/components.module";
-
 import { AppComponent } from "./app.component";
-
 import { AlertComponent } from "./_directives/alert.component";
 import { AuthGuard } from "./_guards/auth.guard";
 import { JwtInterceptor } from "./_helpers/jwt.interceptor";
@@ -43,7 +37,6 @@ import { SettingService } from "./_services/Setting.service";
 import { MatTabsModule } from "@angular/material/tabs";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { LoginComponent } from "./login/login.component";
-//import { EmployeereportComponent } from './Employeereport/Employeereport.component';
 import { SelectDropDownModule } from "ngx-select-dropdown";
 import { NgDatepickerModule } from "ng2-datepicker";
 import { MatMenuModule } from "@angular/material/menu";
@@ -57,7 +50,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	bgsColor: "#00ACC1",
 	bgsOpacity: 0.5,
 	bgsPosition: "bottom-right",
-	bgsSize: 60,
+	bgsSize: 70,
 	bgsType: "ball-spin-clockwise",
 	blur: 15,
 	fgsColor: "#9d37b4",

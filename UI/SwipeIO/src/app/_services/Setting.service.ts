@@ -8,33 +8,30 @@ export class SettingService {
 	constructor(private http: HttpClient) {}
 
 	getCards() {
-		return this.http.get<Card[]>(`${environment.apiUrl}/setting/cards`);
+		return this.http.get<Card[]>(`${environment.apiUrl}/Setting/cards`);
 	}
 	getGates() {
-		return this.http.get<Gate[]>(`${environment.apiUrl}/setting/gates`);
+		return this.http.get<Gate[]>(`${environment.apiUrl}/Setting/gates`);
 	}
 	getLeaves() {
-		return this.http.get<Leave[]>(`${environment.apiUrl}/setting/leaves`);
+		return this.http.get<Leave[]>(`${environment.apiUrl}/Setting/leaves`);
 	}
 	addCard(Card: Card) {
-		return this.http.post(`${environment.apiUrl}/setting/addCard`, Card);
+		return this.http.post(`${environment.apiUrl}/Setting/addCard`, Card);
 	}
 	addGate(Gate: Gate) {
-		return this.http.post(`${environment.apiUrl}/setting/addGate`, Gate);
+		return this.http.post(`${environment.apiUrl}/Setting/addGate`, Gate);
 	}
 	addLeave(Leave: Leave) {
-		return this.http.post(`${environment.apiUrl}/setting/addLeave`, Leave);
+		return this.http.post(`${environment.apiUrl}/Setting/addLeave`, Leave);
 	}
 	deletegate(id: number) {
-		console.log("Called", id);
 		return this.http.delete(`${environment.apiUrl}/Setting/gates/` + id);
 	}
 	deletecard(id: number) {
-		console.log("Called", id);
 		return this.http.delete(`${environment.apiUrl}/Setting/cards/` + id);
 	}
 	deleteleave(id: number) {
-		console.log("Called", id);
 		return this.http.delete(`${environment.apiUrl}/Setting/leaves/` + id);
 	}
 }
