@@ -22,7 +22,6 @@ export const ROUTES: RouteInfo[] = [
 		class: ""
 	},
 	{ path: "/import", title: "Import", icon: "publish", class: "" }
-	
 ];
 export const ROUTES_Employee: RouteInfo[] = [
 	{
@@ -43,7 +42,6 @@ export class SidebarComponent implements OnInit {
 	menuItems: any[];
 	menuItems_employee: any[];
 	currentEmployee: Employee;
-	reportingEmployeesLength: Number;
 	canShow = false;
 	constructor(
 		private EmployeeService: EmployeeService,
@@ -57,15 +55,16 @@ export class SidebarComponent implements OnInit {
 		this.router.navigate(["/login"]);
 	}
 	ngOnInit() {
-		this.menuItems = ROUTES.filter(menuItem => menuItem);
-		this.menuItems_employee = ROUTES_Employee.filter(menuItem => menuItem);
-		if (!this.currentEmployee.is_admin) { 
-			this.EmployeeService.getReportingEmployee(this.currentEmployee).subscribe(Employees => {
-				this.reportingEmployeesLength = Employees.length;
-			});
-		}
-		if (this.reportingEmployeesLength > 0) {
-			this.canShow = true;
+		this.menuItems = ROUTES.filter((menuItem) => menuItem);
+		this.menuItems_employee = ROUTES_Employee.filter((menuItem) => menuItem);
+		if (!this.currentEmployee.is_admin) {
+			this.EmployeeService.getReportingEmployee(this.currentEmployee).subscribe(
+				(Employees) => {
+					if (Employees.length > 0) {
+						this.canShow = true;
+					}
+				}
+			);
 		}
 	}
 	isMobileMenu() {
