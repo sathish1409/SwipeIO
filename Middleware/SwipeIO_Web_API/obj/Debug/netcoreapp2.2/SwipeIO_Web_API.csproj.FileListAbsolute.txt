@@ -54,3 +54,17 @@ C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcorea
 C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.RazorTargetAssemblyInfo.cache
 C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.dll
 C:\Users\sathish.j\Sathish\SwipeIO\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.pdb
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.deps.json
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.runtimeconfig.json
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.runtimeconfig.dev.json
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.dll
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\bin\Debug\netcoreapp2.2\SwipeIO_Web_API.pdb
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.csprojAssemblyReference.cache
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.csproj.CoreCompileInputs.cache
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.RazorAssemblyInfo.cache
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.RazorAssemblyInfo.cs
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.AssemblyInfoInputs.cache
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.AssemblyInfo.cs
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.RazorTargetAssemblyInfo.cache
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.dll
+C:\Users\swipe\Desktop\master\Middleware\SwipeIO_Web_API\obj\Debug\netcoreapp2.2\SwipeIO_Web_API.pdb

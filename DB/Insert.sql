@@ -1,7 +1,7 @@
 INSERT INTO swipeio_config(description, VALUE) VALUES ('day_consideration', '07:00:00');
-INSERT INTO swipeio_config(description, VALUE) VALUES('auto_import_in', 'c:\\users\\sathish.j\\swipeio\\swipelogs\\in\\');
-INSERT INTO swipeio_config(description, VALUE) VALUES('auto_import_processed', 'c:\\users\\sathish.j\\swipeio\\swipelogs\\processed\\');
-INSERT INTO swipeio_config(description, VALUE) VALUES('auto_import_invalid', 'c:\\users\\sathish.j\\swipeio\\swipelogs\\invalid\\');
+INSERT INTO swipeio_config(description, VALUE) VALUES('auto_import_in',' C:\\SwipeLogs\\IN\\');
+INSERT INTO swipeio_config(description, VALUE) VALUES('auto_import_processed', 'C:\\SwipeLogs\\PROCESSED\\');
+INSERT INTO swipeio_config(description, VALUE) VALUES('auto_import_invalid', 'C:\\SwipeLogs\\INVALID\\');
 INSERT INTO swipeio_config(description, VALUE) VALUES('auto_import_cron', '*/2 * * * *');
 
 CALL insert_card('00103691');
