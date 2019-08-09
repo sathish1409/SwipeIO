@@ -106,7 +106,9 @@
 								<ng-template #elseBlock
 									><div class="row">
 										<div class="col-md-12">
-											<div class="alert alert-danger"><span class="text-center"> No Data Available</span></div>
+											<div class="alert alert-danger">
+												<span class="text-center"> No Data Available</span>
+											</div>
 										</div>
 									</div></ng-template
 								>
@@ -212,7 +214,7 @@
 										>
 											<td *ngIf="report_rec.date">
 												<span>
-													{{ report_rec.date | date: "d/M/yyyy" }}
+													{{ report_rec.date | date: "d/M/yyyy - EE" }}
 												</span>
 											</td>
 											<td *ngIf="report_rec.in_time">

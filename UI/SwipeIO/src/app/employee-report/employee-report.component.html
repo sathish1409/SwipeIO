@@ -164,7 +164,7 @@
                                         [ngClass]="{'text-danger font-weight-bold':report_rec.doubt_flag}"
                                         (click)="viewDates(selectedEmployee,report_rec.date)">
                                         <td *ngIf="report_rec.date"><span>
-                                                {{report_rec.date | date: 'd/M/yyyy'}}
+                                                {{report_rec.date | date: 'd/M/yyyy - EE'}}
                                             </span>
                                         </td>
                                         <td *ngIf="report_rec.in_time">
