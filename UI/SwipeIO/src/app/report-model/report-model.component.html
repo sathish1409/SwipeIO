@@ -210,11 +210,22 @@
 											[ngClass]="{
 												'text-danger font-weight-bold': report_rec.doubt_flag
 											}"
-											(click)="viewDates(selectedEmployee, report_rec.date)"
+											(click)="
+												viewDates(
+													selectedEmployee,
+													report_rec.date,
+													report_rec.hours_worked
+												)
+											"
 										>
 											<td *ngIf="report_rec.date">
 												<span>
 													{{ report_rec.date | date: "d/M/yyyy - EE" }}
+													<span
+														*ngIf="report_rec.is_regularized"
+														class="badge badge-primary"
+														>R</span
+													>
 												</span>
 											</td>
 											<td *ngIf="report_rec.in_time">
@@ -241,8 +252,5 @@
 				</div>
 			</div>
 		</mat-dialog-content>
-		<mat-dialog-actions align="end">
-			<button mat-button [mat-dialog-close]="true" cdkFocusInitial>Okay</button>
-		</mat-dialog-actions>
 	</div>
 </div>

@@ -7,12 +7,14 @@ import { NgxUiLoaderService } from "ngx-ui-loader";
 import { MatDialog } from "@angular/material";
 import { ReportModelComponent } from "app/report-model/report-model.component";
 import { ConfirmationBoxComponent } from "app/confirmation-box/confirmation-box.component";
+import { FormControl } from "@angular/forms";
 @Component({
 	selector: "app-addorremove",
 	templateUrl: "./addorremove.component.html",
 	styleUrls: ["./addorremove.component.scss"]
 })
 export class AddorremoveComponent implements OnInit {
+	selectedEmployee1Search = new FormControl();
 	currentEmployee: Employee;
 	constructor(
 		private EmployeeService: EmployeeService,
@@ -28,7 +30,7 @@ export class AddorremoveComponent implements OnInit {
 			data: { employee: employee }
 		});
 
-		dialogRef.afterClosed().subscribe(result => {
+		dialogRef.afterClosed().subscribe((result) => {
 			console.log(`Dialog result: ${result}`);
 		});
 	}
@@ -43,7 +45,7 @@ export class AddorremoveComponent implements OnInit {
 			data: { name: employee.emp_name }
 		});
 
-		dialogRef.afterClosed().subscribe(result => {
+		dialogRef.afterClosed().subscribe((result) => {
 			if (result == true)
 				this.EmployeeService.delete(employee.emp_id)
 					.pipe(first())
@@ -59,7 +61,7 @@ export class AddorremoveComponent implements OnInit {
 		this.ngxService.start();
 		this.EmployeeService.getAll()
 			.pipe(first())
-			.subscribe(Employees => {
+			.subscribe((Employees) => {
 				this.Employees = Employees;
 			});
 		this.ngxService.stop();

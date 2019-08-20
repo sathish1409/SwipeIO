@@ -47,6 +47,22 @@ namespace SwipeIO_Web_API.Services {
 
         }
 
+        public IEnumerable<RegularizedReason> GetRegularizedReasons()
+        {
+            try
+            {
+                MyDbContext setting = new MyDbContext(_config);
+                RegularizedReason[] regularizedReason = setting.RegularizedReason.FromSql("call get_regularized_reasons();").ToArray();
+                return regularizedReason;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+
+        }
+
         public int AddCard (Card card) {
             try {
                 MyDbContext setting = new MyDbContext(_config);
@@ -76,6 +92,22 @@ namespace SwipeIO_Web_API.Services {
                 return isDone;
             } catch (Exception e) {
                 Console.WriteLine (e);
+                return 0;
+            }
+
+        }
+
+        public int AddRegularizedReason(RegularizedReason regularizedReason)
+        {
+            try
+            {
+                MyDbContext setting = new MyDbContext(_config);
+                int isDone = setting.Database.ExecuteSqlCommand("call insert_regularized_reason({0});", regularizedReason.regularized_reason);
+                return isDone;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
                 return 0;
             }
 
@@ -115,6 +147,22 @@ namespace SwipeIO_Web_API.Services {
 
         }
 
+        public int DeleteRegularizedReason(int id)
+        {
+            try
+            {
+                MyDbContext setting = new MyDbContext(_config);
+                int isDelete = setting.Database.ExecuteSqlCommand("call delete_regularized_reason({0});", id);
+                return isDelete;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return 0;
+            }
+
+        }
+
         public Card getCard (int card_id) {
             try {
                 MyDbContext setting = new MyDbContext(_config);
@@ -122,6 +170,21 @@ namespace SwipeIO_Web_API.Services {
                 return card;
             } catch (Exception e) {
                 Console.WriteLine (e);
+                return null;
+            }
+
+        }
+        public RegularizedReason getRegularizedReason(int regularized_reason_id)
+        {
+            try
+            {
+                MyDbContext setting = new MyDbContext(_config);
+                RegularizedReason regularizedReason = setting.RegularizedReason.FromSql("call get_regularized_reason({0});", regularized_reason_id).First();
+                return regularizedReason;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
                 return null;
             }
 

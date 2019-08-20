@@ -1,8 +1,36 @@
 <div class="main-content">
 	<div class="container-fluid">
-		<button routerLink="/add" class="btn btn-success">
-			<span class="material-icons">person_add</span> Add a new Employee
-		</button>
+		<div class="row">
+			<div class="col-md-8">
+				<mat-form-field>
+					<input
+						matInput
+						placeholder="Search Here"
+						class="searchbox"
+						type="text"
+						[formControl]="selectedEmployee1Search"
+						[(ngModel)]="searchText"
+						autofocus
+					/>
+					<button
+						mat-button
+						*ngIf="searchText"
+						matSuffix
+						mat-icon-button
+						aria-label="Clear"
+						(click)="searchText = ''"
+					>
+						<i class="material-icons">close</i>
+					</button>
+				</mat-form-field>
+			</div>
+			<div class="col-md-3 pull-right">
+				<button routerLink="/add" class="btn btn-success ">
+					<span class="material-icons">person_add</span> Add a new Employee
+				</button>
+			</div>
+		</div>
+
 		<div *ngIf="Employees" class="row">
 			<div class="col-md-12">
 				<div class="card">
@@ -30,7 +58,7 @@
 									<th>View / Edit / Remove</th>
 								</thead>
 								<tbody>
-									<tr *ngFor="let employee of Employees">
+									<tr *ngFor="let employee of Employees | filter: searchText">
 										<td>
 											{{ employee.emp_number }}
 										</td>

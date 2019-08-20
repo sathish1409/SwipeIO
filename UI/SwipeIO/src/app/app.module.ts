@@ -39,13 +39,13 @@ import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.compon
 import { LoginComponent } from "./login/login.component";
 import { SelectDropDownModule } from "ngx-select-dropdown";
 import { NgDatepickerModule } from "ng2-datepicker";
+import { NgbModule, NgbTimepickerModule } from "@ng-bootstrap/ng-bootstrap";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { EmployeeDashboardComponent } from "./employee-dashboard/employee-dashboard.component";
 import { AboutComponent } from "./about/about.component";
-
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	bgsColor: "#00ACC1",
 	bgsOpacity: 0.5,
@@ -53,7 +53,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	bgsSize: 70,
 	bgsType: "ball-spin-clockwise",
 	blur: 15,
-	fgsColor: "#9d37b4",
+	fgsColor: "#9c27b0",
 	fgsPosition: "center-center",
 	fgsSize: 120,
 	fgsType: "ball-scale-multiple",
@@ -64,7 +64,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 	masterLoaderId: "master",
 	overlayBorderRadius: "0",
 	overlayColor: "rgba(255,255,255,0.9)",
-	pbColor: "#9d37b4",
+	pbColor: "#9c27b0",
 	pbDirection: "ltr",
 	pbThickness: 7,
 	hasProgressBar: true,
@@ -97,7 +97,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 		MatToolbarModule,
 		MatDialogModule,
 		NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
-		NgxUiLoaderRouterModule.forRoot({ showForeground: true })
+		NgxUiLoaderRouterModule.forRoot({ showForeground: true }),
+		NgbModule,
+		NgbTimepickerModule
 	],
 	declarations: [
 		AppComponent,

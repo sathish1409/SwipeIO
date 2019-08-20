@@ -16,3 +16,10 @@
   .custom-day.faded {
     background-color: rgba(2, 117, 216, 0.5);
   }
+  .searchbox{
+    padding-top: 8px;
+    margin-bottom: 8px;
+  }
+  .searchbox:focus{
+    border: #000;
+  }

@@ -86,7 +86,7 @@ namespace SwipeIO_Web_API.Controllers {
 
             return Ok (employee);
         }
-
+        [Authorize(Roles = Role.Admin)]
         // PUT: api/Employee/5
         [HttpPut ("{id}")]
         public IActionResult Put (int id, [FromBody] Employee employeeParam) {

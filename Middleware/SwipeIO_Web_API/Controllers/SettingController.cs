@@ -42,6 +42,22 @@ namespace SwipeIO_Web_API.Controllers {
             return data;
         }
 
+        [HttpGet("regularized_reasons")]
+        public IEnumerable<RegularizedReason> GetRegularizedReasons()
+        {
+            SettingService _settingService = new SettingService(_config);
+            var data = _settingService.GetRegularizedReasons();
+            return data;
+        }
+
+        [HttpGet("regularized_reason/{id}")]
+        public RegularizedReason GetRegularizedReason(int id)
+        {
+            SettingService _settingService = new SettingService(_config);
+            var data = _settingService.getRegularizedReason(id);
+            return data;
+        }
+
         [Authorize (Roles = Role.Admin)]
         [HttpPost ("addCard")]
         public IActionResult AddCard ([FromBody] Card card) {
@@ -76,6 +92,19 @@ namespace SwipeIO_Web_API.Controllers {
                 return BadRequest (new { message = "Error" });
 
             return Ok ();
+        }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpPost("addRegularizedReason")]
+        public IActionResult AddRegularizedReason([FromBody] RegularizedReason regularizedReason)
+        {
+            SettingService _settingService = new SettingService(_config);
+            var done = _settingService.AddRegularizedReason(regularizedReason);
+
+            if (done == 0)
+                return BadRequest(new { message = "Error" });
+
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5
@@ -117,6 +146,20 @@ namespace SwipeIO_Web_API.Controllers {
                 return NotFound ();
             }
             return Ok ();
+        }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpDelete("regularized_reasons/{id}")]
+        public IActionResult DeleteRegularizedReason(int id)
+        {
+            SettingService _settingService = new SettingService(_config);
+            var isDelete = _settingService.DeleteRegularizedReason(id);
+
+            if (isDelete == 0)
+            {
+                return NotFound();
+            }
+            return Ok();
         }
 
         // PUT: api/Setting/5

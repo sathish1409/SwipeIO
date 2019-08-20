@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SwipeIO_Web_API.Helpers;
 using SwipeIO_Web_API.Services;
@@ -20,11 +21,13 @@ namespace SwipeIO_Web_API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+           // _appSettings = appSettings;
             Instance = this;
         }
         public static Startup Instance { get; private set; }
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public IConfiguration Configuration { get; }
+       // public IOptions<AppSettings> _appSettings { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {

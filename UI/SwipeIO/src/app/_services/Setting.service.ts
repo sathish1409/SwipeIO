@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Card, Gate, Leave } from "../_models/Setting";
+import { Card, Gate, Leave, RegularizedReason } from "../_models/Setting";
 import { environment } from "environments/environment";
 
 @Injectable()
@@ -16,6 +16,17 @@ export class SettingService {
 	getLeaves() {
 		return this.http.get<Leave[]>(`${environment.apiUrl}/Setting/leaves`);
 	}
+	getRegularizedReason() {
+		return this.http.get<RegularizedReason[]>(
+			`${environment.apiUrl}/Setting/regularized_reasons`
+		);
+	}
+	getRegularizedReasonById(id) {
+		return this.http.get<RegularizedReason>(
+			`${environment.apiUrl}/Setting/regularized_reason/${id}`
+		);
+	}
+
 	addCard(Card: Card) {
 		return this.http.post(`${environment.apiUrl}/Setting/addCard`, Card);
 	}
@@ -25,6 +36,12 @@ export class SettingService {
 	addLeave(Leave: Leave) {
 		return this.http.post(`${environment.apiUrl}/Setting/addLeave`, Leave);
 	}
+	addRegularizedReason(regularizedReason: RegularizedReason) {
+		return this.http.post(
+			`${environment.apiUrl}/Setting/addRegularizedReason`,
+			regularizedReason
+		);
+	}
 	deletegate(id: number) {
 		return this.http.delete(`${environment.apiUrl}/Setting/gates/` + id);
 	}
@@ -33,5 +50,10 @@ export class SettingService {
 	}
 	deleteleave(id: number) {
 		return this.http.delete(`${environment.apiUrl}/Setting/leaves/` + id);
+	}
+	deleteRegularizedReason(id: number) {
+		return this.http.delete(
+			`${environment.apiUrl}/Setting/regularized_reasons/` + id
+		);
 	}
 }

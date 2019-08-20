@@ -113,7 +113,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card elem">
                         <div class="card-header card-header-info">
                             <h4 class="card-title">Note</h4>
@@ -134,8 +134,10 @@
                                             than 9 hours </p>
                                     </li>
                                     <li>
-                                        <p class="text-danger"> When the entire row is Red, It means there is an error
-                                            in the given data.</p>
+                                            <p class="text-danger"> Entire row red - Error in Log.</p>
+                                        </li>
+                                    <li>
+                                        <p> <span class="badge badge-primary">R</span> - Logs are Regularized.</p>
                                     </li>
                                     <li>
                                         <p *ngIf="refinedLog" class="text-info">The records updated till
@@ -149,7 +151,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngFor="let employee of Employees" class="col-md-3">
+                <div *ngFor="let employee of Employees" class="col-md-4">
                     <div class="card">
                         <div class="card-header card-header-warning">
                             <h4 class="card-title ">{{employee.emp_name}} <span
@@ -171,9 +173,9 @@
                                         <tr *ngFor="let report_rec of employee.report" mat-raised-button
                                             matTooltip="Click to View Detailed Logs"
                                             [ngClass]="{'text-danger font-weight-bold':report_rec.doubt_flag}"
-                                            (click)="viewDates(employee,report_rec.date)">
+                                            (click)="viewDates(employee,report_rec.date,report_rec.hours_worked)">
                                             <td>
-                                                {{report_rec.date | date: 'd/M/yyyy'}}
+                                                {{report_rec.date | date: 'd/M/yyyy'}} <span *ngIf="report_rec.is_regularized" class="badge badge-primary">R</span>
                                             </td>
                                             <td [ngClass]="getClass(report_rec.hours_worked)">
                                                 {{report_rec.hours_worked}}

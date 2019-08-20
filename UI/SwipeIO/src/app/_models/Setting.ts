@@ -10,3 +10,8 @@ export class Leave {
 	leave_id: number;
 	leave_name: string;
 }
+
+export class RegularizedReason {
+	regularized_reason_id: number;
+	regularized_reason: string;
+}

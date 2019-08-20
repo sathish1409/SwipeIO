@@ -73,4 +73,4 @@ CALL insert_gate('Server Room');
 CALL insert_leave_description('Casual');
 CALL insert_leave_description('Privilege');
 
-CALL insert_employee('000000C4', 'Sathish', 'sathish@gmail.com', '25d55ad283aa400af464c76d713c07ad', 1, 1, '08876880');
+CALL insert_employee('000000C4', 'Sathish', 'sathish@gmail.com', '25d55ad283aa400af464c76d713c07ad', 1, 1, '00128341');

@@ -7,16 +7,16 @@
             <h4 class="card-title">Edit Employee</h4>
           </div>
           <div class="card-body">
-            <form [formGroup]="editForm" *ngIf="selectedEmployee" (ngSubmit)="onSubmit()">
+            <form [formGroup]="editForm" *ngIf="selectedEmployee" >
               <div class="row">
                 <div class="col-md-6">
                   <mat-form-field class="example-full-width">
                     <input matInput type="text" [(ngModel)]="selectedEmployee.emp_name" formControlName="emp_name"
                       class="form-control" placeholder="Employee Name"
                       [ngClass]="{ 'is-invalid': submitted && f.emp_name.errors }" />
-                    <div *ngIf="submitted && f.emp_name.errors" class="invalid-feedback">
-                      <div *ngIf="f.emp_name.errors.required">Name is required</div>
-                    </div>
+                      <div *ngIf="submitted && f.emp_name.errors">
+                        <mat-error *ngIf="submitted && f.emp_name.errors.required">Name is required</mat-error>
+                      </div>
                   </mat-form-field>
                 </div>
                 <div class="col-md-6">
@@ -24,9 +24,9 @@
                     <input matInput [(ngModel)]="selectedEmployee.email" formControlName="email" class="form-control"
                       [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email address"
                       type="email">
-                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                      <div *ngIf="f.email.errors.required">Email is required</div>
-                      <div *ngIf="f.email.errors.email">Enter a valid email</div>
+                      <div *ngIf="submitted && f.email.errors">
+                      <mat-error *ngIf="submitted && f.email.errors.required">Email is required</mat-error>
+                      <mat-error *ngIf="submitted && f.email.errors.email">Enter a valid email</mat-error>
                     </div>
                   </mat-form-field>
                 </div>
@@ -38,22 +38,33 @@
                     <input matInput [(ngModel)]="selectedEmployee.emp_number" formControlName="emp_id"
                       class="form-control" [ngClass]="{ 'is-invalid': submitted && f.emp_id.errors }"
                       placeholder="Employee ID" type="text">
-                    <div *ngIf="submitted && f.emp_id.errors" class="invalid-feedback">
-                      <div *ngIf="f.emp_id.errors.required">Employee ID is required</div>
-                      <div *ngIf="f.emp_id.errors.minlength">Enter a valid Employee ID</div>
-                    </div>
+                      <div *ngIf="submitted && f.emp_id.errors">
+                        <mat-error *ngIf="submitted && f.emp_id.errors.required">Employee ID is required</mat-error>
+                        <mat-error *ngIf="submitted && f.emp_id.errors.minlength">Enter a valid Employee ID</mat-error>
+                      </div>
+                      
+                   
                   </mat-form-field>
                 </div>
                 <div class="col-md-6">
                   <mat-form-field class="example-full-width">
                     <input matInput [(ngModel)]="selectedEmployee.pass_word" formControlName="pass_word"
                       class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pass_word.errors }"
-                      placeholder="Password" type="password">
-                    <div *ngIf="submitted && f.pass_word.errors" class="invalid-feedback">
-                      <div *ngIf="f.pass_word.errors.required">Password is required</div>
-                      <div *ngIf="f.pass_word.errors.minlength">Password must be at least 8 characters</div>
-                    </div>
-                  </mat-form-field>
+                      placeholder="Password" [type]="passType">
+                      <button
+                      mat-button
+                      *ngIf="selectedEmployee.pass_word"
+                      matSuffix
+                      mat-icon-button
+                      (click)="togglePassword()"
+                    >
+						<i class="material-icons">{{passIconName}}</i>
+					</button>
+                      <div *ngIf="submitted && f.pass_word.errors">
+                        <mat-error  *ngIf="submitted && f.pass_word.errors.required">Password is required</mat-error >
+                          <mat-error  *ngIf=" submitted && f.pass_word.errors.minlength">Password must be at least 8 characters</mat-error >    
+                      </div>
+                      </mat-form-field>
                 </div>
               </div>
 
@@ -68,10 +79,11 @@
                         {{card.card_number}}
                       </mat-option>
                     </mat-select>
-                    <div *ngIf="submitted && f.card_id.errors" class="invalid-feedback">
-                      <div *ngIf="f.card_id.errors.required">Please select a card</div>
+                    <div *ngIf="submitted && f.card_id.errors">
+                      <mat-error *ngIf="submitted && f.card_id.errors.required">Please select a card</mat-error>
                     </div>
-                  </mat-form-field>
+                      
+                   </mat-form-field>
                 </div>
                 <div class="col-md-6">
                   <mat-form-field>
@@ -79,7 +91,20 @@
                     <mat-select [(ngModel)]="selectedEmployee.incharges" class="form-control"
                       formControlName="incharges" [ngClass]="{ 'is-invalid': submitted && f.incharges.errors }"
                       multiple>
-                      <mat-option *ngFor="let Employee of Employees" [disabled]="isCurrent(Employee)"
+                      <mat-form-field class="col-md-11">
+                        <input matInput placeholder="Search Here" class="searchbox" type="text" formControlName="selectedEmployee1Search" [(ngModel)]="searchText" autofocus>                                     
+                        <button
+						mat-button
+						*ngIf="searchText"
+						matSuffix
+						mat-icon-button
+						aria-label="Clear"
+						(click)="searchText = ''"
+					>
+						<i class="material-icons">close</i>
+					</button>
+                      </mat-form-field> 
+                      <mat-option *ngFor="let Employee of Employees | filter : searchText" [disabled]="isCurrent(Employee)"
                         [value]="Employee.emp_id">{{Employee.emp_name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -118,7 +143,7 @@
                   </div>
                 </div>
               </div>
-              <button mat-raised-button type="submit" class="btn btn-success pull-right">Edit</button>
+              <button mat-raised-button type="submit" class="btn btn-success pull-right" (click)="onSubmit()">Edit</button>
               <div class="clearfix"></div>
             </form>
           </div>

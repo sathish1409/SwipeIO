@@ -64,6 +64,7 @@ namespace SwipeIO_Web_API.Services
 
                 for (var i = 0; i < dates.Length; i++)
                 {
+
                     report[i] = new Report();
                     TimeSpan hours = new TimeSpan();
                     var today = DateTime.Parse(dates.ElementAt(i).date_log.ToString());
@@ -72,6 +73,7 @@ namespace SwipeIO_Web_API.Services
                     RefinedLog[] data = Emp.RefinedLog.FromSql("call get_swipe_log_ref({0},{1},{2},{3});", emp_id, today, tomo, gate_id).ToArray();
                     if (data.Length > 1)
                     {
+                        report[i].is_regularized = false;
                         report[i].doubt_flag = false;
                         hours = new TimeSpan(0, 0, 0);
                         report[i].emp_id = emp_id;
@@ -98,6 +100,10 @@ namespace SwipeIO_Web_API.Services
                         {
                             if (data[y].inorout == false)
                             {
+                                if (data[y].is_regularized)
+                                {
+                                    report[i].is_regularized = true;
+                                }
                                 report[i].out_time = TimeSpan.Parse(data[y].time_log.ToString());
                                 found = 1;
                             }
@@ -120,12 +126,14 @@ namespace SwipeIO_Web_API.Services
                         {
                             report[i].hours_inside_office = report[i].out_time.Subtract(report[i].in_time);
                         }
-
+                       
+                        
                         var j = x;
                         while (j < y)
-                        {
+                        {                           
                             if (data[j].inorout == true && data[j + 1].inorout == false)
                             {
+                                
                                 int a = TimeSpan.Compare(TimeSpan.Parse(data[j].time_log.ToString()), TimeSpan.Parse(data[j + 1].time_log.ToString()));
                                 if (a > 0)
                                 {
@@ -158,6 +166,7 @@ namespace SwipeIO_Web_API.Services
                         report[i].hours_inside_office = report[i].out_time.Subtract(report[i].in_time);
                         report[i].hours_worked = report[i].hours_inside_office;
                         report[i].doubt_flag = true;
+                        report[i].is_regularized =false;
                     }
                     else
                     {

@@ -77,7 +77,7 @@
         <div class="row">
                 <div class="col-md-12">
                     <div *ngIf="configSwipeIO" class="alert alert-primary"><span> Considering A day from {{configSwipeIO.value}} AM to Next Day's
-                            {{configSwipeIO.value}} AM</span></div>
+                            {{configSwipeIO.value}} AM   <button mat-button class="btn btn-sm btn-info" (click)="ViewInfo()">View More Info</button></span></div>
                 </div>
             </div>
         <div *ngIf='report' class="row">
@@ -162,9 +162,9 @@
                                     <tr *ngFor="let report_rec of report" mat-raised-button
                                         matTooltip="Click to View Detailed Logs"
                                         [ngClass]="{'text-danger font-weight-bold':report_rec.doubt_flag}"
-                                        (click)="viewDates(selectedEmployee,report_rec.date)">
+                                        (click)="viewDates(selectedEmployee,report_rec.date,report_rec.hours_worked)">
                                         <td *ngIf="report_rec.date"><span>
-                                                {{report_rec.date | date: 'd/M/yyyy - EE'}}
+                                                {{report_rec.date | date: 'd/M/yyyy - EE'}} <span *ngIf="report_rec.is_regularized" class="badge badge-primary">R</span>
                                             </span>
                                         </td>
                                         <td *ngIf="report_rec.in_time">

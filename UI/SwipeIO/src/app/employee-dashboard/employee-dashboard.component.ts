@@ -51,13 +51,19 @@ export class EmployeeDashboardComponent implements OnInit {
 	get f() {
 		return this.filterForm.controls;
 	}
-	viewDates(employee, date) {
+	viewDates(employee, date, hours_worked) {
 		const dialogRef = this.dialog.open(EmployeeRefinedlogComponent, {
-			data: { employee: employee, date: date, gate_id: 1 }
+			data: {
+				employee: employee,
+				date: date,
+				gate_id: 1,
+				worked_hours: parseInt(hours_worked),
+				reporting_emp_length: this.Employees.length
+			}
 		});
 
-		dialogRef.afterClosed().subscribe(result => {
-			console.log(`Dialog result: ${result}`);
+		dialogRef.afterClosed().subscribe((result) => {
+			if (result) this.loadAllEmployees();
 		});
 	}
 	isNotGreater(n) {
@@ -81,7 +87,7 @@ export class EmployeeDashboardComponent implements OnInit {
 		this.reportService
 			.getLastRefinedLog()
 			.pipe(first())
-			.subscribe(report_in => {
+			.subscribe((report_in) => {
 				this.refinedLog = report_in[0];
 			});
 		this.filterForm = this.formBuilder.group({
@@ -103,7 +109,7 @@ export class EmployeeDashboardComponent implements OnInit {
 		}
 		this.ngxService.start();
 		this.loading = true;
-		this.Employees.forEach(employee => {
+		this.Employees.forEach((employee) => {
 			this.Params1 = {
 				emp_id: employee.emp_id,
 				from:
@@ -124,7 +130,7 @@ export class EmployeeDashboardComponent implements OnInit {
 			this.reportService
 				.getReport(this.Params1)
 				.pipe(first())
-				.subscribe(report_in => {
+				.subscribe((report_in) => {
 					employee.report = report_in;
 					console.log("called", employee.report);
 				});
@@ -136,16 +142,16 @@ export class EmployeeDashboardComponent implements OnInit {
 	loadAllEmployees() {
 		this.EmployeeService.getReportingEmployee(this.currentEmployee)
 			.pipe(first())
-			.subscribe(Employees => {
+			.subscribe((Employees) => {
 				this.Employees = Employees;
-				this.Employees.forEach(employee => {
+				this.Employees.forEach((employee) => {
 					this.Params.emp_id = employee.emp_id;
 					this.Params.days = this.days;
 					this.Params.gate_id = this.gate_id;
 					this.reportService
 						.getLastReport(this.Params)
 						.pipe(first())
-						.subscribe(report_in => {
+						.subscribe((report_in) => {
 							console.log(report_in);
 							employee.report = report_in;
 						});

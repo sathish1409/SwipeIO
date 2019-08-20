@@ -1,4 +1,5 @@
 import { Time } from "@angular/common";
+import { Employee } from "./Employee";
 
 export class Log {
 	LogID: number;
@@ -17,4 +18,12 @@ export class Log {
 export class Cards {
 	card_id: number;
 	card_number: string;
+}
+
+export class RegularizeParameters {
+	emp_id: number;
+	card_id: number;
+	Date: string;
+	AddHours: string;
+	regularized_reason_id: number;
 }

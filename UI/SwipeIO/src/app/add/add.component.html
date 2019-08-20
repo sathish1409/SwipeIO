@@ -7,7 +7,7 @@
 						<h4 class="card-title">Add Employee</h4>
 					</div>
 					<div class="card-body">
-						<form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+						<form [formGroup]="addForm">
 							<div class="row">
 								<div class="col-md-6">
 									<mat-form-field class="example-full-width">
@@ -90,8 +90,16 @@
 												'is-invalid': submitted && f.pass_word.errors
 											}"
 											placeholder="Password"
-											type="password"
+											[type]="passType"
 										/>
+										<button
+											mat-button
+											matSuffix
+											mat-icon-button
+											(click)="togglePassword()"
+										>
+											<i class="material-icons">{{ passIconName }}</i>
+										</button>
 										<div
 											*ngIf="submitted && f.pass_word.errors"
 											class="invalid-feedback"
@@ -145,8 +153,19 @@
 											}"
 											multiple
 										>
+											<mat-form-field class="col-md-11">
+												<input
+													matInput
+													placeholder="Search Here"
+													class="searchbox"
+													type="text"
+													formControlName="selectedEmployee1Search"
+													[(ngModel)]="searchText"
+													autofocus
+												/>
+											</mat-form-field>
 											<mat-option
-												*ngFor="let Employee of Employees"
+												*ngFor="let Employee of Employees | filter: searchText"
 												[value]="Employee.emp_id"
 												>{{ Employee.emp_name }}</mat-option
 											>
@@ -208,6 +227,7 @@
 								mat-raised-button
 								type="submit"
 								class="btn btn-success pull-right"
+								(click)="onSubmit()"
 							>
 								Add
 							</button>

@@ -54,10 +54,19 @@ export class DashboardComponent implements OnInit {
 		return this.filterForm.controls;
 	}
 
-	viewDates(employee, date) {
+	viewDates(employee, date, n) {
 		// var date1=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
+
 		const dialogRef = this.dialog.open(RefinedLogComponent, {
-			data: { employee: employee, date: date, gate_id: 1 }
+			data: {
+				employee: employee,
+				date: date,
+				gate_id: 1,
+				worked_hours: parseInt(n)
+			}
+		});
+		dialogRef.afterClosed().subscribe((result) => {
+			if (result) this.loadAllEmployees();
 		});
 	}
 

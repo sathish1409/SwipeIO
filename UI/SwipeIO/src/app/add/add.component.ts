@@ -20,7 +20,9 @@ export class AddComponent implements OnInit {
 	Employees: Employee[];
 	Cards: Card[];
 	submitted = false;
-
+	visibilityStat = false;
+	passIconName = "visibility";
+	passType = "password";
 	constructor(
 		private settingService: SettingService,
 		private formBuilder: FormBuilder,
@@ -29,27 +31,38 @@ export class AddComponent implements OnInit {
 		private alertService: AlertService,
 		private ngxService: NgxUiLoaderService
 	) {}
-
+	togglePassword() {
+		if (!this.visibilityStat) {
+			this.visibilityStat = true;
+			this.passType = "text";
+			this.passIconName = "visibility_off";
+		} else {
+			this.visibilityStat = false;
+			this.passType = "password";
+			this.passIconName = "visibility";
+		}
+	}
 	ngOnInit() {
 		this.ngxService.start();
 		this.EmployeeService.getAll()
 			.pipe(first())
-			.subscribe(Employees => {
+			.subscribe((Employees) => {
 				this.Employees = Employees;
 			});
 		this.settingService
 			.getCards()
 			.pipe(first())
-			.subscribe(cards => {
+			.subscribe((cards) => {
 				this.Cards = cards;
 			});
-
+		this.visibilityStat = false;
 		this.addForm = this.formBuilder.group({
 			emp_name: ["", Validators.required],
 			email: ["", [Validators.required, Validators.email]],
 			emp_id: ["", [Validators.required, Validators.minLength(8)]],
 			pass_word: ["", [Validators.required, Validators.minLength(8)]],
 			card_id: ["", Validators.required],
+			selectedEmployee1Search: [""],
 			is_admin: [""],
 			is_contract: [""],
 			incharges: [""]
@@ -99,11 +112,11 @@ export class AddComponent implements OnInit {
 		this.EmployeeService.register(this.param)
 			.pipe(first())
 			.subscribe(
-				data => {
+				(data) => {
 					this.alertService.success("Employee added successfully", true);
 					this.router.navigate(["/addorremove"]);
 				},
-				error => {
+				(error) => {
 					this.alertService.error(error);
 					this.loading = false;
 				}

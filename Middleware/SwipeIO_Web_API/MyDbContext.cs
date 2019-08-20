@@ -22,6 +22,7 @@ namespace SwipeIO_Web_API
         public DbSet<Dates> Dates { get; set; }
         public DbSet<Incharge_log> Incharge_log { get; set; }
         public DbSet<Config> Config { get; set; }
+        public DbSet<RegularizedReason> RegularizedReason { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<RefinedLog>().HasKey(table => new {
@@ -73,6 +74,13 @@ namespace SwipeIO_Web_API
         public int incharge_id { get; set; }
     }
 
+    public class RegularizedReason
+    {
+        [Key]
+        public int regularized_reason_id { get; set; }
+        public string regularized_reason { get; set; }
+    }
+
     public class Log
     {
       
@@ -102,6 +110,9 @@ namespace SwipeIO_Web_API
         public int gate_id { get; set; }
         public int card_id { get; set; }
         public string remarks { get; set; }
+        public bool is_regularized { get; set; }
+        public int regularized_reason_id { get; set; }
+        public int regularized_by { get; set; }
 
     }
 
@@ -127,6 +138,14 @@ namespace SwipeIO_Web_API
         public string to { get; set; }
         public int gate_id { get; set; }
 
+    }
+    public class RegularizeParameters
+    {
+        public int emp_id { get; set; }
+        public int card_id { get; set; }
+        public string Date { get; set; }
+        public string AddHours { get; set; }
+        public int regularized_reason_id { get; set; }
     }
     public class Card
     {
@@ -170,8 +189,9 @@ namespace SwipeIO_Web_API
         public TimeSpan out_time { get; set; }
         public TimeSpan hours_worked { get; set; }
         public TimeSpan hours_inside_office { get; set; }
-        public Boolean doubt_flag { get; set; }
+        public bool doubt_flag { get; set; }
         public string day_cons { get; set; }
+        public bool is_regularized { get; set;}
 
     }
 }

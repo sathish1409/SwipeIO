@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using SwipeIO_Web_API.Helpers;
 using SwipeIO_Web_API.Services;
 
 namespace SwipeIO_Web_API.Controllers {
@@ -17,10 +19,12 @@ namespace SwipeIO_Web_API.Controllers {
 
     public class LogController : ControllerBase {
         public IConfiguration _config;
-         
 
-        public LogController (IConfiguration config) {
+        public IOptions<AppSettings> _appSettings;
+
+        public LogController (IOptions<AppSettings> appSettings, IConfiguration config) {
             _config = config;
+            _appSettings = appSettings;
         }
 
         [Authorize (Roles = Role.Admin)]
@@ -34,6 +38,28 @@ namespace SwipeIO_Web_API.Controllers {
                 return BadRequest (new { message = "Error" });
 
             return Ok (isDone);
+        }
+
+        [HttpPost("regularize")]
+        public IActionResult Regularize([FromBody] RegularizeParameters regularizeParameters)
+        {
+            Console.WriteLine(regularizeParameters);
+            LogService _logService = new LogService(_config);
+
+            EmployeeService _employeeService = new EmployeeService(_appSettings,_config);
+            var currentUserId = int.Parse(User.Identity.Name);
+            Employee[] reporting_employees = _employeeService.GetReportingEmployees(currentUserId).ToArray();
+            for (var i = 0; i < reporting_employees.Length; i++)
+            {
+                if (reporting_employees[i].emp_id != regularizeParameters.emp_id && !User.IsInRole(Role.Admin))
+                {
+                    return Forbid();
+                }
+            }
+            var isDone = _logService.Regularize(regularizeParameters, int.Parse(User.Identity.Name));
+            if (isDone == 0)
+                return BadRequest(new { message = "Error" });
+            return Ok(isDone);
         }
 
         // GET: api/Log

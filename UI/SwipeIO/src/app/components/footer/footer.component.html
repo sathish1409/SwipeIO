@@ -4,11 +4,13 @@
 			<button mat-button routerLink="/about">Made With 💜 By</button>
 		</div>
 		<div class="copyright pull-right">
-			&copy;
-			{{ test | date: "yyyy" }}
-			<a href="https://www.congruentglobal.com" target="_blank"
-				>Congruent Global Inc.</a
-			>
+			<p>
+				Version : {{ version }} | &copy;
+				{{ test | date: "yyyy" }}
+				<a href="https://www.congruentglobal.com" target="_blank"
+					>Congruent Global Inc.</a
+				>
+			</p>
 		</div>
 	</div>
 </footer>

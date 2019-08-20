@@ -24,7 +24,7 @@ drop table if exists Leave_description;
 drop table if exists Leave_log;
 drop table if exists incharge_log;
 drop table if exists swipeio_config;
-
+set foreign_key_checks=0;
 
 CREATE TABLE Cards (
     card_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -712,7 +712,7 @@ create procedure import_to_swipe	(
 		select count(emp_id) into @is_exist_employee from Employee where emp_number=emp_number1;
         if(@is_exist_employee=0)then
 			set @new_email=concat(emp_number1,"@congruentglobal.com") ;
-			call insert_employee(emp_number1,'N/A',@new_email,'12345678',0,0,card_number1);
+			call insert_employee(emp_number1,emp_number1,@new_email,'12345678',0,0,card_number1);
         end if;
 		select emp_id into @new_emp_id from Employee where emp_number=emp_number1;
 		select card_id into @new_card_id from Cards where card_number=card_number1;
@@ -764,17 +764,18 @@ delimiter ;
 delimiter //
 create procedure get_dates(in emp_id1 int,in from_date varchar(20),in to_date varchar(20),in gate_id1 int)
 begin
-    select DISTINCT date_log from Main_swipe where emp_id=emp_id1 and gate_id=gate_id1 and date_log between from_date and to_date;
+SELECT card_id INTO @card_id from Employee where emp_id=emp_id1;
+    select DISTINCT date_log from Main_swipe where emp_id=emp_id1 and card_id=@card_id and gate_id=gate_id1 and date_log between from_date and to_date;
 end //
 delimiter ;
 
 #----------------- <Calls> -----------------#
-#call get_dates(1,"2019/04/15","2019/05/30",1);
+call get_dates(1,"2019/04/15","2019/05/30",1);
 #----------------- </Calls> -----------------#
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get swipe log for a given date and emp id <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
-#drop procedure get_swipe_log_ref;
+drop procedure get_swipe_log_ref;
 delimiter //
 create procedure get_swipe_log_ref	(
 									in emp_id1 int,
@@ -783,37 +784,42 @@ create procedure get_swipe_log_ref	(
                                     in gate_id1 int
 								)
 begin
+	SELECT card_id INTO @card_id from Employee where emp_id=emp_id1;
 	select DISTINCTROW value into @day_cons from swipeio_config where description='day_consideration';
-   ( select * from Main_swipe where emp_id=emp_id1 and remarks="Successful" and gate_id=gate_id1 and date_log=today1 and time_log>@day_cons)union
-    (select * from Main_swipe where emp_id=emp_id1 and remarks="Successful" and gate_id=gate_id1 and date_log=tomorrow1 and time_log<@day_cons);
+   ( select * from Main_swipe where emp_id=emp_id1 and card_id=@card_id and remarks="Successful" and gate_id=gate_id1 and date_log=today1 and time_log>@day_cons)union
+    (select * from Main_swipe where emp_id=emp_id1 and card_id=@card_id and remarks="Successful" and gate_id=gate_id1 and date_log=tomorrow1 and time_log<@day_cons);
 end //
 delimiter ;
-
+call get_employees();
 #----------------- <Calls> -----------------#
-#call get_swipe_log_ref(11,"2019/04/22","2019/04/23",1);
+call get_swipe_log_ref(29,"2019/04/23","2019/04/24",1);
 #----------------- </Calls> -----------------#
-
+use swipeio;
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Get Last logs <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 delimiter //
 create procedure get_last_dates_of_employee(in emp_id1 int, in limit1 int)
 begin
-    SELECT DISTINCT date_log FROM Main_swipe  where emp_id=emp_id1 and remarks="Successful"	ORDER BY date_log DESC
+	SELECT card_id INTO @card_id from Employee where emp_id=emp_id1;
+    SELECT DISTINCT date_log FROM Main_swipe  where emp_id=emp_id1 and card_id=@card_id and remarks="Successful" ORDER BY date_log DESC
 	LIMIT limit1;
 end //
 delimiter ;
-#call get_last_dates_of_employee(1,7);
+call get_last_dates_of_employee(11,7);
 #select * from Main_swipe;
 #select count(*) from  Main_swipe;
-#drop procedure get_last_dates_of_employee;
+drop procedure get_last_dates_of_employee;
 
 
 #drop  procedure get_last_date;
 delimiter //
 create procedure get_last_date()
+
 begin
     SELECT * FROM Main_swipe ORDER BY date_log DESC LIMIT 1;
 end //
 delimiter ;
+call get_employee(11);
+call get_last_date();
 
-#call get_last_date();
+

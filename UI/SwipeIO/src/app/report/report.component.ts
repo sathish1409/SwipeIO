@@ -3,9 +3,14 @@ import { Employee } from "app/_models/Employee";
 import { EmployeeService } from "app/_services/Employee.service";
 import { NgbDate, NgbCalendar } from "@ng-bootstrap/ng-bootstrap";
 import { MatDatepickerInputEvent, MatDialog } from "@angular/material";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { first } from "rxjs/operators";
-import { from } from "rxjs";
+import {
+	FormBuilder,
+	FormGroup,
+	Validators,
+	FormControl
+} from "@angular/forms";
+import { first, startWith, map } from "rxjs/operators";
+import { from, Observable } from "rxjs";
 import { ReportParams, Report, Config, ConfigParam } from "app/_models/Report";
 import { ReportService } from "../_services/Report.service";
 import { NgxUiLoaderService } from "ngx-ui-loader";
@@ -37,19 +42,19 @@ export class ReportComponent implements OnInit {
 	confParam = {
 		description: "day_consideration"
 	};
+	filteredEmployees: Observable<Employee[]>;
 
-	viewDates(employee, date) {
-		// var date1=date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
+	viewDates(employee, date, n) {
 		const dialogRef = this.dialog.open(RefinedLogComponent, {
 			data: {
 				employee: employee,
 				date: date,
-				gate_id: this.selectedGate.gate_id
+				gate_id: 1,
+				worked_hours: parseInt(n)
 			}
 		});
-
-		dialogRef.afterClosed().subscribe(result => {
-			console.log(`Dialog result: ${result}`);
+		dialogRef.afterClosed().subscribe((result) => {
+			if (result) this.onSubmit();
 		});
 	}
 
@@ -107,11 +112,11 @@ export class ReportComponent implements OnInit {
 			this.reportService
 				.getReport(this.Params)
 				.pipe(first())
-				.subscribe(report_in => {
+				.subscribe((report_in) => {
 					this.report = report_in;
 					this.data = report_in.length > 0 ? true : false;
 					this.present = this.report.length;
-					this.report.forEach(row => {
+					this.report.forEach((row) => {
 						if (this.isNotGreater(row.hours_worked)) {
 							this.defaultDays += 1;
 						}
@@ -138,9 +143,9 @@ export class ReportComponent implements OnInit {
 		this.ngxService.start();
 		this.EmployeeService.getAll()
 			.pipe(first())
-			.subscribe(Employees => {
+			.subscribe((Employees) => {
 				this.Employees = Employees;
-				this.Employees.forEach(element => {
+				this.Employees.forEach((element) => {
 					if (element.emp_id == this.currentEmployee.emp_id)
 						this.selectedEmployee = element;
 				});
@@ -154,14 +159,15 @@ export class ReportComponent implements OnInit {
 			from: ["", Validators.required],
 			to: ["", Validators.required],
 			selectedEmployee1: [""],
+			selectedEmployee1Search: [""],
 			gate: [""]
 		});
-
+		console.log(this.filterForm.controls);
 		this.loadAllEmployees();
 		this.settingService
 			.getGates()
 			.pipe(first())
-			.subscribe(gates => {
+			.subscribe((gates) => {
 				this.Gates = gates;
 				this.selectedGate = gates[0];
 			});
@@ -169,10 +175,8 @@ export class ReportComponent implements OnInit {
 		this.reportService
 			.getConfig(this.confParam)
 			.pipe(first())
-			.subscribe(report_in => {
+			.subscribe((report_in) => {
 				this.configSwipeIO = report_in;
 			});
-
-		this.ngxService.stop();
 	}
 }

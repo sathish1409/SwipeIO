@@ -9,6 +9,7 @@ export class Report {
 	hours_worked: string;
 	hours_inside_office: string;
 	doubt_flag: boolean;
+	is_regularized: boolean;
 }
 export class ReportParams {
 	emp_id: number;
@@ -39,7 +40,9 @@ export class RefinedLog {
 	gate_id: number;
 	card_id: number;
 	remarks: string;
-	s;
+	is_regularized: Boolean;
+	regularized_reason_id: number;
+	regularized_by: number;
 }
 export class ShowLog {
 	date_log: Date;

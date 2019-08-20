@@ -29,15 +29,36 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <mat-form-field >
+                                    <mat-form-field *ngIf="Employees">
                                         <mat-label>Select Employee</mat-label>
                                         <mat-select [(ngModel)]="selectedEmployee" (ngModelChange)="onSubmit()"
-                                            formControlName="selectedEmployee1">
-                                            <mat-option *ngFor="let Employee of Employees" [value]="Employee">
+                                            formControlName="selectedEmployee1"> 
+                                            <mat-form-field class="col-md-11">
+                                                    <input matInput placeholder="Search Here" class="searchbox" type="text" formControlName="selectedEmployee1Search" [(ngModel)]="searchText" autofocus>                                     
+                                                    <button
+                                                    mat-button
+                                                    *ngIf="searchText"
+                                                    matSuffix
+                                                    mat-icon-button
+                                                    aria-label="Clear"
+                                                    (click)="searchText = ''"
+                                                >
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                                </mat-form-field>
+                                            <mat-option *ngFor="let Employee of Employees| filter : searchText" [value]="Employee">
                                                 {{Employee.emp_name}}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
+                                    <!-- <mat-form-field class="example-full-width">
+                                        <input type="text" placeholder="Select Employee" [(ngModel)]="searchText" matInput  formControlName="selectedEmployee1" [matAutocomplete]="auto">
+                                        <mat-autocomplete #auto="matAutocomplete">
+                                          <mat-option *ngFor="let Employee of Employees | filter : searchText" [value]="Employee">
+                                            {{Employee.emp_name}}
+                                          </mat-option>
+                                        </mat-autocomplete>
+                                      </mat-form-field> -->
                                 </div>
                                 <div class="col-md-2">
                                     <mat-form-field >
@@ -165,11 +186,10 @@
                                     <tr *ngFor="let report_rec of report" mat-raised-button
                                         matTooltip="Click to View Detailed Logs"
                                         [ngClass]="{'text-danger font-weight-bold':report_rec.doubt_flag}"
-                                        (click)="viewDates(selectedEmployee,report_rec.date)">
+                                        (click)="viewDates(selectedEmployee,report_rec.date,report_rec.hours_worked)">
                                         <td *ngIf="report_rec.date"><span>
-                                                {{report_rec.date | date: 'd/M/yyyy - EE'}}
+                                                {{report_rec.date | date: 'd/M/yyyy - EE'}} <span *ngIf="report_rec.is_regularized" class="badge badge-primary">R</span>
                                             </span>
-
                                         </td>
                                         <td *ngIf="report_rec.in_time">
                                             {{report_rec.in_time}}
@@ -184,6 +204,7 @@
                                             [ngClass]="getClass(report_rec.hours_worked)">
                                             {{report_rec.hours_worked}}
                                         </td>
+                                            
                                     </tr>
                                 </tbody>
                             </table>

@@ -1,0 +1,65 @@
+<button
+	mat-button
+	[mat-dialog-close]="true"
+	mat-raised-button
+	type="button"
+	matTooltip="Close"
+	[matTooltipPosition]="'above'"
+	class="btn btn-danger btn-link btn-sm btn-just-icon pull-right"
+>
+	<i class="material-icons">close</i>
+</button>
+<h2 mat-dialog-title>Info</h2>
+<mat-dialog-content class="mat-typography">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header card-header-info">
+					<h4 class="card-title">Note</h4>
+				</div>
+				<div class="card-body">
+					<div class="stats">
+						<ul>
+							<li>
+								<p>
+									<span class="text-danger font-weight-bold">06:07:55</span> -
+									Worked Less than 8 hours
+								</p>
+							</li>
+							<li>
+								<p>
+									<span class="text-warning font-weight-bold">08:09:42</span> -
+									Worked Less than 9 hours
+								</p>
+							</li>
+							<li>
+								<p>
+									<span class="text-success font-weight-bold">10:25:66</span> -
+									Worked More than 9 hours
+								</p>
+							</li>
+
+							<li>
+								<p class="text-danger">Entire row red - Error in Log.</p>
+							</li>
+							<li>
+								<p>
+									<span class="badge badge-primary">R</span> - Logs are
+									Regularized.
+								</p>
+							</li>
+							<li>
+								<p *ngIf="refinedLog" class="text-info">
+									The records updated till
+									{{ refinedLog.date_log | date: "d/M/yyyy" }}
+									{{ refinedLog.time_log }}.
+								</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="card-footer"></div>
+			</div>
+		</div>
+	</div>
+</mat-dialog-content>

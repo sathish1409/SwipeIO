@@ -1,6 +1,6 @@
 <button
 	mat-button
-	[mat-dialog-close]="true"
+	[mat-dialog-close]="regularized"
 	mat-raised-button
 	type="button"
 	matTooltip="Close"
@@ -12,7 +12,7 @@
 <h2 mat-dialog-title>{{ data.employee.emp_name }}</h2>
 <mat-dialog-content class="mat-typography">
 	<div *ngIf="refinedLog" class="row">
-		<div class="col-md-12">
+		<div class="col-md-12 example-full-width">
 			<div class="card">
 				<div class="card-header card-header-danger">
 					<h4 class="card-title ">
@@ -39,6 +39,11 @@
 								<tr *ngFor="let report_rec of refinedLog">
 									<td>
 										{{ report_rec.date_log | date: "d/M/yyyy" }}
+										<span
+											*ngIf="report_rec.is_regularized"
+											class="badge badge-primary"
+											>R</span
+										>
 									</td>
 									<td>
 										{{ report_rec.time_log }}
@@ -49,9 +54,52 @@
 								</tr>
 							</tbody>
 						</table>
+						<p *ngIf="hasRegValue">
+							The Logs are regularized by
+							{{ by }}, because the employee
+							{{ Regfor }}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="regShow" class="col-md-12">
+			<div class="card">
+				<div class="card-header card-header-danger">
+					<h4 class="card-title ">
+						Regularize
+					</h4>
+					<p class="card-category"></p>
+				</div>
+				<div class="card-body">
+					<ngb-timepicker [(ngModel)]="time"></ngb-timepicker>
+					<div class="text-danger" *ngIf="tryingToAddInvalidTime">
+						Time Cannot be more than 9 hours.
+					</div>
+					<hr />
+					<div *ngIf="regReasons" class="col-md-12">
+						<mat-form-field class="example-full-width">
+							<mat-label>Select Regularize Reason</mat-label>
+							<mat-select
+								[(ngModel)]="selectedRegularizeReason"
+								[formControl]="regreason"
+							>
+								<mat-option *ngFor="let reason of regReasons" [value]="reason">
+									{{ reason.regularized_reason }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+						<button mat-button class="btn btn-success" (click)="regularize()">
+							Add Hours to log
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </mat-dialog-content>
+<mat-dialog-actions *ngIf="buttonShow" align="end">
+	<button mat-button (click)="show()" class="btn btn-warning">
+		<i class="material-icons">edit</i> Regularize
+	</button>
+</mat-dialog-actions>
